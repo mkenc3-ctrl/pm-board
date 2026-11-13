@@ -99,6 +99,9 @@ main{max-width:1100px;margin:0 auto;padding:18px 18px 100px}
 .ovc{margin:16px 0 8px}
 .ovg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .ovi{aspect-ratio:1/1;text-align:left;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--acc);padding:10px 12px;cursor:pointer;font:inherit;color:inherit;display:flex;flex-direction:column;gap:4px;overflow:hidden;min-width:0}
+.ovi{border-top-color:var(--rc,var(--acc))!important}.ovi .rg{color:var(--rc,var(--sub));font-weight:700}
+.rlg{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}.rlg button{font:inherit;font-size:14px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:4px 10px;cursor:pointer;display:flex;align-items:center;gap:6px}.rlg button i{width:10px;height:10px;background:var(--rc)}.rlg button.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.side .sd{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:1px}
 .ovi:hover{border-color:var(--ink)}
 .ovi .rg{font-size:12px;color:var(--sub)}.ovi .t b{font-size:17px;line-height:1.3;display:block}
 .ovi .t em{font-style:normal;color:var(--acc);font-weight:700;font-size:13px;display:block;margin-top:2px}
@@ -195,7 +198,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 var C=window.COMMON, SITES=(window.SITES||[]).slice(), ST={sites:{},localSites:[]}, SERVER=false;
 var view="전체", cur=0, open=null, q="", filt="전체", saveT;
 // 카테고리: 정비사업 현장 · 총회대행 · 프로그램
-var CATS=["정비사업 현장","총회대행","프로그램","기타","지난·대기"];
+var CATS=["정비사업 현장","총회대행","프로그램","기타","보관 현장"];
 function catOf(x){return x.category||(/프로그램/.test(x.kind||"")?"프로그램":x.kind==="총회대행"?"총회대행":x.kind==="기타"?"기타":"정비사업 현장")}
 var TABS=[["전체","▦"],["홈","⌂"],["단계","☰"],["서류","▤"],["결과","◎"],["기록","✎"]], toF="전체";
 function $(i){return document.getElementById(i)}
@@ -225,11 +228,6 @@ window.addEventListener("popstate",function(e){var s=e.state;if(!s){s={view:"전
  view=s.view;open=s.open;cur=s.cur;toF=s.toF;filt=s.filt;q=s.q;depth=s.depth;render();window.scrollTo(0,0)});
 function toggleNav(v){document.body.classList.toggle("navOpen",v===undefined?undefined:!!v)}
 function pick(i){cur=i;open=null;toggleNav(0);if(view==="전체")view="홈";depth++;history.pushState(snap(),"");render();window.scrollTo(0,0)}
-function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick="toggleNav(0);go(\'전체\')">▦ 전체 한눈에</button>';
- CATS.forEach(function(c){var l=SITES.map(function(s,i){return[s,i]}).filter(function(x){return catOf(x[0])===c});if(!l.length)return;
-  h+='<div class="sg"><span class="dot c'+CATS.indexOf(c)+'"></span>'+c+'</div>';
-  l.forEach(function(x){var s=x[0],st=stOf(s);h+='<button class="si'+(x[1]===cur&&view!=="전체"?" on":"")+'" onclick="pick('+x[1]+')"><b>'+esc(nm(s))+'</b>'+(st?'<small>'+st.no+'단계 · '+esc(st.title)+'</small>':'')+'</button>'})});
- return h}
 function toggleMenu(){$("menu").hidden=!$("menu").hidden}
 document.addEventListener("click",function(e){if(!e.target.closest(".menu,.ib"))$("menu").hidden=true});
 document.addEventListener("keydown",function(e){if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();go("서류",1)}});
@@ -276,17 +274,27 @@ function toolbar(){var pc=!window.__AT,t=[];
  if(pc)t.push('<button class="tool" onclick="newSiteDlg.showModal()"><b>＋</b>새 현장</button>');
  if(pc)t.push('<button class="tool" onclick="pubDlg.showModal()"><b>📱</b>폰에 올리기</button>');
  return'<div class="tools">'+t.join("")+'</div>'}
-function overview(){var h=toolbar()+'<div class="ovh"><h2>진행 중인 일 한눈에</h2><span>'+today()+' · 누르면 그 현장으로</span></div>';
- CATS.forEach(function(c){var list=SITES.map(function(s,i){return[s,i]}).filter(function(x){return catOf(x[0])===c});if(!list.length)return;
-  var small=c==="기타"||c==="프로그램";
+// ── 지역(시·도)별 색 ──
+var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",/광주/,"#7a3fa0"],["전북",/전주|전북|군산|익산/,"#3c7d34"],["전남",/광양|전남|순천|여수|목포/,"#c06a1a"],["경남",/밀양|경남|창원|김해/,"#b03a48"],["경북",/포항|구미|경북/,"#8a6d1c"]];
+function isSite(s){var c=catOf(s);return c==="정비사업 현장"||c==="보관 현장"||c==="총회대행"}
+function sido(s){if(!isSite(s))return null;var t=(s.region||"")+" "+(s.place||"");for(var i=0;i<SIDO.length;i++)if(SIDO[i][1].test(t))return SIDO[i];return null}
+var rf="";
+function overview(){var h=toolbar();
+ var cnt={};SITES.forEach(function(s){var d=sido(s);if(d&&catOf(s)==="정비사업 현장")cnt[d[0]]=(cnt[d[0]]||0)+1});
+ h+='<div class="rlg"><button class="'+(rf?"":"on")+'" onclick="rf=\'\';render()">전체 지역</button>'+SIDO.filter(function(d){return cnt[d[0]]}).map(function(d){return'<button class="'+(rf===d[0]?"on":"")+'" style="--rc:'+d[2]+'" onclick="rf=\''+d[0]+'\';render()"><i></i>'+d[0]+' '+cnt[d[0]]+'</button>'}).join("")+'</div>';
+ CATS.forEach(function(c){var list=SITES.map(function(s,i){return[s,i]}).filter(function(x){if(catOf(x[0])!==c)return false;if(!rf)return true;var d=sido(x[0]);return d&&d[0]===rf});if(!list.length)return;
   h+='<h3 class="ovc"><span class="cat c'+CATS.indexOf(c)+'">'+c+' '+list.length+'</span></h3><div class="ovg">';
-  list.forEach(function(x){var s=x[0],st=stOf(s),opn=0;(s.revisions||[]).forEach(function(r){opn+=(r.open||[]).length});
-   var k=(s.info||[]).filter(function(r){return/위원장|조합장/.test(r[0])&&!/확인 필요/.test(r[1])})[0];
-   var rg=s.region&&s.name.indexOf(s.region)!==0?s.region:"";
-   h+='<button class="ovi k'+CATS.indexOf(c)+'" onclick="cur='+x[1]+';open=null;go(\'홈\')">'+(rg?'<span class="rg">'+esc(rg)+'</span>':'')+'<div class="t"><b>'+esc(s.name)+'</b>'+(st?'<em>'+st.no+'단계 · '+esc(st.title)+'</em>':'')+'</div>'+
+  list.forEach(function(x){var s=x[0],st=stOf(s),opn=0,d=sido(s);(s.revisions||[]).forEach(function(r){opn+=(r.open||[]).length});
+   var rg=s.region||"";
+   h+='<button class="ovi k'+CATS.indexOf(c)+'"'+(d?' style="--rc:'+d[2]+'"':'')+' onclick="pick('+x[1]+')">'+(rg?'<span class="rg">'+esc(rg)+'</span>':'')+'<div class="t"><b>'+esc(s.name)+'</b>'+(st?'<em>'+st.no+'단계 · '+esc(st.title)+'</em>':'')+'</div>'+
    '<div class="s">'+esc(s.status||s.place||"")+'</div>'+
    '<div class="f">'+(opn?'<span class="w">확인 '+opn+'</span>':'')+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
   h+='</div>'});
+ return h}
+function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick="toggleNav(0);go(\'전체\')">▦ 전체 한눈에</button>';
+ CATS.forEach(function(c){var l=SITES.map(function(s,i){return[s,i]}).filter(function(x){return catOf(x[0])===c});if(!l.length)return;
+  h+='<div class="sg"><span class="dot c'+CATS.indexOf(c)+'"></span>'+c+'</div>';
+  l.forEach(function(x){var s=x[0],st=stOf(s),d=sido(s);h+='<button class="si'+(x[1]===cur&&view!=="전체"?" on":"")+'" onclick="pick('+x[1]+')"><b>'+(d?'<i class="sd" style="background:'+d[2]+'"></i>':'')+esc(nm(s))+'</b>'+(st?'<small>'+st.no+'단계 · '+esc(st.title)+'</small>':'')+'</button>'})});
  return h}
 // 접는 칸: 제목 줄에 요약 한 줄, 누르면 펼침
 function fold(icon,title,sum,body,more){return'<details class="card fold"><summary><b>'+icon+' '+title+'</b><span class="sm">'+sum+'</span><i>▾</i></summary>'+body+(more?'<div class="fmore">'+more+'</div>':'')+'</details>'}
