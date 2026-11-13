@@ -86,8 +86,10 @@ main{max-width:1100px;margin:0 auto;padding:18px 18px 100px}
 @media(min-width:781px){body{padding-left:240px}.top .bar,.tabs{max-width:none}.logo{margin-right:12px}.side{padding-top:0}.side:before{content:"현장 목록";display:block;padding:20px 18px 10px;font-weight:700;font-size:14px;color:var(--sub)}}
 @media(max-width:780px){.nb{display:block}.side{transform:translateX(-100%);transition:transform .2s;width:80vw;max-width:300px;padding-top:10px;z-index:20}
  .navOpen .side{transform:none}.navOpen .shade{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:19}.curName{font-size:16px}}
-.info summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.info summary::-webkit-details-marker{display:none}
-.info summary .sm{color:var(--sub);font-size:15px}.info summary i{margin-left:auto;font-style:normal;transition:.2s}.info[open] summary i{transform:rotate(180deg)}.info[open] summary{margin-bottom:10px}
+.fold summary,.info summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.fold summary::-webkit-details-marker,.info summary::-webkit-details-marker{display:none}
+.fold .fmore{margin-top:8px;text-align:right}.sm em.w{font-style:normal;color:#b0563a}.tipl{margin:0;padding-left:20px}.fold{margin-bottom:12px}
+@media(max-width:780px){.now .stx{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}}
+.fold summary .sm,.info summary .sm{color:var(--sub);font-size:15px}.fold summary i,.info summary i{margin-left:auto;font-style:normal;transition:.2s}.fold[open] summary i,.info[open] summary i{transform:rotate(180deg)}.fold[open] summary,.info[open] summary{margin-bottom:10px}
 .ovh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:4px 0 6px}.ovh h2{margin:0;font-size:24px}.ovh span{color:var(--sub);font-size:14px}
 .ovc{margin:16px 0 8px}
 .ovg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -268,30 +270,28 @@ function overview(){var h='<div class="ovh"><h2>진행 중인 일 한눈에</h2>
    '<div class="f">'+(opn?'<span class="w">확인 '+opn+'</span>':'')+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
   h+='</div>'});
  return h}
+// 접는 칸: 제목 줄에 요약 한 줄, 누르면 펼침
+function fold(icon,title,sum,body,more){return'<details class="card fold"><summary><b>'+icon+' '+title+'</b><span class="sm">'+sum+'</span><i>▾</i></summary>'+body+(more?'<div class="fmore">'+more+'</div>':'')+'</details>'}
+function finList(rv){return rv.map(function(r){return'<div class="fin1"><b>'+esc(r.topic)+'</b><span>'+esc(r.final)+'</span>'+((r.open||[]).length?'<em>확인 필요 '+r.open.length+'건</em>':'')+'</div>'}).join("")}
+function homeRest(s){var h="",rv=s.revisions||[],opn=0;rv.forEach(function(r){opn+=(r.open||[]).length});
+ if(rv.length)h+=fold("◎","최종 결과",rv.length+'건'+(opn?' · <em class="w">확인 필요 '+opn+'</em>':''),finList(rv),'<button class="more" onclick="go(\'결과\')">수정 이력 보기 ›</button>');
+ var lg=mergedLog();
+ if(lg.length)h+=fold("✎","최근 작업",esc((lg[0].date||"").slice(5)+" "+(lg[0].text||"")),'<div class="log">'+lg.slice(0,5).map(logRow).join("")+'</div>','<button class="more" onclick="go(\'기록\')">전체 기록 ›</button>');
+ if(!window.__AT){var pins=allDocs().filter(function(d){return d.pin});
+  if(pins.length)h+=fold("★","자주 쓰는 서류",pins.length+'건',pins.map(docRow).join(""),'<button class="more" onclick="go(\'서류\')">전체 서류 ›</button>')}
+ return h}
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
- if(!s.current){ // 단계 지정 안 한 현장 — 개요·결과·서류만
-  h+='<div class="card now"><div class="st">'+esc(s.place||"")+'</div><h2>'+esc(nm(s))+'</h2>'+(s.households?'<div>'+esc(s.households)+'</div>':'')+(s.status?'<div class="st">'+esc(s.status)+'</div>':'')+'</div>'+infoCard(s)+'<div class="grid"><div>';
-  var rv0=S().revisions||[];
-  h+='<div class="card"><h3>◎ 최종 결과 <button class="more" onclick="go(\'결과\')">수정 이력 ›</button></h3>'+(rv0.length?rv0.map(function(r){return'<div class="fin1"><b>'+esc(r.topic)+'</b><span>'+esc(r.final)+'</span>'+((r.open||[]).length?'<em>확인 필요 '+r.open.length+'건</em>':'')+'</div>'}).join(""):'<div class="empty">없음</div>')+'</div></div><div>';
-  var p0=allDocs().filter(function(d){return d.pin});
-  h+='<div class="card"><h3>★ 자주 쓰는 서류 <button class="more" onclick="go(\'서류\')">전체 ›</button></h3>'+(p0.length?p0.map(docRow).join(""):'<div class="empty">없음</div>')+'</div>';
-  h+='<div class="card"><h3>✎ 최근 작업 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3><div class="log">'+mergedLog().slice(0,5).map(logRow).join("")+'</div></div>';
-  return h+'</div></div>'}
+ if(!s.current){ // 단계 지정 안 한 현장
+  h+='<div class="card now"><h2>'+esc(nm(s))+'</h2>'+(s.status?'<div>'+esc(s.status)+'</div>':'')+'</div>';
+  return h+infoCard(s)+homeRest(s)}
  var todo=[];st.tasks.forEach(function(t,i){if(!(c[st.no+":"+i]||{}).ok)todo.push(i)});
  var steps=STG().map(function(x){return'<span class="'+(x.no<s.current?"d":x.no===s.current?"c":"")+'" title="'+esc(x.title)+'"></span>'}).join("");
- h+='<div class="card now"><div class="st">'+esc(nm(s))+(s.place?" · "+esc(s.place):"")+'</div><h2>'+st.no+'단계 · '+esc(st.title)+'</h2>'+
-  (s.status?'<div>'+esc(s.status)+'</div>':'')+'<div class="prog"><i style="width:'+pct(st)+'%"></i></div><div class="st">이 단계 할 일 '+pct(st)+'% 완료 · 전체 '+STG().length+'단계 중 '+st.no+'단계</div><div class="steps">'+steps+'</div></div>';
+ h+='<div class="card now"><div class="st">'+esc(nm(s))+'</div><h2>'+st.no+'단계 · '+esc(st.title)+'</h2>'+
+  (s.status?'<div class="stx">'+esc(s.status)+'</div>':'')+'<div class="prog"><i style="width:'+pct(st)+'%"></i></div><div class="st">할 일 '+pct(st)+'% 완료 · 전체 '+STG().length+'단계 중 '+st.no+'단계</div><div class="steps">'+steps+'</div></div>';
+ h+='<div class="card"><h3>✔ 다음 할 일 <button class="more" onclick="open='+st.no+';go(\'단계\')">전체 ›</button></h3>'+(todo.length?todo.slice(0,3).map(function(i){return taskRow(st.no,i)}).join("")+(todo.length>3?'<div class="st">외 '+(todo.length-3)+'건</div>':''):'<div class="empty">이 단계 할 일을 모두 마쳤습니다</div>')+'</div>';
  h+=infoCard(s);
- h+='<div class="grid"><div>';
- h+='<div class="card"><h3>✔ 다음 할 일 <button class="more" onclick="open='+st.no+';go(\'단계\')">전체 보기 ›</button></h3>'+(todo.length?todo.slice(0,5).map(function(i){return taskRow(st.no,i)}).join(""):'<div class="empty">이 단계 할 일을 모두 마쳤습니다 👍</div>')+'</div>';
- if(st.tips&&st.tips.length)h+='<div class="tip"><b>이 단계 주의할 점</b><ul>'+st.tips.slice(0,3).map(function(t){return'<li>'+esc(t)+'</li>'}).join("")+'</ul></div>';
- h+='</div><div>';
- var rv=S().revisions||[];
- if(rv.length)h+='<div class="card"><h3>◎ 최종 결과 <button class="more" onclick="go(\'결과\')">수정 이력 ›</button></h3>'+rv.map(function(r){return'<div class="fin1"><b>'+esc(r.topic)+'</b><span>'+esc(r.final)+'</span>'+((r.open||[]).length?'<em>확인 필요 '+r.open.length+'건</em>':'')+'</div>'}).join("")+'</div>';
- var pins=allDocs().filter(function(d){return d.pin});
- h+='<div class="card"><h3>★ 자주 쓰는 서류 <button class="more" onclick="go(\'서류\')">전체 ›</button></h3>'+(pins.length?pins.map(docRow).join(""):'<div class="empty">없음</div>')+'</div>';
- h+='<div class="card"><h3>✎ 최근 작업 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3><div class="log">'+mergedLog().slice(0,5).map(logRow).join("")+'</div></div>';
- return h+'</div></div>'}
+ if(st.tips&&st.tips.length)h+=fold("!","이 단계 주의할 점",st.tips.length+'가지','<ul class="tipl">'+st.tips.map(function(t){return'<li>'+esc(t)+'</li>'}).join("")+'</ul>');
+ return h+homeRest(s)}
 function stages(){var s=S(),c=SS().chk;
  if(!STG().length)return'<div class="card"><div class="empty">단계가 없는 항목입니다 — 서류·결과·기록 탭을 쓰세요</div></div>';
  if(open==null)open=s.current||1;
