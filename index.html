@@ -152,6 +152,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
  .task .meta input.memo{min-width:0;flex-basis:100%}
  .doc{flex-wrap:wrap}.doc .n{flex-basis:calc(100% - 56px)}.doc .acts{margin-left:56px}
 }
+.botnav{display:none}@media(max-width:780px){.botnav{display:grid;grid-template-columns:1fr 1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:2px solid var(--ink);padding-bottom:env(safe-area-inset-bottom,0px)}.botnav button{font:inherit;font-weight:700;font-size:16px;padding:12px 4px;border:none;border-right:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}.botnav button:last-child{border-right:none}}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -161,7 +162,6 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
   <div class="logo" onclick="go('전체')" style="cursor:pointer"><i>PM</i><span>PM업무관리</span></div>
   <span id="catTag" class="cat"></span>
   <b class="curName" id="curName"></b><select class="site" id="siteSel" aria-label="현장 선택" hidden></select>
-  <button class="ib phoneOnly" title="새로 고침 (최신 내용 받기)" aria-label="새로 고침" onclick="location.replace(location.pathname+'?v='+Date.now())">↻</button>
   <button class="ib" title="찾기 (/)" onclick="go('서류',1)">🔍</button>
   <button class="ib" title="메뉴" onclick="toggleMenu()">⋯</button>
  </div>
@@ -427,4 +427,5 @@ async function unlock(pw){var te=new TextEncoder(),km=await crypto.subtle.import
 function start(o){window.COMMON=o.COMMON;window.SITES=o.SITES;window.__ST=o.ST;window.__AT=o.at;document.getElementById("lock").remove();var s=document.createElement("script");s.textContent=document.getElementById("appsrc").textContent;document.body.appendChild(s)}
 var saved=null;try{saved=localStorage.getItem("pm_pw")}catch(e){}
 if(saved){try{return start(await unlock(saved))}catch(e){try{localStorage.removeItem("pm_pw")}catch(_){}}}
-lockF.onsubmit=async function(ev){ev.preventDefault();lockMsg.textContent="여는 중…";try{var o=await unlock(lockPw.value);if(lockKeep.checked)try{localStorage.setItem("pm_pw",lockPw.value)}catch(e){}start(o)}catch(e){lockMsg.textContent="비밀번호가 맞지 않습니다"}}})();</script></body></html>
+lockF.onsubmit=async function(ev){ev.preventDefault();lockMsg.textContent="여는 중…";try{var o=await unlock(lockPw.value);if(lockKeep.checked)try{localStorage.setItem("pm_pw",lockPw.value)}catch(e){}start(o)}catch(e){lockMsg.textContent="비밀번호가 맞지 않습니다"}}})();</script><nav class="botnav" aria-label="아래 이동 버튼"><button onclick="back()">← 뒤로</button><button onclick="toggleNav(0);go('전체')">🏠 처음으로</button><button onclick="location.replace(location.pathname+'?v='+Date.now())">↻ 새로 고침</button></nav>
+</body></html>
