@@ -87,6 +87,7 @@ main{max-width:1100px;margin:0 auto;padding:18px 18px 100px}
 @media(max-width:780px){.nb{display:block}.side{transform:translateX(-100%);transition:transform .2s;width:80vw;max-width:300px;padding-top:10px;z-index:20}
  .navOpen .side{transform:none}.navOpen .shade{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:19}.curName{font-size:16px}}
 .fold summary,.info summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.fold summary::-webkit-details-marker,.info summary::-webkit-details-marker{display:none}
+.ptb{display:flex;flex-direction:column}.ptr{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.ptr:last-child{border-bottom:none}.pr{flex:none;width:92px;font-size:14px;font-weight:700;color:var(--acc)}.pn{min-width:0;display:flex;flex-direction:column}.pn small{color:var(--sub);font-size:14px;overflow-wrap:anywhere}.pn small.todo{color:#b0563a}
 .bxs{margin-bottom:10px}.bxh{font-weight:700;font-size:15px;border-bottom:1px solid var(--line);padding:4px 0;margin-bottom:4px}.bxh span{color:var(--sub);font-weight:400}.fmore{margin-top:8px;text-align:right}
 .fold .fmore{margin-top:8px;text-align:right}.sm em.w{font-style:normal;color:#b0563a}.tipl{margin:0;padding-left:20px}.fold{margin-bottom:12px}
 @media(max-width:780px){.now .stx{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}}
@@ -296,10 +297,17 @@ function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick=
   h+='<div class="sg"><span class="dot c'+CATS.indexOf(c)+'"></span>'+c+'</div>';
   l.forEach(function(x){var s=x[0],st=stOf(s),d=sido(s);h+='<button class="si'+(x[1]===cur&&view!=="전체"?" on":"")+'" onclick="pick('+x[1]+')"><b>'+(d?'<i class="sd" style="background:'+d[2]+'"></i>':'')+esc(nm(s))+'</b>'+(st?'<small>'+st.no+'단계 · '+esc(st.title)+'</small>':'')+'</button>'})});
  return h}
+// ── 협력업체 ──
+function partnersFold(s){var a=s.partners||[];
+ var body=a.length?'<div class="ptb">'+a.map(function(p){return'<div class="ptr"><span class="pr">'+esc(p.role)+'</span><div class="pn"><b>'+esc(p.name)+'</b>'+
+  ((p.person||p.phone)?'<small>'+esc(p.person||"")+(p.phone?' · '+linkify(p.phone):'')+'</small>':'<small class="todo">담당자·연락처 확인 필요</small>')+(p.note?'<small>'+linkify(p.note)+'</small>':'')+'</div></div>'}).join("")+'</div>'
+  :'<div class="empty">아직 없음 — 업체명·담당자·연락처를 알려 주시거나 입력함에 적어 주시면 넣습니다.</div>';
+ var sum=a.length?a.map(function(p){return p.role}).slice(0,4).join(" · ")+(a.length>4?" 외":""):"없음";
+ return fold("🤝","협력업체",(a.length?a.length+"곳 · ":"")+esc(sum),body)}
 // 접는 칸: 제목 줄에 요약 한 줄, 누르면 펼침
 function fold(icon,title,sum,body,more){return'<details class="card fold"><summary><b>'+icon+' '+title+'</b><span class="sm">'+sum+'</span><i>▾</i></summary>'+body+(more?'<div class="fmore">'+more+'</div>':'')+'</details>'}
 function finList(rv){return rv.map(function(r){return'<div class="fin1"><b>'+esc(r.topic)+'</b><span>'+esc(r.final)+'</span>'+((r.open||[]).length?'<em>확인 필요 '+r.open.length+'건</em>':'')+'</div>'}).join("")}
-function homeRest(s){var h=fold("🗂","문서함",boxSum(s),boxBody(s),boxBtn(s)),rv=s.revisions||[],opn=0;rv.forEach(function(r){opn+=(r.open||[]).length});
+function homeRest(s){var h=partnersFold(s)+fold("🗂","문서함",boxSum(s),boxBody(s),boxBtn(s)),rv=s.revisions||[],opn=0;rv.forEach(function(r){opn+=(r.open||[]).length});
  if(rv.length)h+=fold("◎","최종 결과",rv.length+'건'+(opn?' · <em class="w">확인 필요 '+opn+'</em>':''),finList(rv),'<button class="more" onclick="go(\'결과\')">수정 이력 보기 ›</button>');
  var lg=mergedLog();
  if(lg.length)h+=fold("✎","최근 작업",esc((lg[0].date||"").slice(5)+" "+(lg[0].text||"")),'<div class="log">'+lg.slice(0,5).map(logRow).join("")+'</div>','<button class="more" onclick="go(\'기록\')">전체 기록 ›</button>');
