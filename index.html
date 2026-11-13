@@ -14,7 +14,7 @@ button{cursor:pointer;border-radius:0}
 .top{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:2px solid var(--ink)}
 .bar{display:flex;align-items:center;gap:10px;padding:10px 18px;max-width:1100px;margin:0 auto}
 .cat{font-size:13px;font-weight:700;padding:3px 8px;color:#fff;white-space:nowrap}
-.cat.c0{background:var(--acc)}.cat.c1{background:#6a3d9a}.cat.c2{background:#2e7d32}.cat.c3{background:#8a8579}
+.cat.c0{background:var(--acc)}.cat.c1{background:#6a3d9a}.cat.c2{background:#2e7d32}.cat.c3{background:#8a8579}.cat.c4{background:#9a948a}
 @media(max-width:780px){.cat{display:none}}
 .backb{border:1px solid var(--ink);background:#fff;padding:6px 12px;font-weight:700;white-space:nowrap}
 .backb[hidden]{display:none}
@@ -80,7 +80,7 @@ main{max-width:1100px;margin:0 auto;padding:18px 18px 100px}
 .side .si b{display:block;font-size:16px}.side .si small{color:var(--sub);font-size:13px}
 .side .on{background:#efe9dc;border-left-color:var(--acc)}.side .si:hover,.side .sv:hover{background:#f4efe4}
 .side .sg{font-size:13px;color:var(--sub);font-weight:700;padding:16px 18px 4px;display:flex;align-items:center;gap:6px}
-.side .dot{width:9px;height:9px;display:inline-block}.dot.c0{background:var(--acc)}.dot.c1{background:#6a3d9a}.dot.c2{background:#2e7d32}.dot.c3{background:#8a8579}
+.side .dot{width:9px;height:9px;display:inline-block}.dot.c0{background:var(--acc)}.dot.c1{background:#6a3d9a}.dot.c2{background:#2e7d32}.dot.c3{background:#8a8579}.dot.c4{background:#b7b0a4}
 .curName{font-size:18px;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .nb{display:none}.shade{display:none}.tabs[hidden],.cat[hidden]{display:none!important}
 @media(min-width:781px){body{padding-left:240px}.top .bar,.tabs{max-width:none}.logo{margin-right:12px}.side{padding-top:0}.side:before{content:"현장 목록";display:block;padding:20px 18px 10px;font-weight:700;font-size:14px;color:var(--sub)}}
@@ -99,7 +99,7 @@ main{max-width:1100px;margin:0 auto;padding:18px 18px 100px}
 .ovi .t em{font-style:normal;color:var(--acc);font-weight:700;font-size:13px;display:block;margin-top:2px}
 .ovi .s{font-size:13px;line-height:1.4;color:var(--sub);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .ovi .f{margin-top:auto;display:flex;flex-wrap:wrap;gap:4px;font-size:12px;color:var(--sub)}.ovi .f span{border:1px solid var(--line);padding:0 5px}.ovi .f .w{color:#b0563a;border-color:#e3b9a8}
-.ovi.k1{border-top-color:#6a3d9a}.ovi.k2{border-top-color:#2e7d32}.ovi.k3{border-top-color:#8a8579}
+.ovi.k1{border-top-color:#6a3d9a}.ovi.k2{border-top-color:#2e7d32}.ovi.k3{border-top-color:#8a8579}.ovi.k4{border-top-color:#b7b0a4;opacity:.8}
 @media(max-width:780px){.ovg{grid-template-columns:repeat(2,1fr);gap:8px}.ovi{padding:8px 10px}.ovi .t b{font-size:16px}}
 
 .info dl{display:grid;grid-template-columns:150px 1fr;margin:0;border-top:1px solid var(--line)}
@@ -190,7 +190,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 var C=window.COMMON, SITES=(window.SITES||[]).slice(), ST={sites:{},localSites:[]}, SERVER=false;
 var view="전체", cur=0, open=null, q="", filt="전체", saveT;
 // 카테고리: 정비사업 현장 · 총회대행 · 프로그램
-var CATS=["정비사업 현장","총회대행","프로그램","기타"];
+var CATS=["정비사업 현장","총회대행","프로그램","기타","지난·대기"];
 function catOf(x){return x.category||(/프로그램/.test(x.kind||"")?"프로그램":x.kind==="총회대행"?"총회대행":x.kind==="기타"?"기타":"정비사업 현장")}
 var TABS=[["전체","▦"],["홈","⌂"],["단계","☰"],["서류","▤"],["결과","◎"],["기록","✎"]], toF="전체";
 function $(i){return document.getElementById(i)}
