@@ -267,13 +267,13 @@ var INBOX_URL="https://claude.ai/artifact/EooJC25fNyxipzENocrfsD";
 function siteIdx(re){for(var i=0;i<SITES.length;i++)if(re.test(SITES[i].name))return i;return -1}
 function openRoot(){api("/api/open?mode=open&f="+encodeURIComponent("문서함")).then(function(r){toast(r.ok?"문서함 폴더를 열었습니다":"열 수 없습니다")}).catch(function(){toast("실행기가 꺼져 있습니다")})}
 function toolbar(){var pc=!window.__AT,t=[];
- t.push('<a class="tool" href="'+INBOX_URL+'" target="_blank" rel="noopener"><b>✏️</b>입력함</a>');
+ t.push('<a class="tool" href="'+INBOX_URL+'#schedule" target="_blank" rel="noopener"><b>📅</b>일정</a>');
+ t.push('<a class="tool" href="'+INBOX_URL+'#inbox" target="_blank" rel="noopener"><b>📮</b>여기에 올리기</a>');
+ t.push('<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>');
  if(pc)t.push('<button class="tool" onclick="openRoot()"><b>🗂</b>문서함</button>');
  var v=siteIdx(/투·개표/);if(v>=0)t.push('<button class="tool" onclick="pick('+v+')"><b>🗳</b>투·개표</button>');
  var k=siteIdx(/기타 서류/);if(k>=0)t.push('<button class="tool" onclick="pick('+k+')"><b>📇</b>명함·회사</button>');
  t.push('<button class="tool" onclick="go(\'서류\',1)"><b>🔍</b>서류 찾기</button>');
- if(pc)t.push('<button class="tool" onclick="newSiteDlg.showModal()"><b>＋</b>새 현장</button>');
- if(pc)t.push('<button class="tool" onclick="pubDlg.showModal()"><b>📱</b>폰에 올리기</button>');
  return'<div class="tools">'+t.join("")+'</div>'}
 // ── 지역(시·도)별 색 ──
 var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",/광주/,"#7a3fa0"],["전북",/전주|전북|군산|익산/,"#3c7d34"],["전남",/광양|전남|순천|여수|목포/,"#c06a1a"],["경남",/밀양|경남|창원|김해/,"#b03a48"],["경북",/포항|구미|경북/,"#8a6d1c"]];
@@ -301,7 +301,7 @@ function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick=
 function partnersFold(s){var a=s.partners||[];
  var body=a.length?'<div class="ptb">'+a.map(function(p){return'<div class="ptr"><span class="pr">'+esc(p.role)+'</span><div class="pn"><b>'+esc(p.name)+'</b>'+
   ((p.person||p.phone)?'<small>'+esc(p.person||"")+(p.phone?' · '+linkify(p.phone):'')+'</small>':'<small class="todo">담당자·연락처 확인 필요</small>')+(p.note?'<small>'+linkify(p.note)+'</small>':'')+'</div></div>'}).join("")+'</div>'
-  :'<div class="empty">아직 없음 — 업체명·담당자·연락처를 알려 주시거나 입력함에 적어 주시면 넣습니다.</div>';
+  :'<div class="empty">아직 없음 — 업체명·담당자·연락처를 알려 주시거나 「여기에 올리기」에 적어 주시면 넣습니다.</div>';
  var sum=a.length?a.map(function(p){return p.role}).slice(0,4).join(" · ")+(a.length>4?" 외":""):"없음";
  return fold("🤝","협력업체",(a.length?a.length+"곳 · ":"")+esc(sum),body)}
 // 접는 칸: 제목 줄에 요약 한 줄, 누르면 펼침
