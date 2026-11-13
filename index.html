@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794562672216";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -153,6 +153,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
  .doc{flex-wrap:wrap}.doc .n{flex-basis:calc(100% - 56px)}.doc .acts{margin-left:56px}
 }
 .botnav{display:none}@media(max-width:780px){.botnav{display:grid;grid-template-columns:1fr 1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:2px solid var(--ink);padding-bottom:env(safe-area-inset-bottom,0px)}.botnav button{font:inherit;font-weight:700;font-size:16px;padding:12px 4px;border:none;border-right:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}.botnav button:last-child{border-right:none}}
+body.phone .botnav{display:grid;grid-template-columns:1fr 1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:2px solid var(--ink);padding-bottom:env(safe-area-inset-bottom,0px)}body.phone .botnav button{font:inherit;font-weight:700;font-size:16px;padding:12px 4px;border:none;border-right:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}body.phone .botnav button:last-child{border-right:none}body.phone main{padding-bottom:100px}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
