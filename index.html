@@ -152,6 +152,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
  .task .meta input.memo{min-width:0;flex-basis:100%}
  .doc{flex-wrap:wrap}.doc .n{flex-basis:calc(100% - 56px)}.doc .acts{margin-left:56px}
 }
+.phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
  <div class="bar">
@@ -160,6 +161,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
   <div class="logo" onclick="go('전체')" style="cursor:pointer"><i>PM</i><span>PM업무관리</span></div>
   <span id="catTag" class="cat"></span>
   <b class="curName" id="curName"></b><select class="site" id="siteSel" aria-label="현장 선택" hidden></select>
+  <button class="ib phoneOnly" title="새로 고침 (최신 내용 받기)" aria-label="새로 고침" onclick="location.replace(location.pathname+'?v='+Date.now())">↻</button>
   <button class="ib" title="찾기 (/)" onclick="go('서류',1)">🔍</button>
   <button class="ib" title="메뉴" onclick="toggleMenu()">⋯</button>
  </div>
@@ -194,7 +196,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 </dialog>
 
 <div id="lock"><form id="lockF"><div class="lk-logo">PM</div><h2>PM업무관리</h2><p>비밀번호를 넣어 주세요</p><input id="lockPw" type="password" autocomplete="current-password"><label class="lk-keep"><input type="checkbox" id="lockKeep" checked> 이 폰에서 기억하기</label><button class="btn p">열기</button><p id="lockMsg"></p></form></div>
-<style>#lock{position:fixed;inset:0;background:#f4f1ea;z-index:999;display:flex;align-items:center;justify-content:center}#lockF{width:min(340px,88vw);text-align:center}#lockF input[type=password]{width:100%;font-size:20px;padding:12px;margin:8px 0;box-sizing:border-box}#lockF .btn{width:100%;font-size:19px;padding:12px}.lk-keep{display:block;margin:6px 0 14px;font-size:16px}.lk-logo{display:inline-block;background:#1f3a5f;color:#fff;font-weight:700;padding:8px 12px;font-size:22px}#lockMsg{color:#b0563a;min-height:1.4em}body.phone .pcOnly{display:none}</style>
+<style>#lock{position:fixed;inset:0;background:#f4f1ea;z-index:999;display:flex;align-items:center;justify-content:center}#lockF{width:min(340px,88vw);text-align:center}#lockF input[type=password]{width:100%;font-size:20px;padding:12px;margin:8px 0;box-sizing:border-box}#lockF .btn{width:100%;font-size:19px;padding:12px}.lk-keep{display:block;margin:6px 0 14px;font-size:16px}.lk-logo{display:inline-block;background:#1f3a5f;color:#fff;font-weight:700;padding:8px 12px;font-size:22px}#lockMsg{color:#b0563a;min-height:1.4em}body.phone .pcOnly{display:none}body:not(.phone) .phoneOnly{display:none}</style>
 <script type="text/plain" id="appsrc">
 var C=window.COMMON, SITES=(window.SITES||[]).slice(), ST={sites:{},localSites:[]}, SERVER=false;
 var view="전체", cur=0, open=null, q="", filt="전체", saveT;
