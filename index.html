@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794619652130";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794619740059";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -515,18 +515,18 @@ var LG_RULES=[
  {re:/총회|대의원회|이사회/,when:"after",days:15,t:"회의 의사록 등 공개 마감",law:"도시정비법 제124조 제1항",d:"의사록 등은 작성·변경 후 15일 안에 조합원이 볼 수 있게 공개해야 합니다."}];
 function addDays(s,n){var d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return ymdD(d)}
 function lgDone(){try{return JSON.parse(localStorage.getItem("pm_lg")||"{}")}catch(e){return{}}}
-function lgMark(k){var o=lgDone();o[k]=today();try{localStorage.setItem("pm_lg",JSON.stringify(o))}catch(e){}render()}
+async function lgMark(id,i){try{await bumpPost(id,function(c){c.lg=c.lg||{};c.lg[i]={by:BD.me||"",at:today()}});toast("처리함 — 함께 쓰는 분들 화면에서도 사라집니다");render()}catch(e){toast("저장하지 못했습니다. 잠시 뒤 다시 눌러 주세요")}}
 // 앞으로 30일 · 지난 14일 안의 법정 기한
 function legalDue(site){if(!BD.ready)return[];var t=today(),lo=addDays(t,-14),hi=addDays(t,30),dn=lgDone(),out=[];
  evs().forEach(function(e){if(site&&e.site!==nm(site)&&e.site!==site.name)return;
   LG_RULES.forEach(function(r,i){if(!r.re.test(e.title))return;
    if(r.when==="before"&&e.done)return;if(r.when==="after"&&!e.done&&e.date>=t)return;
    var due=addDays(e.date,r.when==="before"?-r.days:r.days),k=e.id+"_"+i;
-   if(due<lo||due>hi||dn[k])return;out.push({k:k,due:due,t:r.t,law:r.law,d:r.d,ev:e,over:due<t})})});
+   if(due<lo||due>hi||dn[k]||(e.lg||{})[i])return;out.push({k:k,id:e.id,i:i,due:due,t:r.t,law:r.law,d:r.d,ev:e,over:due<t})})});
  return out.sort(function(a,b){return a.due<b.due?-1:1})}
 function lgRow(x){var L=dLabel(x.due);return'<div class="lgr'+(x.over?' lt':'')+'"><b>'+(x.over?"지남 · ":"")+esc(L[0]||L[1])+'</b> '+esc(x.t)+
  '<small>'+(x.ev.site?"["+esc(x.ev.site)+"] ":"")+esc(x.ev.title)+' ('+esc(dLabel(x.ev.date)[1])+')</small><small class="lgl">'+esc(x.law)+' · '+esc(x.d)+'</small>'+
- '<button class="btn sm2" onclick="lgMark(\''+x.k+'\')">처리함</button></div>'}
+ '<button class="btn sm2" onclick="lgMark(\''+x.id+'\','+x.i+')">처리함</button></div>'}
 function legalBox(site){var a=legalDue(site);if(!a.length)return"";
  return'<div class="lgbox"><div class="lgh">⚖ 법정 기한 <span>참고용 · 정관·최신 법령을 꼭 확인하세요</span></div>'+a.map(lgRow).join("")+'</div>'}
 function lgStrip(){var a=legalDue().filter(function(x){return x.due<=addDays(today(),7)});if(!a.length)return"";
