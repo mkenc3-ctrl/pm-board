@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794619082612";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794619236331";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -177,6 +177,8 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .ctg{background:var(--card);border:1px solid var(--line);margin-bottom:10px}.ctgh{display:block;width:100%;text-align:left;font:inherit;font-weight:700;padding:8px 12px;background:#eef1f5;border:none;border-bottom:1px solid var(--line);cursor:pointer;color:var(--ink)}
 .ctr{display:grid;grid-template-columns:76px 1fr auto;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px dashed var(--line)}.ctr:last-child{border-bottom:none}.ctr .pr{font-size:13px;color:var(--sub);font-weight:700;overflow-wrap:anywhere}.ctr .pn{display:flex;flex-direction:column;min-width:0}.ctr .pn small{color:var(--sub);overflow-wrap:anywhere}.ctc{padding:6px 12px;text-decoration:none}
 .chip.tk{background:#2e6b3a;color:#fff;border-color:#2e6b3a}.ev.late{border-left:4px solid #c0392b}.lt{color:#c0392b!important;font-weight:700}.res{color:#2e6b3a!important}.upn.mine{background:#e5f3ea;border-color:#7cc48a}
+.shb{background:#fee500;border-color:#e0c800;color:#3a1d1d;font-weight:700}.cta{display:flex;gap:4px}.ack .shb{padding:3px 10px;font-size:13px}.ev .ac .shb{padding:3px 8px}
+.shd{border:2px solid var(--ink);padding:14px;max-width:min(520px,92vw)}.shd textarea{width:100%;box-sizing:border-box;font:inherit;margin:8px 0}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -310,7 +312,7 @@ function bdSched(){bdInit();markSeen("event");
   '<label class="bdl">맡을 사람 <span class="sm">(비우면 그냥 일정, 이름을 넣으면 그 사람 「내 할 일」에 뜸 · 날짜가 기한)</span><input id="evW" list="evWL" placeholder="예) 김대리" autocomplete="off"><datalist id="evWL">'+people().map(function(n){return'<option value="'+esc(n)+'">'}).join("")+'</datalist></label>'+whoBox()+
   '<button class="btn p bdgo">일정 올리기</button></form>':'')+
   '<div class="bdbar">'+bellBtn()+'<span class="sm">켜 두면 다른 분이 올릴 때 소리로 알려 줍니다 (화면을 열어 둔 동안)</span></div>'+
-  '<div class="seg"><button class="'+(BD.cal?"":"on")+'" onclick="BD.cal=0;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===0)})">☰ 목록</button><button class="'+(BD.cal?"on":"")+'" onclick="BD.cal=1;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===1)})">▦ 달력</button></div>'+
+  '<div class="seg"><button class="'+(BD.cal?"":"on")+'" onclick="BD.cal=0;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===0)})">☰ 목록</button><button class="'+(BD.cal?"on":"")+'" onclick="BD.cal=1;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===1)})">▦ 달력</button></div>'+(BD.ready?'<div class="bdbar">'+shBtn("week","앞으로 7일 일정 카톡으로 보내기")+'</div>':'')+
   '<div id="bdList">'+(BD.ready?schedList():bdWait())+'</div></div>'}
 // ── 달력 (월간) ──
 function calMove(n){var p=(BD.calM||today().slice(0,7)).split("-"),d=new Date(+p[0],+p[1]-1+n,1);BD.calM=d.getFullYear()+"-"+p2(d.getMonth()+1);BD.calDay="";bdDraw()}
@@ -331,7 +333,7 @@ function people(){var n={};BD.items.forEach(function(o){if(o.by)n[o.by]=1;if(o.w
 function late(e){return e.who&&!e.done&&e.date<today()}
 function evRow(e){var a=e.date===today()?" tday":"";
  return'<div class="ev'+a+(e.done?" fin":"")+(late(e)?" late":"")+'"><span class="tm">'+esc(e.time||(e.who?"기한":"종일"))+'</span><div class="bd"><b>'+(e.who?'<span class="chip tk">할 일 · '+esc(e.who)+'</span>':'')+(e.site?'<span class="chip">'+esc(e.site)+'</span>':'')+esc(e.title)+'</b>'+(late(e)?'<small class="lt">기한 지남 ('+esc(dLabel(e.date)[1])+')</small>':'')+(e.place?'<small>'+linkify(e.place)+'</small>':'')+(e.result?'<small class="res">→ 결과: '+linkify(e.result)+'</small>':'')+(e.by?'<small>'+esc(e.by)+' 올림'+(e.doneBy?' · '+esc(e.doneBy)+' 완료':'')+'</small>':'')+'</div><div class="ac">'+
- (BD.del===e.id?'<button class="btn" onclick="delIt(\''+e.id+'\')">지우기</button><button class="btn" onclick="BD.del=\'\';bdDraw()">아니요</button>':'<button class="btn" onclick="doneEv(\''+e.id+'\')">'+(e.done?"되돌리기":"완료")+'</button><button class="btn" aria-label="지우기" onclick="BD.del=\''+e.id+'\';bdDraw()">✕</button>')+'</div></div>'}
+ (BD.del===e.id?'<button class="btn" onclick="delIt(\''+e.id+'\')">지우기</button><button class="btn" onclick="BD.del=\'\';bdDraw()">아니요</button>':shareEv(e.id)+'<button class="btn" onclick="doneEv(\''+e.id+'\')">'+(e.done?"되돌리기":"완료")+'</button><button class="btn" aria-label="지우기" onclick="BD.del=\''+e.id+'\';bdDraw()">✕</button>')+'</div></div>'}
 function evGroup(l){var g={},ks=[];l.forEach(function(e){if(!g[e.date]){g[e.date]=[];ks.push(e.date)}g[e.date].push(e)});
  return ks.map(function(k){var L=dLabel(k);return'<div class="day"><div class="dh'+(L[2]===0?" td":"")+'">'+esc(L[0]||L[1])+(L[0]?' <small>'+esc(L[1])+'</small>':'')+'</div>'+g[k].map(evRow).join("")+'</div>'}).join("")}
 function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort(function(a,b){return(a.date+(a.time||"00:00")).localeCompare(b.date+(b.time||"00:00"))})}
@@ -385,7 +387,7 @@ function sitePending(s){return BD.ready?sitePosts(s).filter(function(o){return o
 function goPre(v){BD.pre=nm(S());go(v)}
 function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().slice(0,3),ev=siteEvs(s).slice(0,3);
  return'<div class="card rec"><h3>🕘 최근 기록 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3>'+
-  '<div class="recbt"><button class="btn p" onclick="goPre(\'올리기\')">📮 이 현장에 올리기</button><button class="btn" onclick="goPre(\'일정\')">📅 일정 넣기</button></div>'+
+  '<div class="recbt"><button class="btn p" onclick="goPre(\'올리기\')">📮 이 현장에 올리기</button><button class="btn" onclick="goPre(\'일정\')">📅 일정 넣기</button>'+shBtn("site","현장 요약 카톡")+'</div>'+
   (ev.length?'<div class="rech">다가오는 일정</div>'+ev.map(function(e){var L=dLabel(e.date);return'<div class="recev"><b>'+esc(L[0]||L[1])+' '+esc(e.time||"")+'</b> '+esc(e.title)+(e.place?' <small>'+esc(e.place)+'</small>':'')+'</div>'}).join(""):'')+
   (p.length?'<div class="rech">올라온 글</div>'+p.map(postRow).join(""):'')+
   (!p.length&&!lg.length&&!ev.length?'<div class="empty">아직 기록이 없습니다. 「이 현장에 올리기」로 첫 소식을 남겨 주세요.</div>':'')+
@@ -400,7 +402,7 @@ function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.
   ((o.replies||[]).length?'<div class="rps">'+o.replies.map(function(r){return'<div class="rp"><b>'+esc(r.by||"이름 없음")+'</b> '+linkify(r.text)+' <small>'+esc(fmtAt(r.at))+'</small></div>'}).join("")+'</div>':'')+
   '<div class="ack">'+((o.seen||[]).length?'<span class="sn">👀 확인: '+o.seen.map(esc).join(", ")+'</span>':'')+
   (BD.me&&(o.seen||[]).indexOf(BD.me)<0&&o.by!==BD.me?'<button class="btn" onclick="ackPost(\''+o.id+'\')">👀 확인했어요</button>':'')+
-  '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button></div>'+
+  '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button>'+sharePost(o.id)+'</div>'+
   (BD.rp===o.id?'<form class="rpf" onsubmit="addReply(event,\''+o.id+'\')"><input id="rpT" placeholder="답글 쓰기 (예: 내일 제가 연락해 보겠습니다)" autocomplete="off"><button class="btn p">올리기</button></form>':'')+'</div>'}
 async function bumpPost(id,fn){await bdLoad();var o=itOf(id);if(!o)return;var c=strip(o);fn(c);await rpc("pm_set",{id_:id,box_:await encJ(c)});await bdLoad()}
 async function ackPost(id){if(!BD.me)return toast("올리는 사람 칸에 이름을 먼저 넣어 주세요");try{await bumpPost(id,function(c){c.seen=c.seen||[];if(c.seen.indexOf(BD.me)<0)c.seen.push(BD.me)});toast("확인 표시를 남겼습니다")}catch(e){toast("남기지 못했습니다")}}
@@ -421,8 +423,47 @@ function contacts(){var q=CQ.trim().toLowerCase();
 function ctList(){var q=CQ.trim().toLowerCase(),a=allContacts().filter(function(c){return!q||[c.site,c.role,c.name,c.person,c.phone,c.note].join(" ").toLowerCase().indexOf(q)>=0});
  if(!a.length)return'<div class="empty">'+(q?"「"+esc(CQ)+"」 들어간 연락처가 없습니다.":"아직 연락처가 없습니다.")+'</div>';
  var g={},ks=[];a.forEach(function(c){if(!g[c.site]){g[c.site]=[];ks.push(c.site)}g[c.site].push(c)});
- return ks.map(function(k){return'<div class="ctg"><button class="ctgh" onclick="pick('+g[k][0].i+')">'+esc(k)+' ›</button>'+g[k].map(function(c){var tel=(c.phone+" "+c.person+" "+c.note).match(/0\d{1,3}-\d{3,4}-\d{4}/);
-  return'<div class="ctr"><span class="pr">'+esc(c.role)+'</span><div class="pn">'+(c.name?'<b>'+esc(c.name)+'</b>':'')+'<small>'+linkify([c.person,c.phone].filter(Boolean).join(" · "))+'</small>'+(c.note?'<small>'+linkify(c.note)+'</small>':'')+'</div>'+(tel?'<a class="btn p ctc" href="tel:'+tel[0]+'">📞</a>':'')+'</div>'}).join("")+'</div>'}).join("")}
+ return ks.map(function(k){return'<div class="ctg"><button class="ctgh" onclick="pick('+g[k][0].i+')">'+esc(k)+' ›</button>'+g[k].map(function(c,ci){var tel=(c.phone+" "+c.person+" "+c.note).match(/0\d{1,3}-\d{3,4}-\d{4}/);
+  return'<div class="ctr"><span class="pr">'+esc(c.role)+'</span><div class="pn">'+(c.name?'<b>'+esc(c.name)+'</b>':'')+'<small>'+linkify([c.person,c.phone].filter(Boolean).join(" · "))+'</small>'+(c.note?'<small>'+linkify(c.note)+'</small>':'')+'</div>'+'<span class="cta">'+shareCt(g[k][0].i+"_"+ci,c)+(tel?'<a class="btn p ctc" href="tel:'+tel[0]+'">📞</a>':'')+'</span></div>'}).join("")+'</div>'}).join("")}
+// ── 카톡으로 보내기 (폰: 공유 창 → 카카오톡 / PC: 복사 → 카톡에 붙여넣기) ──
+var SHR={};
+function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+ return new Promise(function(ok,no){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy")?ok():no()}catch(e){no(e)}a.remove()})}
+async function sendOut(t,files){
+ var mob=/Android|iPhone|iPad/i.test(navigator.userAgent);
+ if(mob&&navigator.share){try{var d={text:t};if(files&&files.length&&navigator.canShare&&navigator.canShare({files:files}))d.files=files;await navigator.share(d);return}catch(e){if(e&&e.name==="AbortError")return}}
+ try{await copyText(t);toast("복사했습니다 — 카톡 대화창에 길게 눌러 붙여넣기")}catch(e){shareBox(t)}}
+// 복사가 막힌 환경: 글을 띄워서 직접 길게 눌러 복사
+function shareBox(t){var d=$("shareDlg");if(!d){d=document.createElement("dialog");d.id="shareDlg";d.className="shd";document.body.appendChild(d)}
+ d.innerHTML='<p><b>아래 글을 길게 눌러 복사한 뒤 카톡에 붙여넣으세요</b></p><textarea readonly rows="10"></textarea><button class="btn p" onclick="this.closest(\'dialog\').close()">닫기</button>';d.querySelector("textarea").value=t;d.showModal();d.querySelector("textarea").select()}
+function shBtn(key,label){return'<button class="btn shb" onclick="shareKey(\''+key+'\')" title="카톡으로 보내기">📤'+(label?" "+label:"")+'</button>'}
+async function shareKey(k){var f=SHR[k];if(!f)return;var r=await f();sendOut(r.t,r.files)}
+function dLine(e){var L=dLabel(e.date);return L[1]+(e.time?" "+e.time:"")}
+// 글 하나
+function postText(o){var st=o.site||(o.note&&o.note.indexOf(" → ")>0?o.note.split(" → ")[0]:"현장 미정");return"[PM업무관리] "+st+"\n"+fmtAt(o.at)+(o.by?" "+o.by:"")+"\n"+(o.text||"(사진)")+((o.photos||[]).length?"\n(사진 "+o.photos.length+"장)":"")+(o.note?"\n→ "+o.note:"")+((o.replies||[]).length?"\n"+o.replies.map(function(r){return"└ "+(r.by||"")+": "+r.text}).join("\n"):"")}
+function sharePost(id){SHR["p"+id]=async function(){var o=itOf(id),fs=[];if(!o)return{t:""};
+  for(var i=0;i<(o.photos||[]).length;i++){try{var u=await getPh(o.photos[i]);if(u){var b=await fetch(u).then(function(r){return r.blob()});fs.push(new File([b],"사진"+(i+1)+".jpg",{type:"image/jpeg"}))}}catch(e){}}
+  return{t:postText(o),files:fs}};return shBtn("p"+id,"카톡")}
+// 일정 하나
+function evText(e){return"[일정] "+dLine(e)+"\n"+(e.site?"["+e.site+"] ":"")+e.title+(e.place?"\n장소: "+e.place:"")+(e.who?"\n담당: "+e.who+" (기한 "+dLabel(e.date)[1]+")":"")+(e.result?"\n결과: "+e.result:"")}
+function shareEv(id){SHR["e"+id]=async function(){var e=itOf(id);return{t:e?evText(e):""}};return shBtn("e"+id,"")}
+// 앞으로 7일 일정 묶음
+function weekText(){var t=today(),end=new Date(t+"T00:00:00");end.setDate(end.getDate()+7);var e7=end.getFullYear()+"-"+p2(end.getMonth()+1)+"-"+p2(end.getDate());
+ var a=evs().filter(function(e){return!e.done&&((e.date>=t&&e.date<=e7)||late(e))});
+ if(!a.length)return"[PM업무관리] 앞으로 7일 일정 없음";
+ var g={},ks=[];a.forEach(function(e){var k=late(e)?"기한 지남":dLabel(e.date)[1];if(!g[k]){g[k]=[];ks.push(k)}g[k].push(e)});
+ return"[PM업무관리] 앞으로 7일 일정\n"+ks.map(function(k){return"\n■ "+k+"\n"+g[k].map(function(e){return"- "+(e.time?e.time+" ":"")+(e.site?"["+e.site+"] ":"")+e.title+(e.who?" (담당 "+e.who+")":"")}).join("\n")}).join("\n")}
+SHR.week=async function(){return{t:weekText()}};
+// 연락처 하나
+function shareCt(k,c){SHR["c"+k]=async function(){return{t:"["+c.site+"] "+c.role+"\n"+[c.name,c.person,c.phone].filter(Boolean).join(" ")+(c.note?"\n"+c.note:"")}};return shBtn("c"+k,"")}
+// 현장 요약
+function siteText(s){var st=stOf(s),lines=["[PM업무관리] "+nm(s)];
+ if(st)lines.push(st.no+"단계 · "+st.title);if(s.status)lines.push(s.status);
+ var ev=siteEvs(s).slice(0,3);if(ev.length)lines.push("\n■ 다가오는 일정\n"+ev.map(function(e){return"- "+dLine(e)+" "+e.title}).join("\n"));
+ var lg=mergedLog().slice(0,3);if(lg.length)lines.push("\n■ 최근 작업\n"+lg.map(function(l){return"- "+(l.date||"").slice(5).replace("-","/")+" "+l.text}).join("\n"));
+ var key=(s.info||[]).filter(function(r){return/조합장|위원장|사무실/.test(r[0])&&!/확인 필요/.test(r[1])});if(key.length)lines.push("\n■ 연락처\n"+key.map(function(r){return"- "+r[0]+": "+r[1]}).join("\n"));
+ return lines.join("\n")}
+SHR.site=async function(){return{t:siteText(S())}};
 // ── 화면 ──
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
