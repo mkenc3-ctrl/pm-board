@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794619517373";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794619652130";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -182,6 +182,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .seg3{max-width:260px}.rep{background:#fff;border:1px solid var(--line);padding:18px 20px;color:#111}.rep header{border-bottom:2px solid #111;margin-bottom:10px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}.rep h1{font-family:"MaruBuri",serif;font-size:22px;margin:0}
 .rep section{margin:12px 0;break-inside:avoid}.rep h2{font-size:17px;margin:0 0 4px;border-left:5px solid var(--acc);padding-left:8px}.rep h2 small{font-weight:400;color:#555;font-size:13px}.rep h3{font-size:14px;margin:8px 0 2px;color:#444}.rep ul{margin:0;padding-left:18px}.rep li{font-size:14px;line-height:1.55;overflow-wrap:anywhere}.rep li.lt{color:#c0392b}
 @media print{body{padding:0!important;background:#fff}body *{visibility:hidden}#rep,#rep *{visibility:visible}#rep{position:absolute;left:0;top:0;width:100%;border:none;padding:0}.noprint{display:none}@page{size:A4;margin:15mm}}
+.lgbox{border:2px solid #b8860b;background:#fffaf0;padding:8px 10px;margin:8px 0}.lgh{font-weight:700;margin-bottom:4px}.lgh span{font-weight:400;font-size:12px;color:#7a5b00;margin-left:6px}.lgr{border-top:1px dashed #e0c98a;padding:6px 0;position:relative;padding-right:64px}.lgr small{display:block;color:#555}.lgr .lgl{font-size:12px;color:#7a5b00}.lgr.lt b{color:#c0392b}.lgr .sm2{position:absolute;right:0;top:6px;padding:4px 8px;font-size:13px}.upn.lg{border-color:#b8860b;background:#fffaf0}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -342,10 +343,10 @@ function evGroup(l){var g={},ks=[];l.forEach(function(e){if(!g[e.date]){g[e.date
 function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort(function(a,b){return(a.date+(a.time||"00:00")).localeCompare(b.date+(b.time||"00:00"))})}
 function schedList(){if(BD.cal)return calView();var a=evs(),t=today(),up=a.filter(function(e){return e.date>=t||late(e)}),past=a.filter(function(e){return e.date<t&&!late(e)});
  if(!a.length)return'<div class="empty">아직 일정이 없습니다. 위에 날짜와 할 일을 넣고 「일정 올리기」를 누르면 함께 쓰는 분들 화면에 보입니다.</div>';
- return(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
+ return legalBox()+(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
 function myTasks(){return BD.me?evs().filter(function(e){return e.who===BD.me&&!e.done}):[]}
 function upStrip(){if(!BD.ready)return"";var t=today(),a=evs().filter(function(e){return e.date>=t&&!e.done}).slice(0,3),m=myTasks();
- return(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+
+ return lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+
  (a.length?'<button class="upn" onclick="go(\'일정\')"><b>📅 다가오는 일정</b>'+a.map(function(e){var L=dLabel(e.date);return'<span>'+esc(L[0]||L[1])+' '+esc(e.time||"")+' · '+esc(e.title)+'</span>'}).join("")+'</button>':"")}
 async function addEv(ev){ev.preventDefault();var d=$("evD").value,n=$("evN").value.trim(),w=($("evW").value||"").trim();if(!d||!n)return toast("날짜와 할 일을 넣어 주세요");
  try{await rpc("pm_add",{kind_:"event",box_:await encJ({date:d,time:$("evT").value,site:$("evS").value,title:n,place:$("evP").value.trim(),who:w,by:BD.me,at:new Date().toISOString(),done:false})});
@@ -390,7 +391,7 @@ function sitePending(s){return BD.ready?sitePosts(s).filter(function(o){return o
 function goPre(v){BD.pre=nm(S());go(v)}
 function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().slice(0,3),ev=siteEvs(s).slice(0,3);
  return'<div class="card rec"><h3>🕘 최근 기록 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3>'+
-  '<div class="recbt"><button class="btn p" onclick="goPre(\'올리기\')">📮 이 현장에 올리기</button><button class="btn" onclick="goPre(\'일정\')">📅 일정 넣기</button>'+shBtn("site","현장 요약 카톡")+'</div>'+
+  '<div class="recbt"><button class="btn p" onclick="goPre(\'올리기\')">📮 이 현장에 올리기</button><button class="btn" onclick="goPre(\'일정\')">📅 일정 넣기</button>'+shBtn("site","현장 요약 카톡")+'</div>'+legalBox(s)+
   (ev.length?'<div class="rech">다가오는 일정</div>'+ev.map(function(e){var L=dLabel(e.date);return'<div class="recev"><b>'+esc(L[0]||L[1])+' '+esc(e.time||"")+'</b> '+esc(e.title)+(e.place?' <small>'+esc(e.place)+'</small>':'')+'</div>'}).join(""):'')+
   (p.length?'<div class="rech">올라온 글</div>'+p.map(postRow).join(""):'')+
   (!p.length&&!lg.length&&!ev.length?'<div class="empty">아직 기록이 없습니다. 「이 현장에 올리기」로 첫 소식을 남겨 주세요.</div>':'')+
@@ -508,6 +509,28 @@ function repText(){var D=repData(RW),r=D.r,L=["[주간 업무 보고] "+md(r[0])
  if(D.com.length)L.push("\n■ 공통\n"+D.com.map(function(e){return"- "+md(e.date)+" "+e.title}).join("\n"));
  if(L.length===1)L.push("기록 없음");return L.join("\n")}
 SHR.rep=async function(){return{t:repText()}};
+// ── 법정 기한 알림 (참고) — 일정에서 자동 계산. 조항은 확실한 것만 ──
+var LG_RULES=[
+ {re:/총회/,when:"before",days:7,t:"총회 소집 통지 마감",law:"도시정비법 제44조",d:"총회 7일 전까지 조합원에게 목적·안건·일시·장소와 서면결의 기간·장소를 알려야 합니다."},
+ {re:/총회|대의원회|이사회/,when:"after",days:15,t:"회의 의사록 등 공개 마감",law:"도시정비법 제124조 제1항",d:"의사록 등은 작성·변경 후 15일 안에 조합원이 볼 수 있게 공개해야 합니다."}];
+function addDays(s,n){var d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return ymdD(d)}
+function lgDone(){try{return JSON.parse(localStorage.getItem("pm_lg")||"{}")}catch(e){return{}}}
+function lgMark(k){var o=lgDone();o[k]=today();try{localStorage.setItem("pm_lg",JSON.stringify(o))}catch(e){}render()}
+// 앞으로 30일 · 지난 14일 안의 법정 기한
+function legalDue(site){if(!BD.ready)return[];var t=today(),lo=addDays(t,-14),hi=addDays(t,30),dn=lgDone(),out=[];
+ evs().forEach(function(e){if(site&&e.site!==nm(site)&&e.site!==site.name)return;
+  LG_RULES.forEach(function(r,i){if(!r.re.test(e.title))return;
+   if(r.when==="before"&&e.done)return;if(r.when==="after"&&!e.done&&e.date>=t)return;
+   var due=addDays(e.date,r.when==="before"?-r.days:r.days),k=e.id+"_"+i;
+   if(due<lo||due>hi||dn[k])return;out.push({k:k,due:due,t:r.t,law:r.law,d:r.d,ev:e,over:due<t})})});
+ return out.sort(function(a,b){return a.due<b.due?-1:1})}
+function lgRow(x){var L=dLabel(x.due);return'<div class="lgr'+(x.over?' lt':'')+'"><b>'+(x.over?"지남 · ":"")+esc(L[0]||L[1])+'</b> '+esc(x.t)+
+ '<small>'+(x.ev.site?"["+esc(x.ev.site)+"] ":"")+esc(x.ev.title)+' ('+esc(dLabel(x.ev.date)[1])+')</small><small class="lgl">'+esc(x.law)+' · '+esc(x.d)+'</small>'+
+ '<button class="btn sm2" onclick="lgMark(\''+x.k+'\')">처리함</button></div>'}
+function legalBox(site){var a=legalDue(site);if(!a.length)return"";
+ return'<div class="lgbox"><div class="lgh">⚖ 법정 기한 <span>참고용 · 정관·최신 법령을 꼭 확인하세요</span></div>'+a.map(lgRow).join("")+'</div>'}
+function lgStrip(){var a=legalDue().filter(function(x){return x.due<=addDays(today(),7)});if(!a.length)return"";
+ return'<button class="upn lg" onclick="go(\'일정\')"><b>⚖ 법정 기한 '+a.length+'</b>'+a.slice(0,3).map(function(x){var L=dLabel(x.due);return'<span'+(x.over?' class="lt"':'')+'>'+(x.over?"지남 · ":esc(L[0]||L[1])+" · ")+esc(x.t)+(x.ev.site?" ["+esc(x.ev.site)+"]":"")+'</span>'}).join("")+'</button>'}
 // ── 화면 ──
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
