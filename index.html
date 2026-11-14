@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794618743860";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794618954696";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -168,6 +168,12 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .ack{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.ack .btn{padding:3px 10px;font-size:13px}.sn{font-size:13px;color:var(--acc);font-weight:700}
 .rps{border-left:3px solid var(--line);padding-left:8px;display:flex;flex-direction:column;gap:3px}.rp{font-size:14px;overflow-wrap:anywhere}.rp small{color:var(--sub)}.rpf{display:flex;gap:6px;margin-top:4px}.rpf input{flex:1;min-width:0;font:inherit;padding:8px;border:1px solid var(--line)}
 .recbt{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}.recev{font-size:14.5px;padding:4px 0;border-bottom:1px dashed var(--line)}.recev small{color:var(--sub)}.ovi .f .nw{background:#c0392b;color:#fff;font-weight:700;padding:0 6px}.ovi .f .ne{color:var(--acc);font-weight:700}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);max-width:320px}.seg button{font:inherit;font-weight:700;padding:8px;border:none;background:#fff;cursor:pointer}.seg button.on{background:var(--ink);color:#fff}
+.cal{background:var(--card);border:1px solid var(--line);padding:8px}.calh{display:flex;align-items:center;gap:6px;margin-bottom:6px}.calh b{font-size:17px;margin:0 6px}.calh .btn:last-child{margin-left:auto}
+.calg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}.cw{text-align:center;font-size:12px;font-weight:700;color:var(--sub)}.su{color:#c0392b!important}.sa{color:#2f5d9b!important}
+.cd{min-height:64px;display:flex;flex-direction:column;align-items:stretch;gap:1px;padding:2px;border:1px solid var(--line);background:#fff;font:inherit;cursor:pointer;text-align:left;min-width:0;color:var(--ink)}.cd .n{font-size:13px;font-weight:700}.cd i{font-style:normal;font-size:11px;line-height:1.3;background:#e8eef5;color:var(--acc);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 2px}.cd i.fin{opacity:.5;text-decoration:line-through}.cd i.more{background:none;color:var(--sub)}
+.cd.td{background:#fff4d6}.cd.sel{outline:3px solid var(--acc);outline-offset:-2px}
+.pq{font:inherit;padding:9px;border:1px solid var(--line);width:100%;box-sizing:border-box;background:#fff}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -300,14 +306,30 @@ function bdSched(){bdInit();markSeen("event");
   '<label class="bdl">장소 · 메모<input id="evP" placeholder="예) 조합 사무실 2층"></label>'+whoBox()+
   '<button class="btn p bdgo">일정 올리기</button></form>':'')+
   '<div class="bdbar">'+bellBtn()+'<span class="sm">켜 두면 다른 분이 올릴 때 소리로 알려 줍니다 (화면을 열어 둔 동안)</span></div>'+
+  '<div class="seg"><button class="'+(BD.cal?"":"on")+'" onclick="BD.cal=0;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===0)})">☰ 목록</button><button class="'+(BD.cal?"on":"")+'" onclick="BD.cal=1;bdDraw();this.parentNode.querySelectorAll(\'button\').forEach(function(b,i){b.classList.toggle(\'on\',i===1)})">▦ 달력</button></div>'+
   '<div id="bdList">'+(BD.ready?schedList():bdWait())+'</div></div>'}
+// ── 달력 (월간) ──
+function calMove(n){var p=(BD.calM||today().slice(0,7)).split("-"),d=new Date(+p[0],+p[1]-1+n,1);BD.calM=d.getFullYear()+"-"+p2(d.getMonth()+1);BD.calDay="";bdDraw()}
+function calPick(ds){BD.calDay=BD.calDay===ds?"":ds;var f=$("evD");if(f&&BD.calDay)f.value=ds;bdDraw()}
+function calView(){var m=BD.calM||today().slice(0,7),p=m.split("-"),y=+p[0],mo=+p[1]-1,first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate(),t=today(),by={};
+ evs().forEach(function(e){if(e.date.slice(0,7)===m)(by[e.date]=by[e.date]||[]).push(e)});
+ var h='<div class="cal"><div class="calh"><button class="btn" onclick="calMove(-1)" aria-label="지난달">‹</button><b>'+y+'년 '+(mo+1)+'월</b><button class="btn" onclick="calMove(1)" aria-label="다음달">›</button><button class="btn" onclick="BD.calM=\'\';BD.calDay=\'\';bdDraw()">오늘</button></div><div class="calg">'+
+  "일월화수목금토".split("").map(function(w,i){return'<span class="cw'+(i===0?" su":i===6?" sa":"")+'">'+w+'</span>'}).join("");
+ for(var i=0;i<first;i++)h+='<span></span>';
+ for(var d=1;d<=days;d++){var ds=m+"-"+p2(d),l=by[ds]||[],wd=(first+d-1)%7;
+  h+='<button class="cd'+(ds===t?" td":"")+(ds===BD.calDay?" sel":"")+(wd===0?" su":wd===6?" sa":"")+'" onclick="calPick(\''+ds+'\')"><span class="n">'+d+'</span>'+l.slice(0,2).map(function(e){return'<i class="'+(e.done?"fin":"")+'">'+esc(e.title)+'</i>'}).join("")+(l.length>2?'<i class="more">+'+(l.length-2)+'</i>':'')+'</button>'}
+ h+='</div></div>';
+ var sel=BD.calDay?(by[BD.calDay]||[]):null;
+ if(sel)h+='<div class="day"><div class="dh">'+esc(dLabel(BD.calDay)[1])+'</div>'+(sel.length?sel.map(evRow).join(""):'<div class="empty">이날 일정이 없습니다. 위 칸에 날짜가 들어갔으니 할 일만 적어 올리면 됩니다.</div>')+'</div>';
+ else h+='<p class="sm">날짜를 누르면 그날 일정이 보이고, 위 입력 칸 날짜도 그날로 바뀝니다.</p>';
+ return h}
 function evRow(e){var a=e.date===today()?" tday":"";
  return'<div class="ev'+a+(e.done?" fin":"")+'"><span class="tm">'+esc(e.time||"종일")+'</span><div class="bd"><b>'+(e.site?'<span class="chip">'+esc(e.site)+'</span>':'')+esc(e.title)+'</b>'+(e.place?'<small>'+linkify(e.place)+'</small>':'')+(e.by?'<small>'+esc(e.by)+' 올림</small>':'')+'</div><div class="ac">'+
  (BD.del===e.id?'<button class="btn" onclick="delIt(\''+e.id+'\')">지우기</button><button class="btn" onclick="BD.del=\'\';bdDraw()">아니요</button>':'<button class="btn" onclick="doneEv(\''+e.id+'\')">'+(e.done?"되돌리기":"완료")+'</button><button class="btn" aria-label="지우기" onclick="BD.del=\''+e.id+'\';bdDraw()">✕</button>')+'</div></div>'}
 function evGroup(l){var g={},ks=[];l.forEach(function(e){if(!g[e.date]){g[e.date]=[];ks.push(e.date)}g[e.date].push(e)});
  return ks.map(function(k){var L=dLabel(k);return'<div class="day"><div class="dh'+(L[2]===0?" td":"")+'">'+esc(L[0]||L[1])+(L[0]?' <small>'+esc(L[1])+'</small>':'')+'</div>'+g[k].map(evRow).join("")+'</div>'}).join("")}
 function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort(function(a,b){return(a.date+(a.time||"00:00")).localeCompare(b.date+(b.time||"00:00"))})}
-function schedList(){var a=evs(),t=today(),up=a.filter(function(e){return e.date>=t}),past=a.filter(function(e){return e.date<t});
+function schedList(){if(BD.cal)return calView();var a=evs(),t=today(),up=a.filter(function(e){return e.date>=t}),past=a.filter(function(e){return e.date<t});
  if(!a.length)return'<div class="empty">아직 일정이 없습니다. 위에 날짜와 할 일을 넣고 「일정 올리기」를 누르면 함께 쓰는 분들 화면에 보입니다.</div>';
  return(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
 function upStrip(){if(!BD.ready)return"";var t=today(),a=evs().filter(function(e){return e.date>=t&&!e.done}).slice(0,3);
@@ -328,7 +350,7 @@ function bdPost(){bdInit();markSeen("post");
   '<label class="bdl">내용<textarea id="poT" rows="5" placeholder="예) 11/14 밀양 조합장 통화 — 시공사 선정총회 1월 말 희망, 견적서 다음 주까지"></textarea></label>'+
   '<div class="bdl">사진 (5장까지)<label class="btn bdph" for="poF">📷 사진 찍기 · 고르기</label><input type="file" id="poF" accept="image/*" multiple hidden onchange="addPics(this)"><div class="thumbs" id="poP">'+picList()+'</div></div>'+whoBox()+
   '<button class="btn p bdgo" id="poGo">올리기</button></form>':'')+
- '<div class="bdbar">'+bellBtn()+'</div><h3 class="bdh3">올린 내용</h3><div id="bdList">'+(BD.ready?postList():bdWait())+'</div></div>'}
+ '<div class="bdbar">'+bellBtn()+'</div><h3 class="bdh3">올린 내용</h3><input class="pq" id="pq" type="search" placeholder="🔍 찾기 (예: 조합장, 견적, 온천)" value="'+esc(BD.q||"")+'" oninput="BD.q=this.value;bdDraw()"><div id="bdList">'+(BD.ready?postList():bdWait())+'</div></div>'}
 function picList(){return BD.pics.map(function(p,i){return'<div class="th"><img src="'+p.url+'" alt="붙인 사진 '+(i+1)+'"><button type="button" aria-label="사진 빼기" onclick="BD.pics.splice('+i+',1);$(\'poP\').innerHTML=picList()">✕</button></div>'}).join("")}
 function shrink(f){return new Promise(function(ok){var im=new Image(),u=URL.createObjectURL(f);im.onload=function(){var r=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement("canvas");c.width=Math.round(im.naturalWidth*r);c.height=Math.round(im.naturalHeight*r);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){ok(b)},"image/jpeg",.8)};im.onerror=function(){URL.revokeObjectURL(u);ok(null)};im.src=u})}
 async function addPics(inp){var fl=[].slice.call(inp.files||[]);inp.value="";for(var i=0;i<fl.length&&BD.pics.length<5;i++){var b=await shrink(fl[i]);if(b)BD.pics.push({blob:b,url:URL.createObjectURL(b)})}$("poP").innerHTML=picList();if(fl.length>5)toast("사진은 5장까지 붙입니다")}
@@ -340,8 +362,10 @@ async function addPost(ev){ev.preventDefault();var s=$("poS").value,t=$("poT").v
   await rpc("pm_add",{kind_:"post",box_:await encJ({site:s,text:t,photos:ids,by:BD.me,at:new Date().toISOString(),status:"대기",note:""})});
   BD.pics=[];toast("올렸습니다");render();bdLoad()}catch(e){g.disabled=false;g.textContent="올리기";toast("올리지 못했습니다 — 인터넷 연결 확인")}}
 function fmtAt(s){var d=new Date(s);return(d.getMonth()+1)+"/"+d.getDate()+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
-function postList(){var a=BD.items.filter(function(o){return o.kind==="post"});
+function postList(){var a=BD.items.filter(function(o){return o.kind==="post"}),q=(BD.q||"").trim().toLowerCase();
  if(!a.length)return'<div class="empty">아직 올린 내용이 없습니다.</div>';
+ if(q){a=a.filter(function(o){return[o.site,o.text,o.by,o.note].concat((o.replies||[]).map(function(r){return r.by+" "+r.text})).join(" ").toLowerCase().indexOf(q)>=0});
+  if(!a.length)return'<div class="empty">「'+esc(BD.q)+'」 들어간 글이 없습니다.</div>'}
  return a.map(postRow).join("")}
 // 이 현장에 올라온 글 (현장 이름이 같거나, 반영 메모에 현장 이름이 들어간 것)
 function sitePosts(s){var n1=nm(s),n2=s.name;return BD.items.filter(function(o){return o.kind==="post"&&(o.site===n1||o.site===n2||(o.note||"").indexOf(n2)===0)})}
