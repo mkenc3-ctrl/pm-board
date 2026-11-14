@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794618016964";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794618429796";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -164,6 +164,9 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .upn{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;width:100%;text-align:left;font:inherit;background:#fff4d6;border:1px solid #e6c46a;padding:8px 12px;margin:0 0 12px;cursor:pointer;color:inherit}.upn span{font-size:14px}
 @media(max-width:780px){.bd2{grid-template-columns:1fr}}
 .tool{position:relative}.nbadge{position:absolute;top:4px;right:6px;background:#c0392b;color:#fff;font-style:normal;font-weight:700;font-size:13px;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:11px;padding:0 5px}
+.rec h3{display:flex;align-items:center;gap:8px}.rec .more{margin-left:auto}.rech{font-weight:700;color:var(--sub);font-size:13px;margin:8px 0 4px}.rec .it{margin-bottom:6px}.ovrec{margin:0 0 12px}
+.ack{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.ack .btn{padding:3px 10px;font-size:13px}.sn{font-size:13px;color:var(--acc);font-weight:700}
+.rps{border-left:3px solid var(--line);padding-left:8px;display:flex;flex-direction:column;gap:3px}.rp{font-size:14px;overflow-wrap:anywhere}.rp small{color:var(--sub)}.rpf{display:flex;gap:6px;margin-top:4px}.rpf input{flex:1;min-width:0;font:inherit;padding:8px;border:1px solid var(--line)}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -273,7 +276,7 @@ function lastSeen(k){try{return localStorage.getItem("pm_seen_"+k)||""}catch(e){
 function markSeen(k){try{localStorage.setItem("pm_seen_"+k,new Date().toISOString())}catch(e){}}
 function newCnt(kind){var t=lastSeen(kind);return BD.items.filter(function(o){return o.kind===kind&&o.by!==BD.me&&(!t||o.at>t)}).length}
 function badge(kind){var n=BD.ready&&lastSeen(kind)?newCnt(kind):0;return n?'<i class="nbadge">'+n+'</i>':""}
-function bdDraw(){document.querySelectorAll("[data-bd]").forEach(function(e){e.innerHTML=badge(e.dataset.bd)});var l=$("bdList");if(l)l.innerHTML=view==="일정"?schedList():postList();var u=$("bdUp");if(u)u.innerHTML=upStrip();bdThumbs()}
+function bdDraw(){var ae=document.activeElement;if(ae&&ae.id==="rpT"&&ae.value)return;document.querySelectorAll("[data-bd]").forEach(function(e){e.innerHTML=badge(e.dataset.bd)});var l=$("bdList");if(l)l.innerHTML=view==="일정"?schedList():postList();var u=$("bdUp");if(u)u.innerHTML=upStrip();var rb=$("recBox");if(rb)rb.innerHTML=recentIn(S());var ra=$("recAll");if(ra)ra.innerHTML=recentAllIn();bdThumbs()}
 // 소리 알림 (화면을 열어 둔 동안)
 function bdBeep(){try{BD.ac=BD.ac||new(window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(function(t,i){var o=BD.ac.createOscillator(),g=BD.ac.createGain();o.frequency.value=i?1046:784;o.connect(g);g.connect(BD.ac.destination);g.gain.setValueAtTime(.2,BD.ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,BD.ac.currentTime+t+.16);o.start(BD.ac.currentTime+t);o.stop(BD.ac.currentTime+t+.17)})}catch(e){}}
 function bdSay(t){try{var u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -338,9 +341,31 @@ async function addPost(ev){ev.preventDefault();var s=$("poS").value,t=$("poT").v
 function fmtAt(s){var d=new Date(s);return(d.getMonth()+1)+"/"+d.getDate()+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
 function postList(){var a=BD.items.filter(function(o){return o.kind==="post"});
  if(!a.length)return'<div class="empty">아직 올린 내용이 없습니다.</div>';
- return a.map(function(o){var ok=o.status==="반영";return'<div class="it'+(ok?" ok":"")+'"><div class="m"><b>'+(ok?"반영됨":"대기")+'</b><span>'+esc(fmtAt(o.at))+'</span><span>'+esc(o.site||"현장 모름")+'</span><span>'+esc(o.by||"")+'</span></div>'+
+ return a.map(postRow).join("")}
+// 이 현장에 올라온 글 (현장 이름이 같거나, 반영 메모에 현장 이름이 들어간 것)
+function sitePosts(s){var n1=nm(s),n2=s.name;return BD.items.filter(function(o){return o.kind==="post"&&(o.site===n1||o.site===n2||(o.note||"").indexOf(n2)===0)})}
+function recentCard(s){return'<div id="recBox">'+recentIn(s)+'</div>'}
+function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().slice(0,3);
+ if(!p.length&&!lg.length)return"";
+ return'<div class="card rec"><h3>🕘 최근 기록 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3>'+
+  (p.length?'<div class="rech">올라온 글</div>'+p.map(postRow).join(""):'')+
+  (lg.length?'<div class="rech">작업 기록</div><div class="log">'+lg.map(logRow).join("")+'</div>':'')+'</div>'}
+// 첫 화면: 모든 현장 최근 올라온 글
+function recentAll(){return'<div id="recAll">'+recentAllIn()+'</div>'}
+function recentAllIn(){if(!BD.ready)return"";var a=BD.items.filter(function(o){return o.kind==="post"}).slice(0,4);if(!a.length)return"";
+ return'<div class="card rec ovrec"><h3>🕘 최근 올라온 글 <button class="more" onclick="go(\'올리기\')">전체 ›</button></h3>'+a.map(postRow).join("")+'</div>'}
+function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.indexOf(" → ")>0?o.note.split(" → ")[0]:"현장 모름");return'<div class="it'+(ok?" ok":"")+'"><div class="m"><b>'+(ok?"반영됨":"대기")+'</b><span>'+esc(fmtAt(o.at))+'</span><span>'+esc(site)+'</span><span>'+esc(o.by||"")+'</span></div>'+
   (o.text?'<div class="t">'+linkify(o.text).replace(/\n/g,"<br>")+'</div>':'')+((o.photos||[]).length?'<div class="thumbs">'+o.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+
-  (o.note?'<div class="n">→ '+esc(o.note)+'</div>':'')+'</div>'}).join("")}
+  (o.note?'<div class="n">→ '+esc(o.note)+'</div>':'')+
+  ((o.replies||[]).length?'<div class="rps">'+o.replies.map(function(r){return'<div class="rp"><b>'+esc(r.by||"이름 없음")+'</b> '+linkify(r.text)+' <small>'+esc(fmtAt(r.at))+'</small></div>'}).join("")+'</div>':'')+
+  '<div class="ack">'+((o.seen||[]).length?'<span class="sn">👀 확인: '+o.seen.map(esc).join(", ")+'</span>':'')+
+  (BD.me&&(o.seen||[]).indexOf(BD.me)<0&&o.by!==BD.me?'<button class="btn" onclick="ackPost(\''+o.id+'\')">👀 확인했어요</button>':'')+
+  '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button></div>'+
+  (BD.rp===o.id?'<form class="rpf" onsubmit="addReply(event,\''+o.id+'\')"><input id="rpT" placeholder="답글 쓰기 (예: 내일 제가 연락해 보겠습니다)" autocomplete="off"><button class="btn p">올리기</button></form>':'')+'</div>'}
+async function bumpPost(id,fn){await bdLoad();var o=itOf(id);if(!o)return;var c=strip(o);fn(c);await rpc("pm_set",{id_:id,box_:await encJ(c)});await bdLoad()}
+async function ackPost(id){if(!BD.me)return toast("올리는 사람 칸에 이름을 먼저 넣어 주세요");try{await bumpPost(id,function(c){c.seen=c.seen||[];if(c.seen.indexOf(BD.me)<0)c.seen.push(BD.me)});toast("확인 표시를 남겼습니다")}catch(e){toast("남기지 못했습니다")}}
+async function addReply(ev,id){ev.preventDefault();var t=($("rpT").value||"").trim();if(!t)return;if(!BD.me)return toast("올리는 사람 칸에 이름을 먼저 넣어 주세요");
+ try{BD.rp="";await bumpPost(id,function(c){c.replies=c.replies||[];c.replies.push({by:BD.me,text:t,at:new Date().toISOString()})});toast("답글을 올렸습니다")}catch(e){toast("올리지 못했습니다")}}
 async function getPh(id){if(BD.img[id])return BD.img[id];var b=await rpc("pm_file_get",{id_:id});if(!b)return"";BD.img[id]=URL.createObjectURL(new Blob([await unseal(b)],{type:"image/jpeg"}));return BD.img[id]}
 function bdThumbs(){document.querySelectorAll("a.th[data-ph]").forEach(function(a){if(a.firstChild)return;getPh(a.dataset.ph).then(function(u){if(u&&!a.firstChild)a.innerHTML='<img src="'+u+'" alt="올린 사진">'}).catch(function(){})})}
 function showPh(a){getPh(a.dataset.ph).then(function(u){if(u)window.open(u,"_blank")})}
@@ -391,7 +416,7 @@ var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",
 function isSite(s){var c=catOf(s);return c==="정비사업 현장"||c==="보관 현장"||c==="총회대행"}
 function sido(s){if(!isSite(s))return null;var t=(s.region||"")+" "+(s.place||"");for(var i=0;i<SIDO.length;i++)if(SIDO[i][1].test(t))return SIDO[i];return null}
 var rf="";
-function overview(){bdInit();var h=toolbar()+'<div id="bdUp">'+upStrip()+'</div>';
+function overview(){bdInit();var h=toolbar()+'<div id="bdUp">'+upStrip()+'</div>'+recentAll();
  var cnt={};SITES.forEach(function(s){var d=sido(s);if(d&&catOf(s)==="정비사업 현장")cnt[d[0]]=(cnt[d[0]]||0)+1});
  h+='<div class="rlg"><button class="'+(rf?"":"on")+'" onclick="rf=\'\';render()">전체 지역</button>'+SIDO.filter(function(d){return cnt[d[0]]}).map(function(d){return'<button class="'+(rf===d[0]?"on":"")+'" style="--rc:'+d[2]+'" onclick="rf=\''+d[0]+'\';render()"><i></i>'+d[0]+' '+cnt[d[0]]+'</button>'}).join("")+'</div>';
  CATS.forEach(function(c){var list=SITES.map(function(s,i){return[s,i]}).filter(function(x){if(catOf(x[0])!==c)return false;if(!rf)return true;var d=sido(x[0]);return d&&d[0]===rf});if(!list.length)return;
@@ -420,8 +445,6 @@ function fold(icon,title,sum,body,more){return'<details class="card fold"><summa
 function finList(rv){return rv.map(function(r){return'<div class="fin1"><b>'+esc(r.topic)+'</b><span>'+esc(r.final)+'</span>'+((r.open||[]).length?'<em>확인 필요 '+r.open.length+'건</em>':'')+'</div>'}).join("")}
 function homeRest(s){var h=partnersFold(s)+fold("🗂","문서함",boxSum(s),boxBody(s),boxBtn(s)),rv=s.revisions||[],opn=0;rv.forEach(function(r){opn+=(r.open||[]).length});
  if(rv.length)h+=fold("◎","최종 결과",rv.length+'건'+(opn?' · <em class="w">확인 필요 '+opn+'</em>':''),finList(rv),'<button class="more" onclick="go(\'결과\')">수정 이력 보기 ›</button>');
- var lg=mergedLog();
- if(lg.length)h+=fold("✎","최근 작업",esc((lg[0].date||"").slice(5)+" "+(lg[0].text||"")),'<div class="log">'+lg.slice(0,5).map(logRow).join("")+'</div>','<button class="more" onclick="go(\'기록\')">전체 기록 ›</button>');
  if(!window.__AT){var pins=allDocs().filter(function(d){return d.pin});
   if(pins.length)h+=fold("★","자주 쓰는 서류",pins.length+'건',pins.map(docRow).join(""),'<button class="more" onclick="go(\'서류\')">전체 서류 ›</button>')}
  return h}
@@ -443,12 +466,15 @@ function boxSum(s){var b=boxOf(s);if(!b)return"";var n={};b.forEach(function(f){
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
  if(!s.current){ // 단계 지정 안 한 현장
   h+='<div class="card now"><h2>'+esc(nm(s))+'</h2>'+(s.status?'<div>'+esc(s.status)+'</div>':'')+'</div>';
-  return h+infoCard(s)+homeRest(s)}
+  return h+recentCard(s)+infoCard(s)+homeRest(s)}
  var todo=[];st.tasks.forEach(function(t,i){if(!(c[st.no+":"+i]||{}).ok)todo.push(i)});
  var steps=STG().map(function(x){return'<span class="'+(x.no<s.current?"d":x.no===s.current?"c":"")+'" title="'+esc(x.title)+'"></span>'}).join("");
  h+='<div class="card now"><div class="st">'+esc(nm(s))+'</div><h2>'+st.no+'단계 · '+esc(st.title)+'</h2>'+
   (s.status?'<div class="stx">'+esc(s.status)+'</div>':'')+'<div class="prog"><i style="width:'+pct(st)+'%"></i></div><div class="st">할 일 '+pct(st)+'% 완료 · 전체 '+STG().length+'단계 중 '+st.no+'단계</div><div class="steps">'+steps+'</div></div>';
- h+='<div class="card"><h3>✔ 다음 할 일 <button class="more" onclick="open='+st.no+';go(\'단계\')">전체 ›</button></h3>'+(todo.length?todo.slice(0,3).map(function(i){return taskRow(st.no,i)}).join("")+(todo.length>3?'<div class="st">외 '+(todo.length-3)+'건</div>':''):'<div class="empty">이 단계 할 일을 모두 마쳤습니다</div>')+'</div>';
+ h+=recentCard(s);
+ h+=fold("✔","다음 할 일",todo.length?todo.length+'건 남음 · '+esc(st.tasks[todo[0]]):'모두 마침',
+  todo.length?todo.slice(0,3).map(function(i){return taskRow(st.no,i)}).join("")+(todo.length>3?'<div class="st">외 '+(todo.length-3)+'건</div>':''):'<div class="empty">이 단계 할 일을 모두 마쳤습니다</div>',
+  '<button class="more" onclick="open='+st.no+';go(\'단계\')">할 일 전체 ›</button>');
  h+=infoCard(s);
  if(st.tips&&st.tips.length)h+=fold("!","이 단계 주의할 점",st.tips.length+'가지','<ul class="tipl">'+st.tips.map(function(t){return'<li>'+esc(t)+'</li>'}).join("")+'</ul>');
  return h+homeRest(s)}
