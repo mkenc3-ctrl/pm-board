@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794637660352";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794638232274";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -201,6 +201,11 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .pvb{position:absolute;top:0;left:0;right:0;display:flex;gap:8px;align-items:center;justify-content:flex-end;padding:10px;color:#fff;font-size:16px}.pvb span{margin-right:auto}.pvb .btn{color:#222;background:#fff;font-size:16px}
 .pvn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);color:#fff;border:0;font-size:28px;width:52px;height:72px;cursor:pointer}.pvn.l{left:6px}.pvn.r{right:6px}
 .sset{display:block;margin:6px 0;font-size:14px;color:#8a5a00}.sset select{margin-left:4px;font-size:14px}.rp .thumbs{display:inline-flex;vertical-align:middle;margin-left:4px}
+.cd i.tk{background:#fdebd0;color:#7a4a00}.cd i.lt{background:#f9d6d5;color:#a01d12}
+.t.long{max-height:9em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}.more2{border:0;background:none;color:var(--acc);font-size:15px;padding:4px 0;cursor:pointer}
+a.tel{display:inline-block;padding:1px 6px;border:1px solid var(--line);border-radius:4px;text-decoration:none;white-space:nowrap}
+.offb{position:fixed;left:0;right:0;bottom:0;z-index:9000;background:#a01d12;color:#fff;text-align:center;padding:10px;font-size:15px}
+.upn.gave b{color:#5a3d8a}
 .mic{margin-top:6px}.mic.on{background:#c0392b;color:#fff}.stc{display:flex;align-items:center;gap:6px;margin:6px 0;font-size:14px}.stc input{width:20px;height:20px}
 .it.pinned{border-left:4px solid #c0392b}.pinb{color:#c0392b;margin-right:4px}.upn.pinu b{color:#c0392b}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
@@ -350,7 +355,7 @@ function calView(){var m=BD.calM||today().slice(0,7),p=m.split("-"),y=+p[0],mo=+
   "일월화수목금토".split("").map(function(w,i){return'<span class="cw'+(i===0?" su":i===6?" sa":"")+'">'+w+'</span>'}).join("");
  for(var i=0;i<first;i++)h+='<span></span>';
  for(var d=1;d<=days;d++){var ds=m+"-"+p2(d),l=by[ds]||[],wd=(first+d-1)%7;
-  h+='<button class="cd'+(ds===t?" td":"")+(ds===BD.calDay?" sel":"")+(wd===0?" su":wd===6?" sa":"")+'" onclick="calPick(\''+ds+'\')"><span class="n">'+d+'</span>'+l.slice(0,2).map(function(e){return'<i class="'+(e.done?"fin":"")+'">'+esc(e.title)+'</i>'}).join("")+(l.length>2?'<i class="more">+'+(l.length-2)+'</i>':'')+'</button>'}
+  h+='<button class="cd'+(ds===t?" td":"")+(ds===BD.calDay?" sel":"")+(wd===0?" su":wd===6?" sa":"")+'" onclick="calPick(\''+ds+'\')"><span class="n">'+d+'</span>'+l.slice(0,2).map(function(e){return'<i class="'+(e.done?"fin":e.who?(late(e)?"tk lt":"tk"):"")+'">'+(e.who?esc(e.who)+"·":"")+esc(e.title)+'</i>'}).join("")+(l.length>2?'<i class="more">+'+(l.length-2)+'</i>':'')+'</button>'}
  h+='</div></div>';
  var sel=BD.calDay?(by[BD.calDay]||[]):null;
  if(sel)h+='<div class="day"><div class="dh">'+esc(dLabel(BD.calDay)[1])+'</div>'+(sel.length?sel.map(evRow).join(""):'<div class="empty">이날 일정이 없습니다. 위 칸에 날짜가 들어갔으니 할 일만 적어 올리면 됩니다.</div>')+'</div>';
@@ -369,10 +374,15 @@ function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort
 function schedList(){if(BD.cal)return calView();var a=evs(),t=today(),up=a.filter(function(e){return e.date>=t||late(e)}),past=a.filter(function(e){return e.date<t&&!late(e)});
  if(!a.length)return'<div class="empty">아직 일정이 없습니다. 위에 날짜와 할 일을 넣고 「일정 올리기」를 누르면 함께 쓰는 분들 화면에 보입니다.</div>';
  return legalBox()+staffBox()+(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
+function gaveTasks(){return BD.me?evs().filter(function(e){return e.by===BD.me&&e.who&&e.who!==BD.me&&!e.done}):[]}
+// 인터넷 끊김 안내 띠
+function offBar(){var b=$("offb");if(navigator.onLine===false){if(!b){b=document.createElement("div");b.id="offb";b.className="offb";b.textContent="📵 인터넷이 끊겼습니다 — 보이는 내용은 마지막으로 받은 것입니다. 연결되면 자동으로 다시 받습니다.";document.body.appendChild(b)}}else if(b){b.remove();try{bdLoad()}catch(e){}}}
+window.addEventListener("offline",offBar);window.addEventListener("online",offBar);setTimeout(offBar,1000);
 function myTasks(){return BD.me?evs().filter(function(e){return e.who===BD.me&&!e.done}):[]}
 function upStrip(){if(!BD.ready)return"";var t=today(),a=evs().filter(function(e){return e.date>=t&&!e.done}).slice(0,3),m=myTasks();
- var pn=BD.items.filter(function(o){return o.kind==="post"&&o.pin});
- return welcomeCard()+pushCard()+(pn.length?'<button class="upn pinu" onclick="go(\'올리기\')"><b>📌 공지</b>'+pn.slice(0,3).map(function(o){return'<span>'+esc((o.text||"(사진)").split("\n")[0].slice(0,40))+'</span>'}).join("")+'</button>':'')+lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+
+ var pn=BD.items.filter(function(o){return o.kind==="post"&&o.pin}),gv=gaveTasks();
+ var gvH=gv.length?'<button class="upn gave" onclick="go(\'일정\')"><b>📤 내가 맡긴 일 '+gv.length+'</b>'+gv.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+esc(e.who)+' · '+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+((e.ck||[]).length?' ('+e.ck.filter(function(c){return c.d}).length+'/'+e.ck.length+')':'')+'</span>'}).join("")+'</button>':'';
+ return welcomeCard()+pushCard()+(pn.length?'<button class="upn pinu" onclick="go(\'올리기\')"><b>📌 공지</b>'+pn.slice(0,3).map(function(o){return'<span>'+esc((o.text||"(사진)").split("\n")[0].slice(0,40))+'</span>'}).join("")+'</button>':'')+lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+gvH+
  (a.length?'<button class="upn" onclick="go(\'일정\')"><b>📅 다가오는 일정</b>'+a.map(function(e){var L=dLabel(e.date);return'<span>'+esc(L[0]||L[1])+' '+esc(e.time||"")+' · '+esc(e.title)+'</span>'}).join("")+'</button>':"")}
 async function addEv(ev){ev.preventDefault();var d=$("evD").value,n=$("evN").value.trim(),w=($("evW").value||"").trim();if(!d||!n)return toast("날짜와 할 일을 넣어 주세요");
  var R=($("evR")&&$("evR").value)||"",ds=repDates(d,R),at0=new Date().toISOString(),cw=clash(d,$("evT").value,w);
@@ -457,7 +467,7 @@ function recentAllIn(){if(!BD.ready)return"";var a=BD.items.filter(function(o){r
  return'<div class="card rec ovrec"><h3>🕘 최근 올라온 글 <button class="more" onclick="go(\'올리기\')">전체 ›</button></h3>'+a.map(postRow).join("")+'</div>'}
 function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.indexOf(" → ")>0?o.note.split(" → ")[0]:"현장 모름");return'<div class="it'+(ok?" ok":"")+(o.pin?" pinned":"")+'"><div class="m">'+(o.pin?'<b class="pinb">📌 공지</b>':'')+'<b>'+(ok?"반영됨":"대기")+'</b><span>'+esc(fmtAt(o.at))+'</span><span>'+esc(site)+'</span><span>'+esc(o.by||"")+'</span></div>'+
   (BD.ed===o.id?'<div class="edw"><textarea id="edT" rows="4">'+esc(o.text||"")+'</textarea><button class="btn p" onclick="saveEd(\''+o.id+'\')">고친 글 저장</button> <button class="btn" onclick="BD.ed=\'\';bdDraw()">취소</button></div>':
-   o.text?'<div class="t">'+linkify(o.text).replace(/\n/g,"<br>")+(o.edited?' <small class="edm">(고침)</small>':'')+'</div>':'')+((o.photos||[]).length?'<div class="thumbs">'+o.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+
+   o.text?(function(lg){return'<div class="t'+(lg?" long":"")+'">'+linkify(o.text).replace(/\n/g,"<br>")+(o.edited?' <small class="edm">(고침)</small>':'')+'</div>'+(lg?'<button class="more2" onclick="this.previousElementSibling.classList.remove(\'long\');this.remove()">▾ 더 보기</button>':'')})(o.text.length>200||o.text.split("\n").length>6):'')+((o.photos||[]).length?'<div class="thumbs">'+o.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+
   (o.note?'<div class="n">→ '+esc(o.note)+'</div>':'')+(!o.site&&!ok?'<label class="sset">📍 어느 현장인지 아시면 골라 주세요 <select onchange="setSite(\''+o.id+'\',this.value)">'+siteOpts("현장 고르기")+'</select></label>':'')+
   ((o.replies||[]).length?'<div class="rps">'+o.replies.map(function(r){return'<div class="rp"><b>'+esc(r.by||"이름 없음")+'</b> '+linkify(r.text)+((r.ph||[]).length?'<span class="thumbs">'+r.ph.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</span>':'')+' <small>'+esc(fmtAt(r.at))+'</small></div>'}).join("")+'</div>':'')+
   '<div class="ack">'+((o.seen||[]).length?'<span class="sn">👀 확인: '+o.seen.map(esc).join(", ")+'</span>':'')+
@@ -821,7 +831,7 @@ function toCls(t){return["gu","si","edu","pub","own","rep","in"][toRank(t)]}
 function docRow(d){var e=ext(d.file),path=d.rel?"PM업무관리/"+d.file:d.file.replace(/^C:\/Users\/[^/]+\/Desktop\//,"바탕화면/");
  return'<div class="doc"><span class="ext '+e+'">'+(e==="폴더"?"폴더":e.toUpperCase())+'</span><div class="n"><b><span class="to '+toCls(d.to)+'">'+esc(d.to)+'</span>'+esc(d.name)+'</b><small>'+esc((d.stage?d.stage+"단계 · ":"")+d.kind+(d.from?" ("+d.from+")":"")+" · "+path)+'</small></div><div class="acts"><button class="btn p" onclick="openDoc(this,0)" data-f="'+esc(d.file)+'" data-r="'+(d.rel?1:0)+'">열기</button> <button class="btn s" title="폴더에서 보기" onclick="openDoc(this,1)" data-f="'+esc(d.file)+'" data-r="'+(d.rel?1:0)+'">📁</button></div></div>'}
 function nm(s){return (s.region&&s.name.indexOf(s.region)!==0?s.region+" ":"")+s.name}
-function linkify(t){return esc(t).replace(/(0\d{1,3}-\d{3,4}-\d{4})/g,'<a href="tel:$1">$1</a>').replace(/([\w.]+@[\w.]+\.\w+)/g,'<a href="mailto:$1">$1</a>')}
+function linkify(t){return esc(t).replace(/(^|[^\d-])(0\d{1,2}[-. ]?\d{3,4}[-. ]?\d{4})(?![\d-])/g,function(m,a,n){return a+'<a class="tel" href="tel:'+n.replace(/\D/g,"")+'">📞 '+n+'</a>'}).replace(/([\w.]+@[\w.]+\.\w+)/g,'<a href="mailto:$1">$1</a>')}
 function infoCard(s){var a=s.info||[];if(!a.length)return"";
  var key=a.filter(function(r){return/위원장|조합장|대표/.test(r[0])&&!/확인 필요/.test(r[1])})[0];
  return'<details class="card info"><summary><b>ℹ 기본 정보 · 연락처</b><span class="sm">'+(key?esc(key[0])+' '+linkify(key[1].split(" (")[0]):'눌러서 보기')+'</span><i>▾</i></summary><dl>'+a.map(function(r){return'<dt>'+esc(r[0])+'</dt><dd'+(/확인 필요/.test(r[1])?' class="todo"':'')+'>'+linkify(r[1])+'</dd>'}).join("")+'</dl></details>'}
