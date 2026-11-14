@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794620873565";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794621248926";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -185,6 +185,8 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .lgbox{border:2px solid #b8860b;background:#fffaf0;padding:8px 10px;margin:8px 0}.lgh{font-weight:700;margin-bottom:4px}.lgh span{font-weight:400;font-size:12px;color:#7a5b00;margin-left:6px}.lgr{border-top:1px dashed #e0c98a;padding:6px 0;position:relative;padding-right:64px}.lgr small{display:block;color:#555}.lgr .lgl{font-size:12px;color:#7a5b00}.lgr.lt b{color:#c0392b}.lgr .sm2{position:absolute;right:0;top:6px;padding:4px 8px;font-size:13px}.upn.lg{border-color:#b8860b;background:#fffaf0}
 .alb{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:4px 0 12px}.alb figure{margin:0;background:#fff;border:1px solid var(--line)}.alb .th{display:block;width:100%;aspect-ratio:1;background:#eee;margin:0}.alb .th img{width:100%;height:100%;object-fit:cover;display:block}.alb figcaption{font-size:13px;padding:4px 6px;line-height:1.4;overflow-wrap:anywhere}
 .ev small.rp{display:inline;color:#666;font-weight:400}
+.qph{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-4px 0 10px}.qph .qb{padding:6px 10px;font-size:14px}
+.stf{border:1px solid var(--line);background:#fff;padding:8px 10px;margin:8px 0}.stf summary{font-weight:700;cursor:pointer}.stf table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}.stf th,.stf td{border-top:1px solid var(--line);padding:5px 4px;text-align:left}.stf td.lt{color:#c0392b;font-weight:700}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -346,7 +348,7 @@ function evGroup(l){var g={},ks=[];l.forEach(function(e){if(!g[e.date]){g[e.date
 function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort(function(a,b){return(a.date+(a.time||"00:00")).localeCompare(b.date+(b.time||"00:00"))})}
 function schedList(){if(BD.cal)return calView();var a=evs(),t=today(),up=a.filter(function(e){return e.date>=t||late(e)}),past=a.filter(function(e){return e.date<t&&!late(e)});
  if(!a.length)return'<div class="empty">아직 일정이 없습니다. 위에 날짜와 할 일을 넣고 「일정 올리기」를 누르면 함께 쓰는 분들 화면에 보입니다.</div>';
- return legalBox()+(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
+ return legalBox()+staffBox()+(up.length?evGroup(up):'<div class="empty">앞으로 잡힌 일정이 없습니다.</div>')+(past.length?'<details class="past"><summary>지난 일정 '+past.length+'건</summary>'+evGroup(past.reverse())+'</details>':'')}
 function myTasks(){return BD.me?evs().filter(function(e){return e.who===BD.me&&!e.done}):[]}
 function upStrip(){if(!BD.ready)return"";var t=today(),a=evs().filter(function(e){return e.date>=t&&!e.done}).slice(0,3),m=myTasks();
  return lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+
@@ -376,6 +378,7 @@ function bdPost(){bdInit();markSeen("post");
  (BD.ready?'<form class="card bdf" onsubmit="addPost(event)"><label class="bdl">어느 현장인가요?<select id="poS" onchange="$(\'poNew\').hidden=this.value!==NEWS">'+siteOpts("잘 모름 (알아서 나눠 주세요)",'<option value="'+NEWS+'">＋ 새 현장 알리기</option>')+'</select></label>'+
   '<div class="bd2" id="poNew" hidden><label class="bdl">새 현장 이름 *<input id="poNN" placeholder="예) 부산 반여3구역 재개발"></label><label class="bdl">지역<input id="poNR" placeholder="예) 부산 해운대구"></label></div>'+
   '<label class="bdl">내용<textarea id="poT" rows="5" placeholder="예) 11/14 밀양 조합장 통화 — 시공사 선정총회 1월 말 희망, 견적서 다음 주까지"></textarea></label>'+
+  '<div class="qph"><span class="sm">눌러서 바로 쓰기</span>'+QP.map(function(q,i){return'<button type="button" class="btn qb" onclick="addQP('+i+')">'+esc(q)+'</button>'}).join("")+'</div>'+
   '<div class="bdl">사진 (5장까지)<label class="btn bdph" for="poF">📷 사진 찍기 · 고르기</label><input type="file" id="poF" accept="image/*" multiple hidden onchange="addPics(this)"><div class="thumbs" id="poP">'+picList()+'</div></div>'+whoBox()+
   '<button class="btn p bdgo" id="poGo">올리기</button></form>':'')+
  '<div class="bdbar">'+bellBtn()+'</div><h3 class="bdh3">올린 내용</h3><input class="pq" id="pq" type="search" placeholder="🔍 찾기 (예: 조합장, 견적, 온천)" value="'+esc(BD.q||"")+'" oninput="BD.q=this.value;bdDraw()"><div id="bdList">'+(BD.ready?postList():bdWait())+'</div></div>'}
@@ -558,6 +561,17 @@ function album(){bdInit();var ps=BD.ready?BD.items.filter(function(o){return o.k
   o.photos.forEach(function(p){h+='<figure><a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a><figcaption><b>'+esc(md(o.at.slice(0,10)))+'</b> '+(PHS?'':esc(postSite(o)||"")+(o.text?' · ':''))+esc((o.text||"").split("\n")[0].slice(0,40))+'</figcaption></figure>'})});
  if(mo)h+='</div>';setTimeout(bdThumbs,50);return h+'</div>'}
 function goAlbum(s){PHS=s||"";go("사진")}
+// ── 글쓰기 빠른 문구: 누르면 내용 칸에 날짜와 함께 들어감 ──
+var QP=["현장 도착했습니다","회의 끝났습니다 — 결과:","조합장 통화 —","서류 받았습니다:","서류 보냈습니다:","구청 방문 —","확인 부탁드립니다:"];
+function addQP(i){var t=$("poT");if(!t)return;var d=new Date(),h=(d.getMonth()+1)+"/"+d.getDate()+" ",q=QP[i];
+ t.value=(t.value?t.value.replace(/\s*$/,"")+"\n":"")+(t.value?"":h)+q+(/[—:]$/.test(q)?" ":"");t.focus();t.setSelectionRange(t.value.length,t.value.length)}
+// ── 사람별 할 일 현황: 남은 일 · 기한 지남 · 이번 주 끝낸 일 ──
+function staffBox(){if(!BD.ready)return"";var w=weekRange(0),P={};
+ evs().forEach(function(e){if(!e.who)return;var p=P[e.who]=P[e.who]||{n:0,l:0,d:0,next:null};
+  if(!e.done){p.n++;if(late(e))p.l++;else if(!p.next)p.next=e}else if(e.date>=w[0]&&e.date<=w[1])p.d++});
+ var ks=Object.keys(P);if(!ks.length)return"";ks.sort(function(a,b){return P[b].l-P[a].l||P[b].n-P[a].n});
+ return'<details class="stf"><summary>👥 사람별 할 일 <span class="sm">'+ks.length+'명 · 남은 일 '+ks.reduce(function(t,k){return t+P[k].n},0)+'건</span></summary><table><tr><th>이름</th><th>남은 일</th><th>기한 지남</th><th>이번 주 끝냄</th><th>가장 가까운 일</th></tr>'+
+  ks.map(function(k){var p=P[k],x=p.next;return'<tr><td><b>'+esc(k)+'</b></td><td>'+p.n+'</td><td'+(p.l?' class="lt"':'')+'>'+p.l+'</td><td>'+p.d+'</td><td>'+(x?esc(md(x.date))+' '+esc(x.title):'-')+'</td></tr>'}).join("")+'</table></details>'}
 // ── 화면 ──
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
