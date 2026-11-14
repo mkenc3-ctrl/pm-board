@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794638547411";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794638729831";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -206,7 +206,8 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 a.tel{display:inline-block;padding:1px 6px;border:1px solid var(--line);border-radius:4px;text-decoration:none;white-space:nowrap}
 .offb{position:fixed;left:0;right:0;bottom:0;z-index:9000;background:#a01d12;color:#fff;text-align:center;padding:10px;font-size:15px}
 .chip.urg{background:#c0392b;color:#fff}.mapb{margin-left:4px;white-space:nowrap}.att{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:4px 0;font-size:14px}.att span{margin-right:4px}.att .btn.on{background:var(--acc);color:#fff}.qrp{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;width:100%}.rpf2{font-weight:bold}
-.upn.gave b{color:#5a3d8a}.upn.newrp b{color:#0b6e4f}b.at{color:#0b6e4f;background:#e3f4ec;padding:0 3px;border-radius:3px}
+.upn.gave b{color:#5a3d8a}.upn.locs{cursor:default}.locb{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.upn.favs b{color:#a87900}
+.exs{display:flex;flex-direction:column;gap:6px}.exg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:14px}.exg small{color:var(--sub);margin-right:4px}.upn.newrp b{color:#0b6e4f}b.at{color:#0b6e4f;background:#e3f4ec;padding:0 3px;border-radius:3px}
 .mic{margin-top:6px}.mic.on{background:#c0392b;color:#fff}.stc{display:flex;align-items:center;gap:6px;margin:6px 0;font-size:14px}.stc input{width:20px;height:20px}
 .it.pinned{border-left:4px solid #c0392b}.pinb{color:#c0392b;margin-right:4px}.upn.pinu b{color:#c0392b}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
@@ -384,7 +385,7 @@ function upStrip(){if(!BD.ready)return"";var t=today(),a=evs().filter(function(e
  var pn=BD.items.filter(function(o){return o.kind==="post"&&o.pin}),gv=gaveTasks();
  var gvH=gv.length?'<button class="upn gave" onclick="go(\'일정\')"><b>📤 내가 맡긴 일 '+gv.length+'</b>'+gv.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+esc(e.who)+' · '+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+((e.ck||[]).length?' ('+e.ck.filter(function(c){return c.d}).length+'/'+e.ck.length+')':'')+'</span>'}).join("")+'</button>':'';
  var nr=newReplies();
- return welcomeCard()+pushCard()+(nr.length?'<button class="upn newrp" onclick="go(\'올리기\')"><b>💬 내 글에 새 답글 '+nr.length+'</b>'+nr.slice(0,3).map(function(o){var r=o.replies[o.replies.length-1];return'<span>'+esc(r.by||"")+': '+esc((r.text||"").slice(0,40))+'</span>'}).join("")+'</button>':'')+(pn.length?'<button class="upn pinu" onclick="go(\'올리기\')"><b>📌 공지</b>'+pn.slice(0,3).map(function(o){return'<span>'+esc((o.text||"(사진)").split("\n")[0].slice(0,40))+'</span>'}).join("")+'</button>':'')+lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+gvH+
+ return welcomeCard()+pushCard()+locStrip()+favStrip()+(nr.length?'<button class="upn newrp" onclick="go(\'올리기\')"><b>💬 내 글에 새 답글 '+nr.length+'</b>'+nr.slice(0,3).map(function(o){var r=o.replies[o.replies.length-1];return'<span>'+esc(r.by||"")+': '+esc((r.text||"").slice(0,40))+'</span>'}).join("")+'</button>':'')+(pn.length?'<button class="upn pinu" onclick="go(\'올리기\')"><b>📌 공지</b>'+pn.slice(0,3).map(function(o){return'<span>'+esc((o.text||"(사진)").split("\n")[0].slice(0,40))+'</span>'}).join("")+'</button>':'')+lgStrip()+(m.length?'<button class="upn mine" onclick="go(\'일정\')"><b>✅ 내 할 일 '+m.length+'</b>'+m.slice(0,4).map(function(e){var L=dLabel(e.date);return'<span'+(late(e)?' class="lt"':'')+'>'+(late(e)?"기한 지남 · ":esc(L[0]||L[1])+" 까지 · ")+esc(e.title)+'</span>'}).join("")+'</button>':'')+gvH+
  (a.length?'<button class="upn" onclick="go(\'일정\')"><b>📅 다가오는 일정</b>'+a.map(function(e){var L=dLabel(e.date);return'<span>'+esc(L[0]||L[1])+' '+esc(e.time||"")+' · '+esc(e.title)+'</span>'}).join("")+'</button>':"")}
 async function addEv(ev){ev.preventDefault();var d=$("evD").value,n=$("evN").value.trim(),w=($("evW").value||"").trim();if(!d||!n)return toast("날짜와 할 일을 넣어 주세요");
  var R=($("evR")&&$("evR").value)||"",ds=repDates(d,R),at0=new Date().toISOString(),cw=clash(d,$("evT").value,w);
@@ -418,7 +419,7 @@ function bdPost(){bdInit();markSeen("post");rpSeenAll();
  (BD.ready?'<form class="card bdf" onsubmit="addPost(event)"><label class="bdl">어느 현장인가요?<select id="poS" onchange="$(\'poNew\').hidden=this.value!==NEWS">'+siteOpts("잘 모름 (알아서 나눠 주세요)",'<option value="'+NEWS+'">＋ 새 현장 알리기</option>')+'</select></label>'+
   '<div class="bd2" id="poNew" hidden><label class="bdl">새 현장 이름 *<input id="poNN" placeholder="예) 부산 반여3구역 재개발"></label><label class="bdl">지역<input id="poNR" placeholder="예) 부산 해운대구"></label></div>'+
   '<label class="bdl">내용<textarea id="poT" rows="5" oninput="saveDraft(this.value)" placeholder="예) 11/14 밀양 조합장 통화 — 시공사 선정총회 1월 말 희망, 견적서 다음 주까지">'+esc(getDraft())+'</textarea>'+micBtn("poT")+(getDraft()?'<p class="sm drf">✏️ 적다 만 글을 불러왔습니다. 필요 없으면 지우세요.</p>':'')+'</label>'+
-  atRow("poT")+'<div class="qph"><span class="sm">눌러서 바로 쓰기</span><button type="button" class="btn qb rpf2" onclick="repForm()">📝 현장 보고 양식</button>'+QP.map(function(q,i){return'<button type="button" class="btn qb" onclick="addQP('+i+')">'+esc(q)+'</button>'}).join("")+'</div>'+
+  atRow("poT")+'<div class="qph"><span class="sm">눌러서 바로 쓰기</span><button type="button" class="btn qb rpf2" onclick="repForm()">📝 현장 보고 양식</button><button type="button" class="btn qb rpf2" onclick="minForm()">📝 회의록 양식</button>'+QP.map(function(q,i){return'<button type="button" class="btn qb" onclick="addQP('+i+')">'+esc(q)+'</button>'}).join("")+'</div>'+
   '<div class="bdl">사진 (5장까지)<label class="btn bdph" for="poF">📷 사진 찍기 · 고르기</label><input type="file" id="poF" accept="image/*" multiple hidden onchange="addPics(this)"><label class="stc"><input type="checkbox" id="poSt"'+(stampOn()?" checked":"")+' onchange="stampSet(this.checked)"> 사진에 날짜·현장 글자 넣기</label><div class="thumbs" id="poP">'+picList()+'</div></div>'+whoBox()+
   '<button class="btn p bdgo" id="poGo">올리기</button></form>':'')+
  '<div class="bdbar">'+bellBtn()+'</div><h3 class="bdh3">올린 내용</h3><input class="pq" id="pq" type="search" placeholder="🔍 찾기 (예: 조합장, 견적, 온천)" value="'+esc(BD.q||"")+'" oninput="BD.q=this.value;bdDraw()"><div id="bdList">'+(BD.ready?postList():bdWait())+'</div></div>'}
@@ -433,7 +434,7 @@ async function addPost(ev){ev.preventDefault();var s=$("poS").value,t=$("poT").v
  var g=$("poGo");g.disabled=true;g.textContent="올리는 중…";
  try{var ids=[];for(var i=0;i<BD.pics.length;i++){g.textContent="사진 올리는 중… ("+(i+1)+"/"+BD.pics.length+")";ids.push(await rpc("pm_file_add",{box_:await seal(new Uint8Array(await BD.pics[i].blob.arrayBuffer()))}))}
   await rpc("pm_add",{kind_:"post",box_:await encJ({site:s,text:t,photos:ids,by:BD.me,at:new Date().toISOString(),status:"대기",note:""})});
-  BD.pics=[];BD.retry=0;saveDraft("");toast("올렸습니다");render();bdLoad()}catch(e){g.disabled=false;g.textContent="올리기";BD.retry=(BD.retry||0)+1;
+  BD.pics=[];BD.retry=0;saveDraft("");setLastSite(s);toast("올렸습니다");render();bdLoad()}catch(e){g.disabled=false;g.textContent="올리기";BD.retry=(BD.retry||0)+1;
   toast(BD.retry<=5?"인터넷이 약합니다 — 글은 저장해 두었고, 연결되면 자동으로 다시 올립니다":"올리지 못했습니다 — 인터넷 연결 확인 후 「올리기」를 다시 눌러 주세요");if(BD.retry<=5)setTimeout(retryPost,BD.retry*15000)}}
 // 적다 만 글 보관(이 기기에만) · 실패하면 자동 다시 보내기
 function getDraft(){try{return localStorage.getItem("pm_draft")||""}catch(e){return""}}
@@ -441,7 +442,7 @@ function saveDraft(v){try{v?localStorage.setItem("pm_draft",v):localStorage.remo
 function retryPost(){var g=$("poGo");if(!BD.retry||!g||g.disabled)return;if(navigator.onLine===false){setTimeout(retryPost,15000);return}g.click()}
 window.addEventListener("online",function(){if(BD.retry)retryPost()});
 function fmtAt(s){var d=new Date(s);return(d.getMonth()+1)+"/"+d.getDate()+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
-function postList(){var a=BD.items.filter(function(o){return o.kind==="post"}),q=(BD.q||"").trim().toLowerCase();
+function postList(){var a=BD.items.filter(function(o){return o.kind==="post"&&!o.exp&&!o.loc}),q=(BD.q||"").trim().toLowerCase();
  if(!a.length)return'<div class="empty">아직 올린 내용이 없습니다.</div>';
  if(q){a=a.filter(function(o){return[o.site,o.text,o.by,o.note].concat((o.replies||[]).map(function(r){return r.by+" "+r.text})).join(" ").toLowerCase().indexOf(q)>=0});
   if(!a.length)return'<div class="empty">「'+esc(BD.q)+'」 들어간 글이 없습니다.</div>'}
@@ -451,7 +452,7 @@ function postList(){var a=BD.items.filter(function(o){return o.kind==="post"}),q
  var cut=addDays(today(),-30),nw=a.filter(function(o){return o.status!=="반영"||(o.at||"").slice(0,10)>=cut}),old=a.filter(function(o){return nw.indexOf(o)<0});
  return pin.map(postRow).join("")+nw.map(postRow).join("")+(old.length?'<details class="past"><summary>30일 지난 글 '+old.length+'건</summary>'+old.map(postRow).join("")+'</details>':'')}
 // 이 현장에 올라온 글 (현장 이름이 같거나, 반영 메모에 현장 이름이 들어간 것)
-function sitePosts(s){var n1=nm(s),n2=s.name;return BD.items.filter(function(o){return o.kind==="post"&&(o.site===n1||o.site===n2||(o.note||"").indexOf(n2)===0)})}
+function sitePosts(s){var n1=nm(s),n2=s.name;return BD.items.filter(function(o){return o.kind==="post"&&!o.exp&&!o.loc&&(o.site===n1||o.site===n2||(o.note||"").indexOf(n2)===0)})}
 function recentCard(s){return'<div id="recBox">'+recentIn(s)+'</div>'}
 function siteEvs(s){var t=today(),n1=nm(s),n2=s.name;return BD.ready?evs().filter(function(e){return(e.site===n1||e.site===n2)&&e.date>=t&&!e.done}):[]}
 function sitePending(s){return BD.ready?sitePosts(s).filter(function(o){return o.status!=="반영"}).length:0}
@@ -465,7 +466,7 @@ function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().sl
   (lg.length?'<div class="rech">작업 기록</div><div class="log">'+lg.map(logRow).join("")+'</div>':'')+'</div>'}
 // 첫 화면: 모든 현장 최근 올라온 글
 function recentAll(){return'<div id="recAll">'+recentAllIn()+'</div>'}
-function recentAllIn(){if(!BD.ready)return"";var a=BD.items.filter(function(o){return o.kind==="post"}).slice(0,4);if(!a.length)return"";
+function recentAllIn(){if(!BD.ready)return"";var a=BD.items.filter(function(o){return o.kind==="post"&&!o.exp&&!o.loc}).slice(0,4);if(!a.length)return"";
  return'<div class="card rec ovrec"><h3>🕘 최근 올라온 글 <button class="more" onclick="go(\'올리기\')">전체 ›</button></h3>'+a.map(postRow).join("")+'</div>'}
 function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.indexOf(" → ")>0?o.note.split(" → ")[0]:"현장 모름");return'<div class="it'+(ok?" ok":"")+(o.pin?" pinned":"")+'"><div class="m">'+(o.pin?'<b class="pinb">📌 공지</b>':'')+'<b>'+(ok?"반영됨":"대기")+'</b><span>'+esc(fmtAt(o.at))+'</span><span>'+esc(site)+'</span><span>'+esc(o.by||"")+'</span></div>'+
   (BD.ed===o.id?'<div class="edw"><textarea id="edT" rows="4">'+esc(o.text||"")+'</textarea><button class="btn p" onclick="saveEd(\''+o.id+'\')">고친 글 저장</button> <button class="btn" onclick="BD.ed=\'\';bdDraw()">취소</button></div>':
@@ -474,7 +475,7 @@ function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.
   ((o.replies||[]).length?'<div class="rps">'+o.replies.map(function(r){return'<div class="rp"><b>'+esc(r.by||"이름 없음")+'</b> '+linkify(r.text)+((r.ph||[]).length?'<span class="thumbs">'+r.ph.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</span>':'')+' <small>'+esc(fmtAt(r.at))+'</small></div>'}).join("")+'</div>':'')+
   '<div class="ack">'+((o.seen||[]).length?'<span class="sn">👀 확인: '+o.seen.map(esc).join(", ")+'</span>':'')+
   (BD.me&&(o.seen||[]).indexOf(BD.me)<0&&o.by!==BD.me?'<button class="btn" onclick="ackPost(\''+o.id+'\')">👀 확인했어요</button>':'')+
-  '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button>'+sharePost(o.id)+'<button class="btn" onclick="postToEv(\''+o.id+'\')">📅 할 일로</button><button class="btn" onclick="pinPost(\''+o.id+'\')">'+(o.pin?"📌 고정 풀기":"📌 공지로 고정")+'</button>'+
+  '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button>'+sharePost(o.id)+'<button class="btn" onclick="postToEv(\''+o.id+'\')">📅 할 일로</button><button class="btn" onclick="favTog(\''+o.id+'\')">'+(isFav(o.id)?"⭐ 빼기":"☆ 나중에")+'</button><button class="btn" onclick="pinPost(\''+o.id+'\')">'+(o.pin?"📌 고정 풀기":"📌 공지로 고정")+'</button>'+
   (BD.me&&o.by===BD.me&&!ok?'<button class="btn" onclick="BD.ed=\''+o.id+'\';bdDraw();var t=$(\'edT\');if(t)t.focus()">✏️ 고치기</button><button class="btn" onclick="delPost(\''+o.id+'\')">🗑 지우기</button>':'')+'</div>'+
   (BD.rp===o.id?'<form class="rpf" onsubmit="addReply(event,\''+o.id+'\')"><input id="rpT" placeholder="답글 쓰기 (예: 내일 제가 연락해 보겠습니다)" autocomplete="off"><button class="btn p">올리기</button><button type="button" class="btn" onclick="rpPhoto(\''+o.id+'\')">📷 사진</button>'+micBtn("rpT")+'<div class="qrp">'+QRP.map(function(t,i){return'<button type="button" class="btn qb" onclick="quickRp(\''+o.id+'\','+i+')">'+esc(t)+'</button>'}).join("")+'</div></form>':'')+'</div>'}
 async function bumpPost(id,fn){await bdLoad();var o=itOf(id);if(!o)return;var c=strip(o);fn(c);await rpc("pm_set",{id_:id,box_:await encJ(c)});await bdLoad()}
@@ -634,7 +635,7 @@ function lgStrip(){var a=legalDue().filter(function(x){return x.due<=addDays(tod
 // ── 현장 사진첩: 올라온 글의 사진을 현장·달별로 모아 보기 ──
 var PHS="";
 function postSite(o){return o.site||(o.note&&o.note.indexOf(" → ")>0?o.note.split(" → ")[0]:"")}
-function album(){bdInit();var ps=BD.ready?BD.items.filter(function(o){return o.kind==="post"&&(o.photos||[]).length}):[];
+function album(){bdInit();var ps=BD.ready?BD.items.filter(function(o){return o.kind==="post"&&!o.exp&&(o.photos||[]).length}):[];
  var sites=[];ps.forEach(function(o){var s=postSite(o)||"현장 모름";if(sites.indexOf(s)<0)sites.push(s)});
  var a=ps.filter(function(o){return!PHS||(postSite(o)||"현장 모름")===PHS}).sort(function(x,y){return(y.at||"").localeCompare(x.at||"")});
  var n=a.reduce(function(t,o){return t+o.photos.length},0),h='<div class="bdw"><h2 class="bdh">📷 현장 사진첩</h2>'+
@@ -833,6 +834,53 @@ function repForm(){var t=$("poT");if(!t)return;var d=new Date(),f="[현장 보�
 // ── 답글 빠른 대답 ──
 var QRP=["네, 알겠습니다","확인했습니다","제가 하겠습니다","전화 주세요","끝냈습니다"];
 async function quickRp(id,i){if(!BD.me)return toast("이름을 먼저 넣어 주세요");try{BD.rp="";await bumpPost(id,function(c){c.replies=c.replies||[];c.replies.push({by:BD.me,text:QRP[i],at:new Date().toISOString()})});toast("답글을 올렸습니다")}catch(e){toast("올리지 못했습니다")}}
+// ── 마지막 고른 현장 기억 (이 기기) ──
+function lastSite(){try{return localStorage.getItem("pm_lastsite")||""}catch(e){return""}}
+function setLastSite(s){try{if(s&&s.indexOf("새 현장:")!==0)localStorage.setItem("pm_lastsite",s)}catch(e){}}
+// ── 📍 오늘 어디 (사무실·외근·현장·휴가·교육) ──
+var LOCK=["🏢 사무실","🚗 외근","🏗 현장","🌴 휴가","📚 교육"];
+function locToday(){var t=today(),m={};BD.items.forEach(function(o){if(o.kind==="post"&&o.loc&&o.loc.d===t&&o.by&&(!m[o.by]||(o.at||"")>(m[o.by].at||"")))m[o.by]=o});return m}
+function locStrip(){if(!BD.ready)return"";var m=locToday(),ks=Object.keys(m).sort();
+ return'<div class="upn locs"><b>📍 오늘 어디</b>'+(ks.length?ks.map(function(k){var l=m[k].loc;return'<span>'+esc(k)+' · '+esc(l.k)+(l.p?' ('+esc(l.p)+')':'')+'</span>'}).join(""):'<span class="sm">아직 아무도 안 알렸습니다</span>')+
+  (BD.me?'<div class="locb">'+(BD.locO?LOCK.map(function(k,i){return'<button class="btn" onclick="locSet('+i+')">'+k+'</button>'}).join("")+'<button class="btn" onclick="BD.locO=0;render()">취소</button>':'<button class="btn" onclick="BD.locO=1;render()">'+(m[BD.me]?"내 위치 바꾸기":"내 위치 알리기")+'</button>')+'</div>':'')+'</div>'}
+async function locSet(i){var k=LOCK[i],p="";if(i===1||i===2){p=window.prompt(i===2?"어느 현장인가요?":"어디로 가시나요?",i===2?lastSite():"");if(p===null)return;p=p.trim()}
+ BD.locO=0;try{await rpc("pm_add",{kind_:"post",box_:await encJ({loc:{d:today(),k:k,p:p},site:p,text:"📍 "+k+(p?" — "+p:""),photos:[],by:BD.me,at:new Date().toISOString(),status:"반영",note:"📍 위치"})});toast("오늘 위치를 알렸습니다");bdLoad()}catch(e){toast("올리지 못했습니다");render()}}
+// ── ⭐ 나중에 볼 글 (이 기기에만) ──
+function favs(){try{return JSON.parse(localStorage.getItem("pm_fav")||"[]")}catch(e){return[]}}
+function isFav(id){return favs().indexOf(id)>=0}
+function favTog(id){var a=favs(),i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);try{localStorage.setItem("pm_fav",JSON.stringify(a))}catch(e){}toast(i>=0?"나중에 볼 글에서 뺐습니다":"⭐ 나중에 볼 글에 넣었습니다 — 첫 화면에 보입니다");bdDraw()}
+function favStrip(){if(!BD.ready)return"";var a=favs().map(itOf).filter(Boolean);if(!a.length)return"";
+ return'<button class="upn favs" onclick="BD.q=\'\';go(\'올리기\')"><b>⭐ 나중에 볼 글 '+a.length+'</b>'+a.slice(0,3).map(function(o){return'<span>'+esc(o.site||"")+' · '+esc((o.text||"(사진)").split("\n")[0].slice(0,36))+'</span>'}).join("")+'</button>'}
+// ── 📝 회의록 양식 ──
+function minForm(){var t=$("poT");if(!t)return;var d=new Date(),f="[회의록] "+(d.getMonth()+1)+"/"+d.getDate()+"\n· 회의 이름: \n· 시간·장소: \n· 참석: \n· 안건: \n· 결정 사항: \n· 다음 할 일 (누가·언제까지): \n· 다음 회의: ";t.value=t.value.trim()?t.value.trim()+"\n\n"+f:f;saveDraft(t.value);t.focus()}
+// ── 💳 경비·영수증 (월별 합계 · 엑셀) ──
+var EXC=["식대","교통·주유","주차·통행료","인쇄·복사","숙박","택배·우편","기타"];
+function expAll(){return BD.items.filter(function(o){return o.kind==="post"&&o.exp}).sort(function(a,b){return(b.exp.d+b.at).localeCompare(a.exp.d+a.at)})}
+function expMon(){return BD.expM||today().slice(0,7)}
+function won(n){return(+n||0).toLocaleString("ko-KR")+"원"}
+function expView(){bdInit();var m=expMon(),a=expAll().filter(function(o){return o.exp.d.slice(0,7)===m}),tot=0,bp={},bs={};
+ a.forEach(function(o){var v=+o.exp.amt||0;tot+=v;bp[o.by||"?"]=(bp[o.by||"?"]||0)+v;var s=o.site||"공통";bs[s]=(bs[s]||0)+v});
+ var sum=function(g){return Object.keys(g).sort(function(x,y){return g[y]-g[x]}).map(function(k){return'<span>'+esc(k)+' <b>'+won(g[k])+'</b></span>'}).join("")};
+ return'<div class="bdw"><h2 class="bdh">💳 경비·영수증</h2>'+(BD.ready?'<form class="card bdf" onsubmit="expAdd(event)">'+
+  '<div class="bd2"><label class="bdl">날짜 *<input type="date" id="exD" value="'+today()+'"></label><label class="bdl">금액 (원) *<input id="exA" inputmode="numeric" placeholder="예) 12000" autocomplete="off"></label></div>'+
+  '<div class="bd2"><label class="bdl">구분<select id="exC">'+EXC.map(function(c){return'<option>'+c+'</option>'}).join("")+'</select></label><label class="bdl">현장<select id="exS">'+siteOpts("공통 · 현장 없음")+'</select></label></div>'+
+  '<label class="bdl">내용<input id="exM" placeholder="예) 조합 이사회 후 식사 4명"></label>'+whoBox()+
+  '<label class="stc"><input type="checkbox" id="exP"> 📷 영수증 사진도 붙이기 (올릴 때 고릅니다)</label><button class="btn p bdgo" id="exGo">경비 올리기</button></form>':bdWait())+
+  '<div class="calh"><button class="btn" onclick="expGo(-1)" aria-label="지난달">‹</button><b>'+m.slice(0,4)+'년 '+(+m.slice(5))+'월</b><button class="btn" onclick="expGo(1)" aria-label="다음달">›</button><button class="btn" onclick="expCsv()">📊 엑셀로 받기</button></div>'+
+  '<div class="card exs"><div><b>이달 합계 '+won(tot)+'</b> <span class="sm">('+a.length+'건)</span></div>'+(a.length?'<div class="exg"><small>사람별</small>'+sum(bp)+'</div><div class="exg"><small>현장별</small>'+sum(bs)+'</div>':'')+'</div>'+
+  (a.length?a.map(function(o){var e=o.exp;return'<div class="ev"><span class="tm">'+esc(e.d.slice(5).replace("-","/"))+'</span><div class="bd"><b><span class="chip">'+esc(e.cat)+'</span>'+(o.site?'<span class="chip">'+esc(o.site)+'</span>':'')+won(e.amt)+'</b>'+(e.memo?'<small>'+esc(e.memo)+'</small>':'')+((o.photos||[]).length?'<div class="thumbs">'+o.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+'<small>'+esc(o.by||"")+'</small></div><div class="ac">'+
+   (BD.me&&o.by===BD.me?'<button class="btn" onclick="if(confirm(\'이 경비를 지울까요?\'))delIt(\''+o.id+'\')">✕</button>':'')+'</div></div>'}).join(""):'<div class="empty">이달 경비가 없습니다.</div>')+'</div>'}
+function expGo(k){var m=expMon(),d=new Date(+m.slice(0,4),+m.slice(5)-1+k,1);BD.expM=d.getFullYear()+"-"+p2(d.getMonth()+1);render()}
+async function expAdd(ev){ev.preventDefault();if(!BD.me)return toast("올리는 사람 이름을 먼저 넣어 주세요");var d=$("exD").value,amt=+(($("exA").value||"").replace(/[^\d]/g,""));
+ if(!d||!amt)return toast("날짜와 금액을 넣어 주세요");var s=$("exS").value,c=$("exC").value,mm=$("exM").value.trim(),ph=[],g=$("exGo");
+ if($("exP").checked){var f=await pickPhoto();if(f){g.disabled=true;g.textContent="영수증 올리는 중…";try{var b=await shrink(f,stampLab(f,s));ph.push(await rpc("pm_file_add",{box_:await seal(new Uint8Array(await b.arrayBuffer()))}))}catch(x){toast("사진은 올리지 못했습니다")}}}
+ g.disabled=true;g.textContent="올리는 중…";
+ try{await rpc("pm_add",{kind_:"post",box_:await encJ({exp:{d:d,cat:c,amt:amt,memo:mm},site:s,text:"💳 "+c+" "+won(amt)+(mm?" — "+mm:""),photos:ph,by:BD.me,at:new Date().toISOString(),status:"반영",note:"💳 경비"})});
+  setLastSite(s);toast(won(amt)+" 경비를 올렸습니다");BD.expM=d.slice(0,7);render();bdLoad()}catch(x){g.disabled=false;g.textContent="경비 올리기";toast("올리지 못했습니다 — 인터넷 연결 확인")}}
+function expCsv(){var m=expMon(),a=expAll().filter(function(o){return o.exp.d.slice(0,7)===m}).reverse(),q=function(v){v=String(v==null?"":v);return/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+ var rows=[["날짜","구분","현장","금액","내용","쓴 사람","영수증 사진"]].concat(a.map(function(o){var e=o.exp;return[e.d,e.cat,o.site,e.amt,e.memo,o.by,(o.photos||[]).length?"있음":""]}));
+ rows.push(["합계","","",a.reduce(function(s,o){return s+(+o.exp.amt||0)},0),"","",""]);
+ var b=new Blob(["﻿"+rows.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv;charset=utf-8"}),l=document.createElement("a");l.href=URL.createObjectURL(b);l.download="경비-"+m+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(l.href);l.remove()},2000);toast(a.length+"건을 엑셀 파일로 받았습니다")}
 // ── 일정 엑셀(CSV) 내려받기 ──
 function evCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
  var rows=[["날짜","시간","현장","할 일·약속","맡은 사람","장소·메모","완료","결과","올린 사람","완료한 사람"]].concat(evs().map(function(e){return[e.date,e.time,e.site,e.title,e.who,e.place,e.done?"완료":"",e.result,e.by,e.doneBy]}));
@@ -842,10 +890,11 @@ function evCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(v)
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
- var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
+ var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
+ else if(view==="올리기"||view==="경비"){var pz=$(view==="경비"?"exS":"poS"),ls=lastSite();if(pz&&!pz.value&&ls&&[].some.call(pz.options,function(x){return x.value===ls}))pz.value=ls}
  $("backB").hidden=(depth===0&&view==="전체");
  $("mode").textContent=window.__AT?"📱 폰 보기 · "+window.__AT+" 올린 내용 · 파일 열기·체크는 사무실 PC에서":SERVER?"● 실행기 연결됨 — 「열기」로 바로 열리고, 체크·메모는 PM업무관리 폴더에 저장됩니다":"○ 미리보기 모드 — 바탕화면 「PM업무관리」 아이콘으로 열어야 파일 열기·폴더 저장이 됩니다";
 }
@@ -878,6 +927,7 @@ function toolbar(){var pc=!window.__AT,t=[];
  t.push('<button class="tool" onclick="go(\'연락처\')"><b>📞</b>연락처</button>');
  t.push('<button class="tool" onclick="go(\'보고서\')"><b>🗒</b>주간 보고</button>');
  t.push('<button class="tool" onclick="goAlbum()"><b>📷</b>사진첩</button>');
+ t.push('<button class="tool" onclick="go(\'경비\')"><b>💳</b>경비</button>');
  t.push('<button class="tool" onclick="go(\'사용법\')"><b>❓</b>사용법</button>');
  if(pc)t.push('<button class="tool" onclick="openRoot()"><b>🗂</b>문서함</button>');
  var v=siteIdx(/투·개표/);if(v>=0)t.push('<button class="tool" onclick="pick('+v+')"><b>🗳</b>투·개표</button>');
