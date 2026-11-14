@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794618429796";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794618743860";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -167,6 +167,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .rec h3{display:flex;align-items:center;gap:8px}.rec .more{margin-left:auto}.rech{font-weight:700;color:var(--sub);font-size:13px;margin:8px 0 4px}.rec .it{margin-bottom:6px}.ovrec{margin:0 0 12px}
 .ack{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.ack .btn{padding:3px 10px;font-size:13px}.sn{font-size:13px;color:var(--acc);font-weight:700}
 .rps{border-left:3px solid var(--line);padding-left:8px;display:flex;flex-direction:column;gap:3px}.rp{font-size:14px;overflow-wrap:anywhere}.rp small{color:var(--sub)}.rpf{display:flex;gap:6px;margin-top:4px}.rpf input{flex:1;min-width:0;font:inherit;padding:8px;border:1px solid var(--line)}
+.recbt{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}.recev{font-size:14.5px;padding:4px 0;border-bottom:1px dashed var(--line)}.recev small{color:var(--sub)}.ovi .f .nw{background:#c0392b;color:#fff;font-weight:700;padding:0 6px}.ovi .f .ne{color:var(--acc);font-weight:700}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -345,10 +346,15 @@ function postList(){var a=BD.items.filter(function(o){return o.kind==="post"});
 // 이 현장에 올라온 글 (현장 이름이 같거나, 반영 메모에 현장 이름이 들어간 것)
 function sitePosts(s){var n1=nm(s),n2=s.name;return BD.items.filter(function(o){return o.kind==="post"&&(o.site===n1||o.site===n2||(o.note||"").indexOf(n2)===0)})}
 function recentCard(s){return'<div id="recBox">'+recentIn(s)+'</div>'}
-function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().slice(0,3);
- if(!p.length&&!lg.length)return"";
+function siteEvs(s){var t=today(),n1=nm(s),n2=s.name;return BD.ready?evs().filter(function(e){return(e.site===n1||e.site===n2)&&e.date>=t&&!e.done}):[]}
+function sitePending(s){return BD.ready?sitePosts(s).filter(function(o){return o.status!=="반영"}).length:0}
+function goPre(v){BD.pre=nm(S());go(v)}
+function recentIn(s){var p=BD.ready?sitePosts(s).slice(0,3):[],lg=mergedLog().slice(0,3),ev=siteEvs(s).slice(0,3);
  return'<div class="card rec"><h3>🕘 최근 기록 <button class="more" onclick="go(\'기록\')">전체 ›</button></h3>'+
+  '<div class="recbt"><button class="btn p" onclick="goPre(\'올리기\')">📮 이 현장에 올리기</button><button class="btn" onclick="goPre(\'일정\')">📅 일정 넣기</button></div>'+
+  (ev.length?'<div class="rech">다가오는 일정</div>'+ev.map(function(e){var L=dLabel(e.date);return'<div class="recev"><b>'+esc(L[0]||L[1])+' '+esc(e.time||"")+'</b> '+esc(e.title)+(e.place?' <small>'+esc(e.place)+'</small>':'')+'</div>'}).join(""):'')+
   (p.length?'<div class="rech">올라온 글</div>'+p.map(postRow).join(""):'')+
+  (!p.length&&!lg.length&&!ev.length?'<div class="empty">아직 기록이 없습니다. 「이 현장에 올리기」로 첫 소식을 남겨 주세요.</div>':'')+
   (lg.length?'<div class="rech">작업 기록</div><div class="log">'+lg.map(logRow).join("")+'</div>':'')+'</div>'}
 // 첫 화면: 모든 현장 최근 올라온 글
 function recentAll(){return'<div id="recAll">'+recentAllIn()+'</div>'}
@@ -377,6 +383,7 @@ function render(){
  var BV=/^(전체|일정|올리기)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
  $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost}[view]();bdThumbs();
+ if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  $("backB").hidden=(depth===0&&view==="전체");
  $("mode").textContent=window.__AT?"📱 폰 보기 · "+window.__AT+" 올린 내용 · 파일 열기·체크는 사무실 PC에서":SERVER?"● 실행기 연결됨 — 「열기」로 바로 열리고, 체크·메모는 PM업무관리 폴더에 저장됩니다":"○ 미리보기 모드 — 바탕화면 「PM업무관리」 아이콘으로 열어야 파일 열기·폴더 저장이 됩니다";
 }
@@ -425,7 +432,7 @@ function overview(){bdInit();var h=toolbar()+'<div id="bdUp">'+upStrip()+'</div>
    var rg=s.region||"";
    h+='<button class="ovi k'+CATS.indexOf(c)+'"'+(d?' style="--rc:'+d[2]+'"':'')+' onclick="pick('+x[1]+')">'+(rg?'<span class="rg">'+esc(rg)+'</span>':'')+'<div class="t"><b>'+esc(s.name)+'</b>'+(st?'<em>'+st.no+'단계 · '+esc(st.title)+'</em>':'')+'</div>'+
    '<div class="s">'+esc(s.status||s.place||"")+'</div>'+
-   '<div class="f">'+(opn?'<span class="w">확인 '+opn+'</span>':'')+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
+   '<div class="f">'+(function(){var n=sitePending(s),e=siteEvs(s)[0];return(n?'<span class="nw">새 글 '+n+'</span>':'')+(e?'<span class="ne">📅 '+esc(e.date.slice(5).replace("-","/"))+'</span>':'')})()+(opn?'<span class="w">확인 '+opn+'</span>':'')+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
   h+='</div>'});
  return h}
 function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick="toggleNav(0);go(\'전체\')">▦ 전체 한눈에</button>';
