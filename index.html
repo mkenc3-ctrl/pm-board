@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794637233036";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794637437623";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -196,6 +196,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .nk{display:block;font-size:16px;padding:5px 0}.nk input{width:20px;height:20px;vertical-align:middle}
 .fqd>small{color:var(--sub);font-size:12px}.fql{border-top:1px solid var(--line);padding:6px 0;font-size:15px}
 .cta{background:#fff;border:1px solid var(--line);padding:10px;width:100%}.ppd{font-size:15px;padding:4px}
+.ckl{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:4px 0}.ck{border:1px solid var(--line);background:#fff;border-radius:4px;padding:4px 8px;font-size:14px;cursor:pointer}.ck.on{color:#888;text-decoration:line-through}.ck.add{border-style:dashed;color:#555}
 .mic{margin-top:6px}.mic.on{background:#c0392b;color:#fff}.stc{display:flex;align-items:center;gap:6px;margin:6px 0;font-size:14px}.stc input{width:20px;height:20px}
 .it.pinned{border-left:4px solid #c0392b}.pinb{color:#c0392b;margin-right:4px}.upn.pinu b{color:#c0392b}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
@@ -308,7 +309,7 @@ function lastSeen(k){try{return localStorage.getItem("pm_seen_"+k)||""}catch(e){
 function markSeen(k){try{localStorage.setItem("pm_seen_"+k,new Date().toISOString())}catch(e){}}
 function newCnt(kind){var t=lastSeen(kind);return BD.items.filter(function(o){return o.kind===kind&&o.by!==BD.me&&(!t||o.at>t)}).length}
 function badge(kind){var n=BD.ready&&lastSeen(kind)?newCnt(kind):0;return n?'<i class="nbadge">'+n+'</i>':""}
-function bdDraw(){var ae=document.activeElement;if(ae&&(ae.id==="rpT"&&ae.value||ae.id==="edT"))return;document.querySelectorAll("[data-bd]").forEach(function(e){e.innerHTML=badge(e.dataset.bd)});var l=$("bdList");if(l)l.innerHTML=view==="일정"?schedList():postList();var u=$("bdUp");if(u)u.innerHTML=upStrip();var rb=$("recBox");if(rb)rb.innerHTML=recentIn(S());var ra=$("recAll");if(ra)ra.innerHTML=recentAllIn();bdThumbs()}
+function bdDraw(){var ae=document.activeElement;if(MIC)return;if(ae&&(ae.id==="rpT"&&ae.value||ae.id==="edT"))return;document.querySelectorAll("[data-bd]").forEach(function(e){e.innerHTML=badge(e.dataset.bd)});var l=$("bdList");if(l)l.innerHTML=view==="일정"?schedList():postList();var u=$("bdUp");if(u)u.innerHTML=upStrip();var rb=$("recBox");if(rb)rb.innerHTML=recentIn(S());var ra=$("recAll");if(ra)ra.innerHTML=recentAllIn();bdThumbs()}
 // 소리 알림 (화면을 열어 둔 동안)
 function bdBeep(){try{BD.ac=BD.ac||new(window.AudioContext||window.webkitAudioContext)();[0,.18].forEach(function(t,i){var o=BD.ac.createOscillator(),g=BD.ac.createGain();o.frequency.value=i?1046:784;o.connect(g);g.connect(BD.ac.destination);g.gain.setValueAtTime(.2,BD.ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,BD.ac.currentTime+t+.16);o.start(BD.ac.currentTime+t);o.stop(BD.ac.currentTime+t+.17)})}catch(e){}}
 function bdSay(t){try{var u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -327,7 +328,7 @@ function bdSched(){bdInit();markSeen("event");
  return'<div class="bdw"><h2 class="bdh">📅 함께 쓰는 일정</h2>'+(BD.ready?'<form class="card bdf" onsubmit="addEv(event)">'+
   '<div class="bd2"><label class="bdl">날짜 *<input type="date" id="evD" value="'+today()+'"></label><label class="bdl">시간<input type="time" id="evT"></label></div>'+
   '<label class="bdl">현장<select id="evS">'+siteOpts("공통 · 현장 없음")+'</select></label>'+
-  '<label class="bdl">할 일 · 약속 *<input id="evN" placeholder="예) 전라중교 조합 이사회 참석"></label>'+
+  '<label class="bdl">할 일 · 약속 *<input id="evN" placeholder="예) 전라중교 조합 이사회 참석">'+micBtn("evN")+'</label>'+
   '<label class="bdl">장소 · 메모<input id="evP" placeholder="예) 조합 사무실 2층"></label>'+
   '<label class="bdl">맡을 사람 <span class="sm">(비우면 그냥 일정, 이름을 넣으면 그 사람 「내 할 일」에 뜸 · 날짜가 기한)</span><input id="evW" list="evWL" placeholder="예) 김대리" autocomplete="off"><datalist id="evWL">'+people().map(function(n){return'<option value="'+esc(n)+'">'}).join("")+'</datalist></label>'+whoBox()+
   '<label class="bdl">되풀이 <span class="sm">(정기 이사회·주간 회의처럼 반복되는 일)</span><select id="evR"><option value="">한 번만</option><option value="w1">매주 같은 요일 (8번)</option><option value="w2">2주마다 (6번)</option><option value="m1">매달 같은 날 (12번)</option><option value="m3">석 달마다 (4번)</option></select></label>'+
@@ -354,10 +355,10 @@ function calView(){var m=BD.calM||today().slice(0,7),p=m.split("-"),y=+p[0],mo=+
 function people(){var n={};BD.items.forEach(function(o){if(o.by)n[o.by]=1;if(o.who)n[o.who]=1;(o.seen||[]).forEach(function(x){n[x]=1})});if(BD.me)n[BD.me]=1;return Object.keys(n).sort()}
 function late(e){return e.who&&!e.done&&e.date<today()}
 function evRow(e){var a=e.date===today()?" tday":"";
- return'<div class="ev'+a+(e.done?" fin":"")+(late(e)?" late":"")+'"><span class="tm">'+esc(e.time||(e.who?"기한":"종일"))+'</span><div class="bd"><b>'+(e.who?'<span class="chip tk">할 일 · '+esc(e.who)+'</span>':'')+(e.site?'<span class="chip">'+esc(e.site)+'</span>':'')+esc(e.title)+(e.rep?' <small class="rp">🔁 '+esc(e.rep)+'</small>':'')+'</b>'+(late(e)?'<small class="lt">기한 지남 ('+esc(dLabel(e.date)[1])+')</small>':'')+(e.place?'<small>'+linkify(e.place)+'</small>':'')+(e.result?'<small class="res">→ 결과: '+linkify(e.result)+'</small>':'')+((e.photos||[]).length?'<div class="thumbs">'+e.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+(e.moved?'<small>⏩ '+e.moved+'번 미룸</small>':'')+(e.by?'<small>'+esc(e.by)+' 올림'+(e.doneBy?' · '+esc(e.doneBy)+' 완료':'')+'</small>':'')+'</div><div class="ac">'+
+ return'<div class="ev'+a+(e.done?" fin":"")+(late(e)?" late":"")+'"><span class="tm">'+esc(e.time||(e.who?"기한":"종일"))+'</span><div class="bd"><b>'+(e.who?'<span class="chip tk">할 일 · '+esc(e.who)+'</span>':'')+(e.site?'<span class="chip">'+esc(e.site)+'</span>':'')+esc(e.title)+(e.rep?' <small class="rp">🔁 '+esc(e.rep)+'</small>':'')+'</b>'+(late(e)?'<small class="lt">기한 지남 ('+esc(dLabel(e.date)[1])+')</small>':'')+(e.place?'<small>'+linkify(e.place)+'</small>':'')+(e.result?'<small class="res">→ 결과: '+linkify(e.result)+'</small>':'')+((e.photos||[]).length?'<div class="thumbs">'+e.photos.map(function(p){return'<a class="th" data-ph="'+esc(p)+'" href="#" onclick="showPh(this);return false"></a>'}).join("")+'</div>':'')+ckList(e)+(e.moved?'<small>⏩ '+e.moved+'번 미룸</small>':'')+(e.by?'<small>'+esc(e.by)+' 올림'+(e.doneBy?' · '+esc(e.doneBy)+' 완료':'')+'</small>':'')+'</div><div class="ac">'+
  (BD.del===e.id?'<button class="btn" onclick="delIt(\''+e.id+'\')">'+(e.rep?"이것만":"지우기")+'</button>'+(e.rep?'<button class="btn" onclick="delSeries(\''+e.id+'\')">남은 되풀이 전부</button>':'')+'<button class="btn" onclick="BD.del=\'\';bdDraw()">아니요</button>':
   BD.pp===e.id?'<button class="btn" onclick="moveEv(\''+e.id+'\',addDays(today()>e.date?today():e.date,1))">하루 뒤</button><button class="btn" onclick="moveEv(\''+e.id+'\',addDays(today()>e.date?today():e.date,7))">일주일 뒤</button><input type="date" class="ppd" aria-label="날짜 고르기" onchange="moveEv(\''+e.id+'\',this.value)"><button class="btn" onclick="BD.pp=\'\';bdDraw()">취소</button>':
-  (e.done?'':'<button class="btn" title="미루기" aria-label="미루기" onclick="BD.pp=\''+e.id+'\';bdDraw()">⏩</button>')+(e.done?'':'<a class="btn" href="'+esc(gcal(e))+'" target="_blank" rel="noopener" title="내 폰 달력에 넣기" aria-label="내 달력에 넣기">📆</a>')+shareEv(e.id)+'<button class="btn" onclick="doneEv(\''+e.id+'\')">'+(e.done?"되돌리기":"완료")+'</button><button class="btn" aria-label="지우기" onclick="BD.del=\''+e.id+'\';bdDraw()">✕</button>')+'</div></div>'}
+  (e.done?'':'<button class="btn" title="미루기" aria-label="미루기" onclick="BD.pp=\''+e.id+'\';bdDraw()">⏩</button>')+(e.done?'':'<a class="btn" href="'+esc(gcal(e))+'" target="_blank" rel="noopener" title="내 폰 달력에 넣기" aria-label="내 달력에 넣기">📆</a>')+shareEv(e.id)+'<button class="btn" title="복사해서 새로 넣기" aria-label="복사해서 새로 넣기" onclick="copyEv(\''+e.id+'\')">📋</button><button class="btn" onclick="doneEv(\''+e.id+'\')">'+(e.done?"되돌리기":"완료")+'</button><button class="btn" aria-label="지우기" onclick="BD.del=\''+e.id+'\';bdDraw()">✕</button>')+'</div></div>'}
 function evGroup(l){var g={},ks=[];l.forEach(function(e){if(!g[e.date]){g[e.date]=[];ks.push(e.date)}g[e.date].push(e)});
  return ks.map(function(k){var L=dLabel(k);return'<div class="day"><div class="dh'+(L[2]===0?" td":"")+'">'+esc(L[0]||L[1])+(L[0]?' <small>'+esc(L[1])+'</small>':'')+'</div>'+g[k].map(evRow).join("")+'</div>'}).join("")}
 function evs(){return BD.items.filter(function(o){return o.kind==="event"}).sort(function(a,b){return(a.date+(a.time||"00:00")).localeCompare(b.date+(b.time||"00:00"))})}
@@ -459,7 +460,7 @@ function postRow(o){var ok=o.status==="반영",site=o.site||(ok&&o.note&&o.note.
   (BD.me&&(o.seen||[]).indexOf(BD.me)<0&&o.by!==BD.me?'<button class="btn" onclick="ackPost(\''+o.id+'\')">👀 확인했어요</button>':'')+
   '<button class="btn" onclick="BD.rp=BD.rp===\''+o.id+'\'?\'\':\''+o.id+'\';bdDraw();var r=$(\'rpT\');if(r)r.focus()">💬 답글</button>'+sharePost(o.id)+'<button class="btn" onclick="pinPost(\''+o.id+'\')">'+(o.pin?"📌 고정 풀기":"📌 공지로 고정")+'</button>'+
   (BD.me&&o.by===BD.me&&!ok?'<button class="btn" onclick="BD.ed=\''+o.id+'\';bdDraw();var t=$(\'edT\');if(t)t.focus()">✏️ 고치기</button><button class="btn" onclick="delPost(\''+o.id+'\')">🗑 지우기</button>':'')+'</div>'+
-  (BD.rp===o.id?'<form class="rpf" onsubmit="addReply(event,\''+o.id+'\')"><input id="rpT" placeholder="답글 쓰기 (예: 내일 제가 연락해 보겠습니다)" autocomplete="off"><button class="btn p">올리기</button></form>':'')+'</div>'}
+  (BD.rp===o.id?'<form class="rpf" onsubmit="addReply(event,\''+o.id+'\')"><input id="rpT" placeholder="답글 쓰기 (예: 내일 제가 연락해 보겠습니다)" autocomplete="off"><button class="btn p">올리기</button>'+micBtn("rpT")+'</form>':'')+'</div>'}
 async function bumpPost(id,fn){await bdLoad();var o=itOf(id);if(!o)return;var c=strip(o);fn(c);await rpc("pm_set",{id_:id,box_:await encJ(c)});await bdLoad()}
 async function ackPost(id){if(!BD.me)return toast("올리는 사람 칸에 이름을 먼저 넣어 주세요");try{await bumpPost(id,function(c){c.seen=c.seen||[];if(c.seen.indexOf(BD.me)<0)c.seen.push(BD.me)});toast("확인 표시를 남겼습니다")}catch(e){toast("남기지 못했습니다")}}
 async function addReply(ev,id){ev.preventDefault();var t=($("rpT").value||"").trim();if(!t)return;if(!BD.me)return toast("올리는 사람 칸에 이름을 먼저 넣어 주세요");
@@ -685,11 +686,11 @@ async function addPack(){var d=$("evD").value,s=$("evS").value,w=($("evW").value
   $("evN").value="";toast("총회 준비 일정 "+list.length+"개를 넣었습니다");bdLoad()}catch(e){toast("넣지 못했습니다 — 인터넷 연결 확인");bdLoad()}}
 // ── 사용법 (크게·짧게, 누르면 펼쳐짐) ──
 var HELP=[
- ["📮","현장 소식·사진 올리기",["「📮 여기에 올리기」를 누릅니다","현장을 고르고 글을 쓰거나 「사진 찍기」를 누릅니다 (5장까지)","아래 빠른 문구 버튼을 누르면 날짜와 함께 바로 들어갑니다","「올리기」를 누르면 함께 쓰는 분들 화면과 폰 알림으로 갑니다","인터넷이 약해 실패해도 글은 남아 있고, 연결되면 자동으로 다시 올립니다"]],
- ["📅","일정·할 일 넣기",["「📅 일정」에서 날짜와 할 일을 넣고 「일정 올리기」","「맡을 사람」에 이름을 넣으면 그분의 「내 할 일」과 폰 알림으로 갑니다","「되풀이」로 매주·매달 일정을 한 번에 넣습니다","총회는 「🗳 총회 준비 묶음」으로 30일 전부터 할 일이 한 번에 들어갑니다","끝나면 「완료」를 누르고 결과 한 줄을 남깁니다","📆 버튼으로 내 폰 달력에도 넣을 수 있습니다"]],
+ ["📮","현장 소식·사진 올리기",["「📮 여기에 올리기」를 누릅니다","현장을 고르고 글을 쓰거나 「사진 찍기」를 누릅니다 (5장까지)","아래 빠른 문구 버튼을 누르면 날짜와 함께 바로 들어갑니다","「올리기」를 누르면 함께 쓰는 분들 화면과 폰 알림으로 갑니다","인터넷이 약해 실패해도 글은 남아 있고, 연결되면 자동으로 다시 올립니다","「🎤 말로 쓰기」를 누르고 말하면 글자로 들어갑니다","사진에는 찍은 날짜·현장이 글자로 들어갑니다 (끄려면 체크 풀기)","모두 꼭 봐야 할 글은 「📌 공지로 고정」 → 첫 화면 맨 위에 보입니다"]],
+ ["📅","일정·할 일 넣기",["「📅 일정」에서 날짜와 할 일을 넣고 「일정 올리기」","「맡을 사람」에 이름을 넣으면 그분의 「내 할 일」과 폰 알림으로 갑니다","「되풀이」로 매주·매달 일정을 한 번에 넣습니다","총회는 「🗳 총회 준비 묶음」으로 30일 전부터 할 일이 한 번에 들어갑니다","끝나면 「완료」를 누르고 결과 한 줄을 남깁니다","📆 버튼으로 내 폰 달력에도 넣을 수 있습니다","⏩ 로 하루 뒤·일주일 뒤로 미루고, 📋 로 같은 일정을 복사해 다른 날 넣습니다","「＋ 세부 항목」으로 준비물·할 일을 나눠 하나씩 ☑ 합니다","「📊 엑셀로 받기」로 일정 전체를 엑셀 파일로 받습니다"]],
  ["💬","답글·확인",["글 아래 「💬 답글」로 대화합니다 (글쓴이에게 알림이 갑니다)","읽었으면 「👀 확인했어요」를 누릅니다","내가 쓴 「대기」 글은 「✏️ 고치기」「🗑 지우기」가 됩니다"]],
  ["📤","카톡으로 보내기",["노란 📤 버튼을 누르면 폰에서는 공유 창이 열립니다 → 카카오톡 선택","PC에서는 복사됩니다 → 카톡 대화창에 붙여넣기","일정 묶음·현장 요약·연락처·주간 보고도 같은 방법입니다"]],
- ["🔔","폰 알림",["첫 화면 「🔔 폰 알림 켜기」를 한 번 누르고 「허용」","새 글·새 일정, 맡은 할 일, 답글, 일정 1시간 전, 아침 요약, 금요일 주간 보고를 알려 드립니다","알림은 사무실 PC의 실행기가 켜져 있을 때 갑니다"]],
+ ["🔔","폰 알림",["첫 화면 「🔔 폰 알림 켜기」를 한 번 누르고 「허용」","새 글·새 일정, 맡은 할 일, 답글, 일정 1시간 전, 저녁 6시 내일 일정, 아침 요약, 금요일 주간 보고를 알려 드립니다","알림은 사무실 PC의 실행기가 켜져 있을 때 갑니다"]],
  ["🗒","보고서·사진첩·문서",["「🗒 주간 보고」: 지난주·이번 주·지난달·이번 달 보고서와 현장 진행표 → 인쇄·PDF·카톡","「📷 사진첩」: 올라온 사진을 현장·달별로","「🔍 서류 찾기」: 모든 현장 문서함을 파일 이름으로 찾기 (폰은 「보내 달라고 하기」)"]],
  ["⚖","법정 기한 (참고용)",["일정 제목에 「총회」「대의원회」「이사회」가 있으면 소집 통지·의사록 공개 마감을 계산해 보여 줍니다","4단계 이후 현장은 분기별 조합원 서면 통지 마감이 14일 전부터 뜹니다","참고용입니다. 정관과 최신 법령을 꼭 확인하세요"]],
  ["↻","화면이 이상할 때",["위쪽 ↻ 를 누르면 새로 고칩니다","🏠 는 처음 화면, ← 뒤로 는 앞 화면입니다","폰 홈 화면에 앱처럼 두기: 크롬 ⋮ → 「홈 화면에 추가」 → 「설치」"]]];
@@ -704,7 +705,7 @@ function applyFs(){var z=(FS[getFs()]||FS[0])[1];document.body.style.zoom=z===1?
 function fsBox(){return'<div class="fsb"><b>글씨 크기</b> <span class="sm">(이 기기에만)</span><div class="seg fss">'+FS.map(function(f,i){return'<button class="'+(getFs()===i?"on":"")+'" onclick="setFs('+i+')" style="font-size:'+(14*f[1])+'px">'+f[0]+'</button>'}).join("")+'</div></div>'}
 try{applyFs()}catch(e){}
 // ── 알림 골라 받기 (이 폰 등록에 저장 · PC가 보낼 때 확인) ──
-var NK=[["new","새 글·새 일정"],["task","나에게 맡긴 할 일"],["reply","내 글의 답글"],["soon","일정 1시간 전"],["morning","아침 요약"],["weekly","금요일 주간 보고"]];
+var NK=[["new","새 글·새 일정"],["task","나에게 맡긴 할 일"],["reply","내 글의 답글"],["soon","일정 1시간 전"],["eve","저녁 6시 내일 일정"],["morning","아침 요약"],["weekly","금요일 주간 보고"]];
 function mySub(){var e="";try{e=localStorage.getItem("pm_push")||""}catch(x){}return(BD.subs||[]).filter(function(o){return o.sub&&o.sub.endpoint===e})[0]}
 function notiBox(){var m=mySub();if(!m)return"";var off=m.off||{};
  return'<div class="fsb"><b>🔔 받을 알림 고르기</b> <span class="sm">(이 폰에만)</span>'+NK.map(function(k){return'<label class="nk"><input type="checkbox" '+(off[k[0]]?'':'checked')+' onchange="setNoti(\''+k[0]+'\',this.checked)"> '+k[1]+'</label>'}).join("")+'</div>'}
@@ -759,6 +760,18 @@ function clash(d,t,w){var a=evs().filter(function(e){return e.date===d&&!e.done}
  var ww=w?a.filter(function(e){return e.who===w}):[];if(ww.length)m.push("⚠ "+w+"님은 이날 할 일이 이미 "+ww.length+"개 있습니다: "+ww.map(function(e){return e.title}).join(", "));
  return m.join("\n")}
 function tmin(s){var p=(s||"0:0").split(":");return+p[0]*60+(+p[1]||0)}
+// ── 일정 세부 체크 항목 (예: 안건지 인쇄 ☐ 참석자 명단 ☐) ──
+function ckList(e){var a=e.ck||[];return'<div class="ckl">'+a.map(function(c,i){return'<button class="ck'+(c.d?" on":"")+'" onclick="ckTog(\''+e.id+'\','+i+')">'+(c.d?"☑":"☐")+' '+esc(c.t)+'</button>'}).join("")+
+ (e.done?'':'<button class="ck add" onclick="ckAdd(\''+e.id+'\')">＋ 세부 항목</button>')+(a.length?'<small>'+a.filter(function(c){return c.d}).length+'/'+a.length+' 끝냄</small>':'')+'</div>'}
+async function ckSave(id,fn){var e=itOf(id);if(!e)return;var c=strip(e);c.ck=(c.ck||[]).map(function(x){return Object.assign({},x)});fn(c.ck);try{await rpc("pm_set",{id_:id,box_:await encJ(c)});bdLoad()}catch(x){toast("바꾸지 못했습니다")}}
+function ckAdd(id){var t=window.prompt("세부 항목을 적어 주세요\n여러 개는 쉼표(,)로 나눕니다\n예) 안건지 인쇄, 참석자 명단, 위임장 확인","");if(!t)return;
+ var a=t.split(/[,，]/).map(function(s){return s.trim()}).filter(Boolean);if(a.length)ckSave(id,function(l){a.forEach(function(s){l.push({t:s,d:false})})})}
+function ckTog(id,i){ckSave(id,function(l){if(l[i]){l[i].d=!l[i].d;l[i].by=l[i].d?BD.me||"":""}})}
+// ── 일정 복사해서 새로 넣기 (날짜만 새로 고르기) ──
+function copyEv(id){var e=itOf(id);if(!e)return;var f=function(){if(!$("evN"))return;$("evN").value=e.title||"";$("evT").value=e.time||"";$("evP").value=e.place||"";$("evW").value=e.who||"";
+  var s=$("evS");if(s&&[].some.call(s.options,function(o){return o.value===e.site}))s.value=e.site;$("evD").value=e.date>=today()?addDays(e.date,7):today();
+  $("evD").scrollIntoView({block:"center"});$("evD").focus();toast("내용을 채웠습니다 — 날짜를 고르고 「일정 올리기」")};
+ if($("evN"))f();else{go("일정");setTimeout(f,300)}}
 // ── 일정 엑셀(CSV) 내려받기 ──
 function evCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
  var rows=[["날짜","시간","현장","할 일·약속","맡은 사람","장소·메모","완료","결과","올린 사람","완료한 사람"]].concat(evs().map(function(e){return[e.date,e.time,e.site,e.title,e.who,e.place,e.done?"완료":"",e.result,e.by,e.doneBy]}));
