@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794625384575";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794625803879";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -192,6 +192,9 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
 .dqr{border-top:1px solid var(--line);padding:6px 0}.dqr>small{margin-left:6px;color:var(--sub)}.dqr .doc{border:none;padding:4px 0}
 .edw textarea{width:100%;font-size:16px;padding:8px;border:1px solid var(--line);margin:4px 0}.edm{color:var(--sub)}
 .pkb{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}.pkb .sm{display:block;margin-top:4px}
+.hlp details{border:1px solid var(--line);background:#fff;margin:6px 0;padding:8px 12px}.hlp summary{font-size:17px;font-weight:700;cursor:pointer}.hlp ol{margin:8px 0 4px;padding-left:22px;line-height:1.7;font-size:15px}.fsb{background:#fff;border:1px solid var(--line);padding:8px 12px;margin:6px 0}.fsb .seg{max-width:360px;margin-top:6px}.fss{display:flex!important}.fss button{flex:1}
+.nk{display:block;font-size:16px;padding:5px 0}.nk input{width:20px;height:20px;vertical-align:middle}
+.fqd>small{color:var(--sub);font-size:12px}.fql{border-top:1px solid var(--line);padding:6px 0;font-size:15px}
 .phoneOnly{display:none}body.phone .phoneOnly{display:inline-flex}
 </style></head><body>
 <div class="top">
@@ -202,7 +205,7 @@ dialog input{width:100%;padding:8px;margin:4px 0 12px;border:1px solid var(--lin
   <span id="catTag" class="cat"></span>
   <b class="curName" id="curName"></b><select class="site" id="siteSel" aria-label="현장 선택" hidden></select>
   <button class="ib phoneOnly" title="처음으로" aria-label="처음으로" onclick="toggleNav(0);go('전체')">🏠</button><button class="ib phoneOnly" title="새로 고침" aria-label="새로 고침" onclick="location.replace(location.pathname+'?v='+Date.now())">↻</button>
-  <button class="ib" title="찾기 (/)" onclick="go('서류',1)">🔍</button>
+  <button class="ib" title="전체 찾기 (/)" onclick="go('찾기')">🔍</button>
   <button class="ib" title="메뉴" onclick="toggleMenu()">⋯</button>
  </div>
  <nav class="tabs" id="tabs"></nav>
@@ -273,7 +276,7 @@ function toggleNav(v){document.body.classList.toggle("navOpen",v===undefined?und
 function pick(i){cur=i;open=null;toggleNav(0);if(view==="전체")view="홈";depth++;history.pushState(snap(),"");render();window.scrollTo(0,0)}
 function toggleMenu(){$("menu").hidden=!$("menu").hidden}
 document.addEventListener("click",function(e){if(!e.target.closest(".menu,.ib"))$("menu").hidden=true});
-document.addEventListener("keydown",function(e){if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();go("서류",1)}});
+document.addEventListener("keydown",function(e){if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();go("찾기")}});
 
 // ── 함께 쓰기: 일정 · 여기에 올리기 (무료 Supabase, 내용·사진은 비밀번호 열쇠로 잠가서 보냄) ──
 var BD={ready:false,busy:0,err:"",key:null,tok:"",url:"",anon:"",items:[],seen:null,timer:0,pics:[],img:{},del:"",bell:false,ac:null};
@@ -661,13 +664,57 @@ async function addPack(){var d=$("evD").value,s=$("evS").value,w=($("evW").value
  list.push({date:d,title:n});
  try{for(var k=0;k<list.length;k++)await rpc("pm_add",{kind_:"event",box_:await encJ({date:list[k].date,time:list[k].pk?"":$("evT").value,site:s,title:list[k].title,place:list[k].pk?"":$("evP").value.trim(),who:list[k].pk?w:"",by:BD.me,at:at0,done:false,pk:list[k].pk?n:"",rs:at0})});
   $("evN").value="";toast("총회 준비 일정 "+list.length+"개를 넣었습니다");bdLoad()}catch(e){toast("넣지 못했습니다 — 인터넷 연결 확인");bdLoad()}}
+// ── 사용법 (크게·짧게, 누르면 펼쳐짐) ──
+var HELP=[
+ ["📮","현장 소식·사진 올리기",["「📮 여기에 올리기」를 누릅니다","현장을 고르고 글을 쓰거나 「사진 찍기」를 누릅니다 (5장까지)","아래 빠른 문구 버튼을 누르면 날짜와 함께 바로 들어갑니다","「올리기」를 누르면 함께 쓰는 분들 화면과 폰 알림으로 갑니다","인터넷이 약해 실패해도 글은 남아 있고, 연결되면 자동으로 다시 올립니다"]],
+ ["📅","일정·할 일 넣기",["「📅 일정」에서 날짜와 할 일을 넣고 「일정 올리기」","「맡을 사람」에 이름을 넣으면 그분의 「내 할 일」과 폰 알림으로 갑니다","「되풀이」로 매주·매달 일정을 한 번에 넣습니다","총회는 「🗳 총회 준비 묶음」으로 30일 전부터 할 일이 한 번에 들어갑니다","끝나면 「완료」를 누르고 결과 한 줄을 남깁니다","📆 버튼으로 내 폰 달력에도 넣을 수 있습니다"]],
+ ["💬","답글·확인",["글 아래 「💬 답글」로 대화합니다 (글쓴이에게 알림이 갑니다)","읽었으면 「👀 확인했어요」를 누릅니다","내가 쓴 「대기」 글은 「✏️ 고치기」「🗑 지우기」가 됩니다"]],
+ ["📤","카톡으로 보내기",["노란 📤 버튼을 누르면 폰에서는 공유 창이 열립니다 → 카카오톡 선택","PC에서는 복사됩니다 → 카톡 대화창에 붙여넣기","일정 묶음·현장 요약·연락처·주간 보고도 같은 방법입니다"]],
+ ["🔔","폰 알림",["첫 화면 「🔔 폰 알림 켜기」를 한 번 누르고 「허용」","새 글·새 일정, 맡은 할 일, 답글, 일정 1시간 전, 아침 요약, 금요일 주간 보고를 알려 드립니다","알림은 사무실 PC의 실행기가 켜져 있을 때 갑니다"]],
+ ["🗒","보고서·사진첩·문서",["「🗒 주간 보고」: 지난주·이번 주·지난달·이번 달 보고서와 현장 진행표 → 인쇄·PDF·카톡","「📷 사진첩」: 올라온 사진을 현장·달별로","「🔍 서류 찾기」: 모든 현장 문서함을 파일 이름으로 찾기 (폰은 「보내 달라고 하기」)"]],
+ ["⚖","법정 기한 (참고용)",["일정 제목에 「총회」「대의원회」「이사회」가 있으면 소집 통지·의사록 공개 마감을 계산해 보여 줍니다","4단계 이후 현장은 분기별 조합원 서면 통지 마감이 14일 전부터 뜹니다","참고용입니다. 정관과 최신 법령을 꼭 확인하세요"]],
+ ["↻","화면이 이상할 때",["위쪽 ↻ 를 누르면 새로 고칩니다","🏠 는 처음 화면, ← 뒤로 는 앞 화면입니다","폰 홈 화면에 앱처럼 두기: 크롬 ⋮ → 「홈 화면에 추가」 → 「설치」"]]];
+function help(){return'<div class="bdw hlp"><h2 class="bdh">❓ 사용법</h2><p class="sm">궁금한 것을 누르면 펼쳐집니다.</p>'+fsBox()+notiBox()+
+ HELP.map(function(h,i){return'<details'+(i===0?' open':'')+'><summary><span>'+h[0]+'</span> '+esc(h[1])+'</summary><ol>'+h[2].map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ol></details>'}).join("")+
+ '<div class="bdbar">'+shBtn("invite","함께 쓸 분 초대하기 (카톡)")+'</div></div>'}
+// ── 글씨 크기 (이 기기에만 · 기본은 보통) ──
+var FS=[["보통",1],["크게",1.15],["아주 크게",1.3]];
+function getFs(){try{return+(localStorage.getItem("pm_fs")||0)}catch(e){return 0}}
+function setFs(i){try{localStorage.setItem("pm_fs",i)}catch(e){}applyFs();render()}
+function applyFs(){var z=(FS[getFs()]||FS[0])[1];document.body.style.zoom=z===1?"":z}
+function fsBox(){return'<div class="fsb"><b>글씨 크기</b> <span class="sm">(이 기기에만)</span><div class="seg fss">'+FS.map(function(f,i){return'<button class="'+(getFs()===i?"on":"")+'" onclick="setFs('+i+')" style="font-size:'+(14*f[1])+'px">'+f[0]+'</button>'}).join("")+'</div></div>'}
+try{applyFs()}catch(e){}
+// ── 알림 골라 받기 (이 폰 등록에 저장 · PC가 보낼 때 확인) ──
+var NK=[["new","새 글·새 일정"],["task","나에게 맡긴 할 일"],["reply","내 글의 답글"],["soon","일정 1시간 전"],["morning","아침 요약"],["weekly","금요일 주간 보고"]];
+function mySub(){var e="";try{e=localStorage.getItem("pm_push")||""}catch(x){}return(BD.subs||[]).filter(function(o){return o.sub&&o.sub.endpoint===e})[0]}
+function notiBox(){var m=mySub();if(!m)return"";var off=m.off||{};
+ return'<div class="fsb"><b>🔔 받을 알림 고르기</b> <span class="sm">(이 폰에만)</span>'+NK.map(function(k){return'<label class="nk"><input type="checkbox" '+(off[k[0]]?'':'checked')+' onchange="setNoti(\''+k[0]+'\',this.checked)"> '+k[1]+'</label>'}).join("")+'</div>'}
+async function setNoti(k,on){var m=mySub();if(!m)return;var c=Object.assign({},m);delete c.id;delete c.kind;c.off=Object.assign({},c.off||{});if(on)delete c.off[k];else c.off[k]=1;
+ try{await rpc("pm_set",{id_:m.id,box_:await encJ(c)});m.off=c.off;toast(on?"켰습니다":"껐습니다")}catch(e){toast("저장하지 못했습니다 — 인터넷 연결 확인");render()}}
+// ── 통합 찾기: 글·답글·일정·연락처·문서·작업 기록을 한 번에 ──
+var FQ="";
+function findAll(){return'<div class="bdw"><h2 class="bdh">🔍 전체 찾기</h2><input id="fq" class="search" type="search" placeholder="예) 조합장, 견적, 온천8, 김대리" value="'+esc(FQ)+'" oninput="FQ=this.value;$(\'fqh\').innerHTML=findHits()">'+
+ '<p class="sm">올라온 글·답글, 일정·할 일, 연락처, 문서함 파일, 작업 기록에서 함께 찾습니다. 낱말 여러 개는 띄어 쓰면 모두 들어간 것만 나옵니다. <a href="#" onclick="go(\'서류\',1);return false">이 현장 서류·양식 보기 ›</a></p><div id="fqh">'+findHits()+'</div></div>'}
+function fqm(t){var ws=FQ.trim().toLowerCase().split(/\s+/);t=String(t||"").toLowerCase();return ws.every(function(w){return t.indexOf(w)>=0})}
+function findHits(){var q=FQ.trim();if(q.length<1)return'<div class="empty">찾을 낱말을 넣어 주세요.</div>';var h="",n=0,C9=function(a){return a.slice(0,15)};
+ var ps=BD.ready?BD.items.filter(function(o){return o.kind==="post"&&fqm([o.site,o.text,o.by,o.note,(o.replies||[]).map(function(r){return r.by+" "+r.text}).join(" ")].join(" "))}).sort(function(a,b){return(b.at||"").localeCompare(a.at||"")}):[];
+ if(ps.length){n+=ps.length;h+='<div class="rech">📮 글·답글 '+ps.length+'건</div>'+C9(ps).map(postRow).join("")}
+ var ev=BD.ready?evs().filter(function(e){return fqm([e.site,e.title,e.place,e.who,e.result,e.by].join(" "))}).reverse():[];
+ if(ev.length){n+=ev.length;h+='<div class="rech">📅 일정·할 일 '+ev.length+'건</div>'+C9(ev).map(function(e){return'<div class="fqd"><small>'+esc(e.date)+'</small>'+evRow(e)+'</div>'}).join("")}
+ var ct=allContacts().filter(function(c){return fqm([c.site,c.role,c.name,c.person,c.phone,c.note].join(" "))});
+ if(ct.length){n+=ct.length;var keep=CQ;CQ=q;h+='<div class="rech">📞 연락처 '+ct.length+'건</div>'+ctList();CQ=keep}
+ var dc=docAll().filter(function(f){return fqm(f.site+" "+f.sub+" "+f.name)});
+ if(dc.length){n+=dc.length;var k2=DQ;DQ=q;h+='<div class="rech">🗂 문서 '+dc.length+'건</div>'+docHits();DQ=k2}
+ var lg=[];SITES.forEach(function(s){siteLog(s).forEach(function(l){if(fqm(nm(s)+" "+l.text))lg.push({s:nm(s),date:l.date,text:l.text})})});lg.sort(function(a,b){return(b.date||"").localeCompare(a.date||"")});
+ if(lg.length){n+=lg.length;h+='<div class="rech">📝 작업 기록 '+lg.length+'건</div>'+C9(lg).map(function(l){return'<div class="fql"><b>'+esc(md(l.date||"0000-00-00"))+'</b> <span class="chip">'+esc(l.s)+'</span>'+esc(l.text)+'</div>'}).join("")}
+ setTimeout(bdThumbs,50);return n?h:'<div class="empty">「'+esc(q)+'」 찾은 것이 없습니다.</div>'}
 // ── 화면 ──
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
- var BV=/^(전체|일정|올리기|연락처|보고서|사진)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
+ var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  $("backB").hidden=(depth===0&&view==="전체");
  $("mode").textContent=window.__AT?"📱 폰 보기 · "+window.__AT+" 올린 내용 · 파일 열기·체크는 사무실 PC에서":SERVER?"● 실행기 연결됨 — 「열기」로 바로 열리고, 체크·메모는 PM업무관리 폴더에 저장됩니다":"○ 미리보기 모드 — 바탕화면 「PM업무관리」 아이콘으로 열어야 파일 열기·폴더 저장이 됩니다";
@@ -701,6 +748,7 @@ function toolbar(){var pc=!window.__AT,t=[];
  t.push('<button class="tool" onclick="go(\'연락처\')"><b>📞</b>연락처</button>');
  t.push('<button class="tool" onclick="go(\'보고서\')"><b>🗒</b>주간 보고</button>');
  t.push('<button class="tool" onclick="goAlbum()"><b>📷</b>사진첩</button>');
+ t.push('<button class="tool" onclick="go(\'사용법\')"><b>❓</b>사용법</button>');
  if(pc)t.push('<button class="tool" onclick="openRoot()"><b>🗂</b>문서함</button>');
  var v=siteIdx(/투·개표/);if(v>=0)t.push('<button class="tool" onclick="pick('+v+')"><b>🗳</b>투·개표</button>');
  var k=siteIdx(/기타 서류/);if(k>=0)t.push('<button class="tool" onclick="pick('+k+')"><b>📇</b>명함·회사</button>');
