@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794734940947";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794735267420";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -967,7 +967,7 @@ function postCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(
  var rows=[["올린 때","현장","쓴 사람","내용","상태","정리 메모","사진","파일","답글","확인한 분"]].concat(a.map(function(o){return[(o.at||"").slice(0,16).replace("T"," "),o.site,o.by,o.text,o.status,o.note,(o.photos||[]).length,(o.files||[]).map(function(f){return f.n}).join(" / "),(o.replies||[]).map(function(r){return r.by+": "+r.text}).join(" / "),(o.seen||[]).join(", ")]}));
  var b=new Blob(["\ufeff"+rows.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv;charset=utf-8"}),l=document.createElement("a");l.href=URL.createObjectURL(b);l.download="올린글-"+today()+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(l.href);l.remove()},2000);toast("글 "+a.length+"건을 엑셀 파일로 받았습니다")}
 // ── 새로 생긴 기능 안내 (바뀔 때 한 번) ──
-var NEWV="2026-11-15i",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
+var NEWV="2026-11-15j",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
 function newsCard(){if(!BD.me)return"";try{if(localStorage.getItem("pm_newv")===NEWV)return""}catch(e){return""}
  return'<div class="wel nws"><h3>✨ 새로 생긴 기능</h3><ul>'+NEWS_L.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul><button class="btn p" onclick="try{localStorage.setItem(\'pm_newv\',NEWV)}catch(e){};render()">잘 봤습니다</button> <button class="btn" onclick="go(\'사용법\')">사용법 보기</button></div>'}
 // ── 장소 자동완성 (최근 쓴 장소) ──
@@ -1350,7 +1350,7 @@ function render(){
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
  var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비|비례율)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView,지도:mapView}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView,지도:mapView,최근문서:rcView}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  else if(view==="올리기"||view==="경비"){var pz=$(view==="경비"?"exS":"poS"),ls=lastSite();if(pz&&!pz.value&&ls&&[].some.call(pz.options,function(x){return x.value===ls}))pz.value=ls}
  $("backB").hidden=(depth===0&&view==="전체");
@@ -1402,6 +1402,7 @@ function toolbar(){var pc=!window.__AT,t=[];
  t.push('<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>');
  t.push('<button class="tool" onclick="go(\'연락처\')"><b>📞</b>연락처</button>');
  t.push('<button class="tool" onclick="go(\'지도\')"><b>🗺</b>현장 지도</button>');
+ if(pc)t.push('<button class="tool" onclick="RECENT=null;go(\'최근문서\')"><b>🆕</b>최근 문서</button>');
  t.push('<button class="tool" onclick="go(\'보고서\')"><b>🗒</b>주간 보고</button>');
  t.push('<button class="tool" onclick="goAlbum()"><b>📷</b>사진첩</button>');
  t.push('<button class="tool" onclick="go(\'경비\')"><b>💳</b>경비</button>');
@@ -1416,6 +1417,60 @@ var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",
 
 
 
+
+// ── 고도화 2차 10 (2026-11-15) ──
+// 1. 미동의자 「받음」 체크 (이 PC에 날짜와 함께 기억)
+function rcvAll(){try{return JSON.parse(localStorage.getItem("pm_rcv")||"{}")}catch(e){return{}}}
+function rcvOf(){return rcvAll()[CNT.site]||{}}
+function rcvSet(no,on){var a=rcvAll(),m=a[CNT.site]=a[CNT.site]||{};if(on)m[no]=today();else delete m[no];try{localStorage.setItem("pm_rcv",JSON.stringify(a))}catch(e){}render()}
+function rcvLine(r){var m=rcvOf(),n=r.notAgree.filter(function(x){return m[x.no]}).length,td=r.notAgree.filter(function(x){return m[x.no]===today()});
+ if(!n)return'<p class="sm">동의서를 받으면 왼쪽 「받음」 칸을 눌러 두세요. 다음 명부 정리 전까지 예상 동의율을 바로 볼 수 있습니다.</p>';
+ var a=r.agree+n;return'<div class="bxs" style="background:#eef7ee;padding:8px 10px;margin:8px 0"><b>받음 표시 '+n+'명 → 예상 동의 '+a+'명 / '+r.total+'명 · '+(a*100/r.total).toFixed(2)+'%</b>'+
+  (td.length?'<br>오늘 받은 사람 '+td.length+'명 <button class="btn s" onclick="rcvCopy()">📋 오늘 받은 사람 복사</button>':'')+'<br><small>명부 엑셀에 동의서 표시를 한 뒤 다시 세면 실제 숫자로 바뀝니다.</small></div>'}
+function rcvCopy(){var m=rcvOf(),L=CNT.res.notAgree.filter(function(x){return m[x.no]===today()});
+ var t=nm(S())+" 오늘 받은 동의서 ("+today()+" · "+L.length+"명)\n"+L.map(function(x){return x.no+"번 "+x.names.join(", ")}).join("\n");var p=copyText(t);if(p&&p.then)p.then(function(){toast("복사했습니다")});else toast("복사했습니다")}
+// 2. 소재지(건물·지번)별 동의 현황 + 지도
+function addrQ(k){var b=(mapQ(S())||"").split(" ").slice(0,2).join(" ");return(b?b+" ":"")+k}
+function cntAddr(r){var L=r.byAddr||[];if(!L.length)return"";var show=CNT.ad?L:L.filter(function(x){return x.na.length}).slice(0,20);
+ return'<div class="card"><h3>🏘 소재지별 동의 현황</h3><p class="sm">건물명이 있으면 건물별로, 없으면 지번별로 묶었습니다. 미동의가 많은 곳부터 — 방문 순서 정할 때 쓰세요.</p>'+
+  '<table style="width:100%;border-collapse:collapse;font-size:15px"><tr style="background:#f3efe6"><th style="padding:6px;text-align:left">소재지</th><th>인원</th><th>동의</th><th>미동의</th><th></th></tr>'+
+  show.map(function(x){return'<tr style="border-top:1px solid #e5dfd2"><td style="padding:6px">'+esc(x.k)+(x.na.length?'<br><small>미동의 '+esc(x.na.slice(0,12).join("·"))+'번'+(x.na.length>12?' …':'')+'</small>':'')+'</td><td style="text-align:center">'+x.t+'</td><td style="text-align:center">'+x.a+' <small>('+Math.round(x.a*100/x.t)+'%)</small></td><td style="text-align:center;color:'+(x.na.length?'#c33':'#2a7')+'">'+x.na.length+'</td><td><button class="btn s" onclick="mapOpen(this.dataset.q)" data-q="'+esc(addrQ(x.k))+'">📍</button></td></tr>'}).join("")+'</table>'+
+  '<p><button class="btn" onclick="CNT.ad=!CNT.ad;render()">'+(CNT.ad?'미동의 있는 곳만 보기':'모든 소재지 보기 ('+L.length+'곳)')+'</button></p></div>'}
+// 3. 토지·건물 구분
+function cntKind(r){var K=r.kind||{},ks=Object.keys(K).filter(function(k){return K[k][0]});if(!ks.length)return"";
+ return'<div class="card"><h3>🧱 소유 구분별</h3><div class="bzk">'+ks.map(function(k){var t=K[k][0],a=K[k][1];return'<div><small>'+esc(k)+' '+t+'명</small><b>'+(a*100/t).toFixed(1)+'%</b><small>동의 '+a+' · 미동의 '+(t-a)+'</small></div>'}).join("")+'</div></div>'}
+// 4. 동의 요청 안내문
+function askPrev(){var s=S(),r=CNT.res,st=stOf(s);
+ var t="["+s.name+" 동의서 제출 안내]\n\n안녕하십니까. "+s.name+" 사업 관련하여 안내드립니다.\n\n"+(st?"현재 「"+st.title+"」 단계를 진행하고 있으며, ":"")+"지금까지 토지등소유자 "+r.total+"명 중 "+r.agree+"명("+r.rate.toFixed(1)+"%)께서 동의해 주셨습니다.\n\n아직 동의서를 내지 않으신 분께서는 사무실로 연락 주시면 찾아뵙고 자세히 설명드리겠습니다.\n궁금하신 점도 편하게 물어봐 주십시오.\n\n· 연락처: \n· 사무실: \n\n감사합니다.";
+ prevBox("✉ 동의 요청 안내문","연락처·사무실을 채우고 문구를 다듬은 뒤 복사하세요. 문자·카톡에 붙여 넣으면 됩니다.",t)}
+// 5. 동의율 추이 그래프
+function cntChart(L){if(L.length<2)return"";var W=320,H=90,mn=Math.min.apply(null,L.map(function(x){return x.r}))-2,mx=Math.max.apply(null,L.map(function(x){return x.r}))+2;
+ var P=L.map(function(x,i){return[10+i*(W-20)/(L.length-1),H-12-(x.r-mn)*(H-24)/(mx-mn||1)]});
+ return'<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:480px;height:auto;display:block;margin:6px 0"><polyline fill="none" stroke="#1f3a5f" stroke-width="2" points="'+P.map(function(p){return p.join(",")}).join(" ")+'"/>'+
+  P.map(function(p,i){return'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#1f3a5f"/><text x="'+p[0]+'" y="'+(p[1]-6)+'" font-size="10" text-anchor="middle">'+Number(L[i].r).toFixed(1)+'</text>'}).join("")+'</svg>'}
+// 6. 비교 결과 복사
+function cmpCopy(){var c=CNT.cmp,f=function(L){return L.map(function(x){return x.name+"("+x.no+"번)"}).join(", ")};
+ var t=nm(S())+" 명부 비교 ("+today()+")\n"+c.oldName+"\n· 이전 "+c.old.agree+"/"+c.old.total+"명 ("+c.old.rate+"%) → 지금 "+c.new.agree+"/"+c.new.total+"명 ("+c.new.rate+"%)\n· 새로 동의 "+c.newAgree.length+"명"+(c.newAgree.length?": "+f(c.newAgree):"")+"\n· 동의 빠짐 "+c.lost.length+"명"+(c.lost.length?": "+f(c.lost):"")+"\n· 새로 들어온 소유자 "+c.added.length+"명 · 빠진 소유자 "+c.removed.length+"명";
+ var p=copyText(t);if(p&&p.then)p.then(function(){toast("비교 결과를 복사했습니다")});else toast("복사했습니다")}
+// 7. 사업개요 짧게
+function bizShort(s){var a=ovRows(s),st=stOf(s),g=function(re){for(var k=0;k<a.length;k++)if(re.test(a[k][0]))return bizClean(a[k][1]);return""};
+ var L=["■ "+nm(s)];if(st)L.push("· 진행: "+st.no+"단계 "+st.title);
+ [["위치",/^위치/],["조합원 수",/^(조합원|토지등소유자)/],["동의율",/^동의/],["규모",/^규모/],["추정 비례율",/^추정 비례율/]].forEach(function(x){var v=g(x[1]);if(v&&v!=="—")L.push("· "+x[0]+": "+v.split(" — ")[0])});
+ var c=SERVER&&cntLast(s.name);if(c)L.push("· 최근 명부 집계: 동의 "+c.a+"/"+c.t+"명 ("+Number(c.r).toFixed(2)+"%, "+c.d+")");
+ var q=mapQ(s);if(q)L.push("📍 "+mapUrl(q));L.push("("+today()+" 기준)");return L.join("\n")}
+// 9. 문서함 안에서 파일 이름 찾기
+function boxFilter(v){v=v.trim().toLowerCase();document.querySelectorAll("#boxList .doc").forEach(function(d){var n=(d.querySelector(".n b")||{}).textContent||"";d.style.display=!v||n.toLowerCase().indexOf(v)>=0?"":"none"});
+ document.querySelectorAll("#boxList .bxs").forEach(function(g){var any=[].some.call(g.querySelectorAll(".doc"),function(d){return d.style.display!=="none"});g.style.display=any?"":"none"})}
+// 10. 최근 넣은 문서 (모든 현장)
+var RECENT=null,RDAYS=7;
+function rcView(){if(!SERVER)return'<div class="card"><div class="empty">사무실 PC에서만 볼 수 있습니다</div></div>';
+ if(!RECENT){RECENT="…";api("/api/recent?days="+RDAYS).then(function(r){RECENT=r.files||[];render()}).catch(function(){RECENT=[];render()})}
+ var h='<div class="card"><h3>🆕 최근 넣은 문서 — '+RDAYS+'일</h3><p class="sm">모든 현장 문서함에서 최근에 넣거나 고친 파일입니다. '+[3,7,30].map(function(d){return'<button class="btn'+(d===RDAYS?' p':'')+' s" onclick="RDAYS='+d+';RECENT=null;render()">'+d+'일</button>'}).join(" ")+'</p>';
+ if(RECENT==="…")return h+'<div class="empty">불러오는 중…</div></div>';
+ if(!RECENT.length)return h+'<div class="empty">이 기간에 넣은 문서가 없습니다</div></div>';
+ var g={};RECENT.forEach(function(f){(g[f.date]=g[f.date]||[]).push(f)});
+ return h+Object.keys(g).sort().reverse().map(function(d){return'<div class="bxs"><div class="bxh">'+esc(d)+' <span>'+g[d].length+'건</span></div>'+g[d].map(function(f){var e=ext(f.name);
+  return'<div class="doc"><span class="ext '+e+'">'+e.toUpperCase()+'</span><div class="n"><b>'+esc(f.name)+'</b><small>'+esc(f.site+" · "+f.sub.replace(/^\d+_/,""))+'</small></div><div class="acts"><button class="btn p" onclick="openDoc(this,0)" data-f="'+esc(f.file)+'" data-r="0">열기</button> <button class="btn s" title="폴더에서 보기" onclick="openDoc(this,1)" data-f="'+esc(f.file)+'" data-r="0">📁</button></div></div>'}).join("")+'</div>'}).join("")+'</div>'}
 // ── 명부 집계 더하기 (2026-11-15 고도화 10) ──
 function cntH(){try{return JSON.parse(localStorage.getItem("pm_cnth")||"{}")}catch(e){return{}}}
 function cntKeep(site,f,r){var h=cntH(),L=h[site]=h[site]||[],d=today(),fn=f.split("/").pop();
@@ -1423,7 +1478,7 @@ function cntKeep(site,f,r){var h=cntH(),L=h[site]=h[site]||[],d=today(),fn=f.spl
  try{localStorage.setItem("pm_cnth",JSON.stringify(h))}catch(e){}}
 function cntLast(site){var L=cntH()[site]||[];return L[L.length-1]||null}
 function cntHistBox(){var L=(cntH()[CNT.site]||[]).slice().reverse();if(!L.length)return"";
- return'<div class="card"><h3>📈 집계 기록 (이 PC)</h3>'+L.slice(0,10).map(function(x,i){var p=L[i+1],dd=p?x.a-p.a:0;
+ return'<div class="card"><h3>📈 집계 기록 (이 PC)</h3>'+cntChart(L.slice(0,12).reverse())+L.slice(0,10).map(function(x,i){var p=L[i+1],dd=p?x.a-p.a:0;
   return'<div class="doc"><div class="n"><b>'+esc(x.d)+' · 동의 '+x.a+'명 / '+x.t+'명 · '+Number(x.r).toFixed(2)+'%'+(p&&dd?' <span style="color:'+(dd>0?'#2a7':'#c33')+'">('+(dd>0?'+':'')+dd+'명)</span>':'')+'</b><small>'+esc(x.fn)+'</small></div></div>'}).join("")+'</div>'}
 // 3. 목표 동의율까지 몇 명 더
 function cntNeed(t,num,den){return Math.max(0,Math.ceil(t*num/den-1e-9))}
@@ -1440,9 +1495,9 @@ function cntGoalSet(){var v=$("goalIn").value;try{localStorage.setItem("pm_goal"
 function cntNa(r){var L=r.notAgree||[];if(!L.length)return'<div class="card"><h3>✅ 미동의자 없음</h3></div>';
  var show=CNT.all?L:L.slice(0,30);
  return'<div class="card"><h3>📝 미동의자 명단 '+L.length+'명</h3><p class="sm">동의서를 아직 못 받은 번호입니다. 공유자는 못 받은 사람 이름만 적었습니다.</p>'+
-  '<button class="btn p" onclick="cntNaCopy()">📋 명단 복사</button> <button class="btn" onclick="cntNaSave()">💾 엑셀로 저장 (명부 옆에)</button>'+
-  '<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:15px"><tr style="background:#f3efe6"><th style="padding:6px;text-align:left">번호</th><th style="text-align:left">미동의 소유자</th><th style="text-align:left">소재지</th></tr>'+
-  show.map(function(x){return'<tr style="border-top:1px solid #e5dfd2"><td style="padding:6px">'+esc(x.no)+'</td><td>'+esc(x.names.join(", "))+(x.all>1?' <small>(공유 '+x.all+'명)</small>':'')+'</td><td>'+esc(x.addr)+'</td></tr>'}).join("")+'</table>'+
+  rcvLine(r)+'<button class="btn p" onclick="cntNaCopy()">📋 명단 복사</button> <button class="btn" onclick="cntNaSave()">💾 엑셀로 저장 (명부 옆에)</button> <button class="btn" onclick="askPrev()">✉ 동의 요청 안내문</button>'+
+  '<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:15px"><tr style="background:#f3efe6"><th style="padding:6px">받음</th><th style="padding:6px;text-align:left">번호</th><th style="text-align:left">미동의 소유자</th><th style="text-align:left">소재지</th></tr>'+
+  show.map(function(x){var g=rcvOf()[x.no];return'<tr style="border-top:1px solid #e5dfd2'+(g?';background:#eef7ee':'')+'"><td style="padding:6px;text-align:center"><input type="checkbox" style="width:22px;height:22px"'+(g?' checked':'')+' onchange="rcvSet(\''+esc(x.no)+'\',this.checked)">'+(g?'<br><small>'+esc(g.slice(5))+'</small>':'')+'</td><td style="padding:6px">'+esc(x.no)+'</td><td>'+esc(x.names.join(", "))+(x.all>1?' <small>(공유 '+x.all+'명)</small>':'')+'</td><td>'+esc(x.addr)+'</td></tr>'}).join("")+'</table>'+
   (L.length>30?'<p><button class="btn" onclick="CNT.all=!CNT.all;render()">'+(CNT.all?'30명만 보기':'모두 보기 ('+L.length+'명)')+'</button></p>':'')+'</div>'}
 function cntNaText(){var r=CNT.res;return nm(S())+" 미동의자 명단 ("+today()+" · "+r.notAgree.length+"명)\n"+r.notAgree.map(function(x){return x.no+"번 "+x.names.join(", ")+(x.addr?" — "+x.addr:"")}).join("\n")}
 function cntNaCopy(){var p=copyText(cntNaText());if(p&&p.then)p.then(function(){toast("명단을 복사했습니다")});else toast("명단을 복사했습니다")}
@@ -1459,7 +1514,7 @@ function cntCmpBox(){var b=(BOXC[CNT.site]||[]).filter(function(f){return f.file
  else if(c){var li=function(lab,L,col){return'<div class="bxs"><div class="bxh" style="color:'+col+'">'+lab+' '+L.length+'명</div>'+(L.length?'<p style="margin:2px 0 8px;font-size:15px;line-height:1.6">'+esc(L.slice(0,60).map(function(x){return x.name+"("+x.no+"번)"}).join(", ")+(L.length>60?" …":""))+'</p>':'')+'</div>'};
   h+='<p style="font-size:16px;margin:10px 0"><b>'+esc(c.oldName)+'</b><br>'+c.old.agree+'명 / '+c.old.total+'명 ('+c.old.rate+'%) → <b>지금 '+c.new.agree+'명 / '+c.new.total+'명 ('+c.new.rate+'%)</b></p>'+
    li("새로 동의",c.newAgree,"#2a7")+li("동의 빠짐",c.lost,"#c33")+li("새로 들어온 소유자",c.added,"#357")+li("명부에서 빠진 소유자",c.removed,"#975")+
-   '<p class="sm">번호를 합치거나 나누면 사람은 그대로여도 인원·동의 수가 달라집니다. 이전 명부의 동의서 칸 위치가 다르면 이전 동의 수가 0으로 나올 수 있습니다.</p>'}
+   '<p><button class="btn p" onclick="cmpCopy()">📋 비교 결과 복사</button></p><p class="sm">번호를 합치거나 나누면 사람은 그대로여도 인원·동의 수가 달라집니다. 이전 명부의 동의서 칸 위치가 다르면 이전 동의 수가 0으로 나올 수 있습니다.</p>'}
  return h+'</div>'}
 function cntCmpGo(){var a=$("cmpSel").value,nm1=$("cmpSel").selectedOptions[0].textContent;CNT.cmp="…";render();
  api("/api/cmp?a="+encodeURIComponent(a)+"&b="+encodeURIComponent(CNT.file)).then(function(r){r.oldName=nm1;CNT.cmp=r;render()}).catch(function(){CNT.cmp={error:"PM업무관리를 다시 켠 뒤 눌러 주세요"};render()})}
@@ -1479,11 +1534,12 @@ function boxUnsort(){var n=S().name;api("/api/unsort?site="+encodeURIComponent(n
  alert(r.ok?(r.back.length?"되돌렸습니다 — 처음 넣은 자리로 "+r.back.length+"개":"되돌릴 파일이 없습니다 (PM업무관리를 다시 켜면 되돌리기 기록이 지워집니다)"):(r.msg||"되돌리지 못했습니다"))}).catch(function(){toast("PM업무관리를 다시 켠 뒤 눌러 주세요")})}
 
 // 8. 사업개요 복사 전 미리보기
-function bizPrev(){var t=bizText(S()),d=document.createElement("div");d.id="bzPrev";
+function bizPrev(){prevBox("📋 카톡에 보낼 사업개요","내부 메모는 뺐습니다. 고칠 곳이 있으면 여기서 고친 뒤 복사하세요.",bizText(S()),'<button class="btn" onclick="$(\'bzTxt\').value=bizShort(S())">짧게</button> <button class="btn" onclick="$(\'bzTxt\').value=bizText(S())">자세히</button> ')}
+function prevBox(title,note,t,extra){var o=$("bzPrev");if(o)o.remove();var d=document.createElement("div");d.id="bzPrev";
  d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px";
- d.innerHTML='<div style="background:#fffdf8;max-width:560px;width:100%;padding:16px;border:1px solid #ccc"><h3 style="margin:0 0 6px">📋 카톡에 보낼 사업개요</h3><p class="sm" style="margin:0 0 8px">내부 메모는 뺐습니다. 고칠 곳이 있으면 여기서 고친 뒤 복사하세요.</p>'+
+ d.innerHTML='<div style="background:#fffdf8;max-width:560px;width:100%;padding:16px;border:1px solid #ccc"><h3 style="margin:0 0 6px">'+esc(title)+'</h3><p class="sm" style="margin:0 0 8px">'+esc(note)+'</p>'+
   '<textarea id="bzTxt" style="width:100%;height:46vh;font-size:15px;line-height:1.5;padding:8px;box-sizing:border-box">'+esc(t)+'</textarea>'+
-  '<div style="margin-top:10px;text-align:right"><button class="btn" onclick="document.getElementById(\'bzPrev\').remove()">닫기</button> <button class="btn p" onclick="bizCopyT()">복사하기</button></div></div>';
+  '<div style="margin-top:10px;text-align:right">'+(extra||"")+'<button class="btn" onclick="document.getElementById(\'bzPrev\').remove()">닫기</button> <button class="btn p" onclick="bizCopyT()">복사하기</button></div></div>';
  document.body.appendChild(d)}
 function bizCopyT(){var t=$("bzTxt").value,p=copyText(t),ok=function(){$("bzPrev").remove();toast("복사했습니다 — 카톡에 붙여 넣으세요")};
  if(p&&p.then)p.then(ok,function(){$("bzTxt").select();toast("글을 길게 눌러 복사하세요")});else ok()}
@@ -1542,7 +1598,7 @@ function overview(){bdInit();var h=toolbar()+'<div id="bdUp">'+upStrip()+'</div>
    var rg=s.region||"";
    h+='<button class="ovi k'+CATS.indexOf(c)+'"'+(d?' style="--rc:'+d[2]+'"':'')+' onclick="pick('+x[1]+')">'+(rg?'<span class="rg">'+esc(rg)+'</span>':'')+'<div class="t"><b>'+esc(s.name)+'</b>'+(st?'<em>'+st.no+'단계 · '+esc(st.title)+'</em>':'')+'</div>'+
    '<div class="s">'+esc(s.status||s.place||"")+'</div>'+
-   '<div class="f">'+(function(){var n=sitePending(s),e=siteEvs(s)[0];return(n?'<span class="nw">새 글 '+n+'</span>':'')+(e?'<span class="ne">📅 '+esc(e.date.slice(5).replace("-","/"))+'</span>':'')})()+(opn?'<span class="w">확인 '+opn+'</span>':'')+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
+   '<div class="f">'+(function(){var n=sitePending(s),e=siteEvs(s)[0];return(n?'<span class="nw">새 글 '+n+'</span>':'')+(e?'<span class="ne">📅 '+esc(e.date.slice(5).replace("-","/"))+'</span>':'')})()+(opn?'<span class="w">확인 '+opn+'</span>':'')+(function(){var c=SERVER&&cntLast(s.name);return c?'<span title="최근 명부 집계 '+esc(c.d)+'">동의 '+Number(c.r).toFixed(1)+'%</span>':''})()+(s.updated?'<span>'+esc(s.updated.slice(5))+'</span>':'')+'</div></button>'});
   h+='</div>'});
  return h}
 function side(){var h='<button class="sv'+(view==="전체"?" on":"")+'" onclick="toggleNav(0);go(\'전체\')">▦ 전체 한눈에</button>';
@@ -1574,7 +1630,7 @@ function boxRow(f){var e=ext(f.name);return'<div class="doc"><span class="ext '+
  (f.file?'<div class="acts">'+(SERVER&&/^06/.test(f.sub)&&/^xls[xm]$/.test(e)&&/명부/.test(f.name)?'<button class="btn" onclick="cntGo(this)" data-f="'+esc(f.file)+'">📊 집계</button> ':'')+'<button class="btn p" onclick="openDoc(this,0)" data-f="'+esc(f.file)+'" data-r="0">열기</button> <button class="btn s" title="폴더에서 보기" onclick="openDoc(this,1)" data-f="'+esc(f.file)+'" data-r="0">📁</button></div>':'')+'</div>'}
 function boxBody(s){var b=boxOf(s);if(!b)return'<div class="empty">불러오는 중…</div>';
  var g={};b.forEach(function(f){(g[f.sub]=g[f.sub]||[]).push(f)});var ks=Object.keys(g).sort();
- return ks.length?ks.map(function(k){return'<div class="bxs"><div class="bxh">'+esc(k.replace(/^\d+_/,""))+' <span>'+g[k].length+'건</span></div>'+g[k].map(boxRow).join("")+'</div>'}).join("")
+ return ks.length?(b.length>6?'<input placeholder="🔍 이 현장 문서함에서 파일 이름 찾기" oninput="boxFilter(this.value)" style="width:100%;font-size:16px;padding:8px;margin:4px 0 8px;box-sizing:border-box">':'')+'<div id="boxList">'+ks.map(function(k){return'<div class="bxs"><div class="bxh">'+esc(k.replace(/^\d+_/,""))+' <span>'+g[k].length+'건</span></div>'+g[k].map(boxRow).join("")+'</div>'}).join("")+'</div>'
   :'<div class="empty">아직 넣은 문서가 없습니다.'+(window.__AT?' 사무실 PC의 문서함 폴더에 넣으면 여기에도 보입니다.':' 「문서함 폴더 열기」를 눌러 계약서·공문 등을 해당 폴더에 넣으면 바로 여기 보입니다.')+'</div>'}
 function boxBtn(s){if(window.__AT)return'';var b=boxOf(s)||[],raw=b.filter(function(f){return f.sub==="(바로 넣은 파일)"}).length;
  return(raw?'<button class="btn p" onclick="boxSort()">🧹 바로 넣은 파일 '+raw+'개 칸에 나눠 넣기</button> ':'')+(SORTED[s.name]?'<button class="btn" onclick="boxUnsort()">↩ 방금 정리 되돌리기</button> ':'')+'<button class="btn'+(raw?'':' p')+'" onclick="openBox()">📂 문서함 폴더 열기</button> <button class="btn" onclick="BOXC={};render()">↻</button>'}
@@ -1597,7 +1653,7 @@ function cntView(){if(!CNT)return'<div class="card"><div class="empty">문서함
  if(r.dupPerson.length)warn.push(["같은 이름·생년월일이 다른 번호에 "+r.dupPerson.length+"건","한 사람이 토지·건물을 따로 가진 경우가 많아 그대로 둡니다. 같은 물건인데 번호만 나뉘었으면 합치세요",r.dupPerson.slice(0,30).map(function(x){return x.name+"("+x.nos.join("·")+"번)"}).join(", ")+(r.dupPerson.length>30?" …":"")]);
  h+='<div class="bzk"><div><small>토지등소유자</small><b>'+r.total+'명</b></div><div><small>동의</small><b>'+r.agree+'명</b></div><div><small>동의율</small><b>'+r.rate.toFixed(2)+'%</b></div><div><small>미동의</small><b>'+(r.total-r.agree)+'명</b></div></div>'+
   '<p class="sm">기준: 같은 조합원번호 = 1명 · 공유자는 전원 동의해야 동의 · 한 사람이 여러 필지면 한 줄만 표시돼도 동의 · 「소유권대지권」 줄은 뺌</p>'+
-  '<button class="btn p" onclick="cntCopy()">📋 결과 복사</button> <button class="btn" onclick="cntPrint()">🖨 인쇄</button> <button class="btn" onclick="openDoc(this,0)" data-f="'+esc(CNT.file)+'" data-r="0">명부 열기</button></div>'+cntGoal(r)+cntNa(r)+cntCmpBox()+cntHistBox();
+  '<button class="btn p" onclick="cntCopy()">📋 결과 복사</button> <button class="btn" onclick="cntPrint()">🖨 인쇄</button> <button class="btn" onclick="openDoc(this,0)" data-f="'+esc(CNT.file)+'" data-r="0">명부 열기</button></div>'+cntGoal(r)+cntNa(r)+cntAddr(r)+cntKind(r)+cntCmpBox()+cntHistBox();
  h+='<div class="card"><h3>'+(warn.length?'⚠ 확인할 곳 '+warn.length+'가지':'✅ 확인할 곳 없음')+'</h3>'+warn.map(function(w){return'<div class="bxs"><div class="bxh">'+esc(w[0])+'</div><p class="sm" style="margin:4px 0">'+esc(w[1])+'</p>'+(w[2]?'<p style="margin:2px 0 8px;font-size:15px;line-height:1.6">'+esc(w[2])+'</p>':'')+'</div>'}).join("")+'</div>';
  return h}
 function cntCopy(){var p=copyText(cntText(CNT.res,nm(S())));if(p&&p.then)p.then(function(){toast("복사했습니다 — 카톡에 붙여 넣기")});else toast("복사했습니다")}
