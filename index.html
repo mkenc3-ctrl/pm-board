@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794717763888";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794717913143";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -965,7 +965,7 @@ function postCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(
  var rows=[["올린 때","현장","쓴 사람","내용","상태","정리 메모","사진","파일","답글","확인한 분"]].concat(a.map(function(o){return[(o.at||"").slice(0,16).replace("T"," "),o.site,o.by,o.text,o.status,o.note,(o.photos||[]).length,(o.files||[]).map(function(f){return f.n}).join(" / "),(o.replies||[]).map(function(r){return r.by+": "+r.text}).join(" / "),(o.seen||[]).join(", ")]}));
  var b=new Blob(["\ufeff"+rows.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv;charset=utf-8"}),l=document.createElement("a");l.href=URL.createObjectURL(b);l.download="올린글-"+today()+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(l.href);l.remove()},2000);toast("글 "+a.length+"건을 엑셀 파일로 받았습니다")}
 // ── 새로 생긴 기능 안내 (바뀔 때 한 번) ──
-var NEWV="2026-11-15e",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
+var NEWV="2026-11-15f",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
 function newsCard(){if(!BD.me)return"";try{if(localStorage.getItem("pm_newv")===NEWV)return""}catch(e){return""}
  return'<div class="wel nws"><h3>✨ 새로 생긴 기능</h3><ul>'+NEWS_L.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul><button class="btn p" onclick="try{localStorage.setItem(\'pm_newv\',NEWV)}catch(e){};render()">잘 봤습니다</button> <button class="btn" onclick="go(\'사용법\')">사용법 보기</button></div>'}
 // ── 장소 자동완성 (최근 쓴 장소) ──
@@ -1348,7 +1348,7 @@ function render(){
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
  var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비|비례율)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView,지도:mapView}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  else if(view==="올리기"||view==="경비"){var pz=$(view==="경비"?"exS":"poS"),ls=lastSite();if(pz&&!pz.value&&ls&&[].some.call(pz.options,function(x){return x.value===ls}))pz.value=ls}
  $("backB").hidden=(depth===0&&view==="전체");
@@ -1383,7 +1383,7 @@ function bizCard(s){if(!isSite(s))return"";var a=ovRows(s),st=stOf(s),hasR=(s.ra
   return'<div class="bzg"><h4>'+g[0]+'</h4><dl class="bzl">'+rows.map(function(r){var k=/^(조합원|토지등소유자)/.test(r[0]);return'<dt'+(k?' class="key"':'')+'>'+esc(r[0])+'</dt><dd>'+val(r[1])+'</dd>'}).join("")+'</dl></div>'}).join("");
  return'<div class="card biz"><div class="bzh"><b>📋 사업개요</b>'+(st?'<span>'+st.no+'단계 · '+esc(st.title)+'</span>':'')+'</div>'+
   (K.length?'<div class="bzk">'+K.map(function(k){return'<div><small>'+k[0]+'</small><b>'+esc(k[1].replace(/\s+/g,""))+'</b></div>'}).join("")+'</div>':'')+
-  '<div class="bzgs">'+body+'</div>'+
+  '<div class="bzgs">'+body+'</div>'+mapBtns(s)+
   (hasR?'<button class="btn" onclick="RT=null;var L=rtLs();delete L.cur;rtStore(L);go(\'비례율\')">🧮 비례율 계산 열기</button>':'')+'</div>'}
 function infoCard(s){var u=isSite(s)?ovUsed(s):[],a=(s.info||[]).filter(function(r){return u.indexOf(r)<0});if(!a.length)return"";
  var key=a.filter(function(r){return/위원장|조합장|대표/.test(r[0])&&!/확인 필요/.test(r[1])})[0];
@@ -1399,6 +1399,7 @@ function toolbar(){var pc=!window.__AT,t=[];
  t.push('<button class="tool" onclick="go(\'올리기\')"><b>📮</b>여기에 올리기<span data-bd="post">'+badge('post')+'</span></button>');
  t.push('<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>');
  t.push('<button class="tool" onclick="go(\'연락처\')"><b>📞</b>연락처</button>');
+ t.push('<button class="tool" onclick="go(\'지도\')"><b>🗺</b>현장 지도</button>');
  t.push('<button class="tool" onclick="go(\'보고서\')"><b>🗒</b>주간 보고</button>');
  t.push('<button class="tool" onclick="goAlbum()"><b>📷</b>사진첩</button>');
  t.push('<button class="tool" onclick="go(\'경비\')"><b>💳</b>경비</button>');
@@ -1410,6 +1411,21 @@ function toolbar(){var pc=!window.__AT,t=[];
  return'<div class="tools">'+t.join("")+'</div>'}
 // ── 지역(시·도)별 색 ──
 var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",/광주/,"#7a3fa0"],["전북",/전주|전북|군산|익산/,"#3c7d34"],["전남",/광양|전남|순천|여수|목포/,"#c06a1a"],["경남",/밀양|경남|창원|김해/,"#b03a48"],["경북",/포항|구미|경북/,"#8a6d1c"]];
+
+// ── 카카오맵 위치 (열쇠 없이 카카오맵 검색 링크로 열기 — 폰에서는 카카오맵 앱으로) ──
+function mapQ(s){if(s.map)return s.map;var v="";(s.info||[]).forEach(function(r){if(!v&&/^위치/.test(r[0]))v=String(r[1])});
+ v=v.split(/\s+[—(]/)[0].replace(/번지.*$/,"").replace(/\s*일원.*$/,"").trim();
+ return /(시|구|군|동|읍|면|리|가|역)(\s|$|\d)/.test(v)&&!/바탕화면|폴더/.test(v)?v:""}
+function mapUrl(q){return"https://map.kakao.com/link/search/"+encodeURIComponent(q)}
+function mapOpen(q){window.open(mapUrl(q),"_blank")}
+function mapBtns(s){var q=mapQ(s);if(!q)return"";var ex=(s.maps||[]);
+ return'<div style="margin:10px 0 6px"><button class="btn p" onclick="mapOpen(this.dataset.q)" data-q="'+esc(q)+'">📍 카카오맵에서 위치 보기</button>'+
+  ex.map(function(m){return' <button class="btn" onclick="mapOpen(this.dataset.q)" data-q="'+esc(m[1])+'">📍 '+esc(m[0])+'</button>'}).join("")+
+  '<div class="sm" style="margin-top:4px">'+esc(q)+' — 카카오맵에서 「길찾기」를 누르면 가는 길이 나옵니다</div></div>'}
+function mapView(){var L=SITES.map(function(s,i){return{s:s,i:i,q:mapQ(s)}}).filter(function(x){return x.q});
+ return'<div class="card"><h3>🗺 현장 지도</h3><p class="sm">현장을 누르면 카카오맵에서 그 위치가 열립니다. 폰에서는 카카오맵 앱으로 열립니다.</p>'+
+  L.map(function(x){return'<div class="doc"><span class="ext">📍</span><div class="n"><b>'+esc(nm(x.s))+'</b><small>'+esc(x.q)+'</small></div><div class="acts"><button class="btn p" onclick="mapOpen(this.dataset.q)" data-q="'+esc(x.q)+'">지도</button> <button class="btn" onclick="pick('+x.i+')">현장</button></div></div>'}).join("")+
+  '</div>'}
 function isSite(s){var c=catOf(s);return c==="정비사업 현장"||c==="보관 현장"||c==="총회대행"}
 function sido(s){if(!isSite(s))return null;var t=(s.region||"")+" "+(s.place||"");for(var i=0;i<SIDO.length;i++)if(SIDO[i][1].test(t))return SIDO[i];return null}
 var rf="";
@@ -2545,7 +2561,7 @@ function postCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(
  var rows=[["올린 때","현장","쓴 사람","내용","상태","정리 메모","사진","파일","답글","확인한 분"]].concat(a.map(function(o){return[(o.at||"").slice(0,16).replace("T"," "),o.site,o.by,o.text,o.status,o.note,(o.photos||[]).length,(o.files||[]).map(function(f){return f.n}).join(" / "),(o.replies||[]).map(function(r){return r.by+": "+r.text}).join(" / "),(o.seen||[]).join(", ")]}));
  var b=new Blob(["\ufeff"+rows.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv;charset=utf-8"}),l=document.createElement("a");l.href=URL.createObjectURL(b);l.download="올린글-"+today()+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(l.href);l.remove()},2000);toast("글 "+a.length+"건을 엑셀 파일로 받았습니다")}
 // ── 새로 생긴 기능 안내 (바뀔 때 한 번) ──
-var NEWV="2026-11-15e",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
+var NEWV="2026-11-15f",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","🎤 말로 쓰기 · 📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
 function newsCard(){if(!BD.me)return"";try{if(localStorage.getItem("pm_newv")===NEWV)return""}catch(e){return""}
  return'<div class="wel nws"><h3>✨ 새로 생긴 기능</h3><ul>'+NEWS_L.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul><button class="btn p" onclick="try{localStorage.setItem(\'pm_newv\',NEWV)}catch(e){};render()">잘 봤습니다</button> <button class="btn" onclick="go(\'사용법\')">사용법 보기</button></div>'}
 // ── 장소 자동완성 (최근 쓴 장소) ──
@@ -2928,7 +2944,7 @@ function render(){
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
  var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비|비례율)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+t[1]+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,집계:cntView,지도:mapView}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  else if(view==="올리기"||view==="경비"){var pz=$(view==="경비"?"exS":"poS"),ls=lastSite();if(pz&&!pz.value&&ls&&[].some.call(pz.options,function(x){return x.value===ls}))pz.value=ls}
  $("backB").hidden=(depth===0&&view==="전체");
@@ -2963,7 +2979,7 @@ function bizCard(s){if(!isSite(s))return"";var a=ovRows(s),st=stOf(s),hasR=(s.ra
   return'<div class="bzg"><h4>'+g[0]+'</h4><dl class="bzl">'+rows.map(function(r){var k=/^(조합원|토지등소유자)/.test(r[0]);return'<dt'+(k?' class="key"':'')+'>'+esc(r[0])+'</dt><dd>'+val(r[1])+'</dd>'}).join("")+'</dl></div>'}).join("");
  return'<div class="card biz"><div class="bzh"><b>📋 사업개요</b>'+(st?'<span>'+st.no+'단계 · '+esc(st.title)+'</span>':'')+'</div>'+
   (K.length?'<div class="bzk">'+K.map(function(k){return'<div><small>'+k[0]+'</small><b>'+esc(k[1].replace(/\s+/g,""))+'</b></div>'}).join("")+'</div>':'')+
-  '<div class="bzgs">'+body+'</div>'+
+  '<div class="bzgs">'+body+'</div>'+mapBtns(s)+
   (hasR?'<button class="btn" onclick="RT=null;var L=rtLs();delete L.cur;rtStore(L);go(\'비례율\')">🧮 비례율 계산 열기</button>':'')+'</div>'}
 function infoCard(s){var u=isSite(s)?ovUsed(s):[],a=(s.info||[]).filter(function(r){return u.indexOf(r)<0});if(!a.length)return"";
  var key=a.filter(function(r){return/위원장|조합장|대표/.test(r[0])&&!/확인 필요/.test(r[1])})[0];
@@ -2979,6 +2995,7 @@ function toolbar(){var pc=!window.__AT,t=[];
  t.push('<button class="tool" onclick="go(\'올리기\')"><b>📮</b>여기에 올리기<span data-bd="post">'+badge('post')+'</span></button>');
  t.push('<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>');
  t.push('<button class="tool" onclick="go(\'연락처\')"><b>📞</b>연락처</button>');
+ t.push('<button class="tool" onclick="go(\'지도\')"><b>🗺</b>현장 지도</button>');
  t.push('<button class="tool" onclick="go(\'보고서\')"><b>🗒</b>주간 보고</button>');
  t.push('<button class="tool" onclick="goAlbum()"><b>📷</b>사진첩</button>');
  t.push('<button class="tool" onclick="go(\'경비\')"><b>💳</b>경비</button>');
@@ -2990,6 +3007,21 @@ function toolbar(){var pc=!window.__AT,t=[];
  return'<div class="tools">'+t.join("")+'</div>'}
 // ── 지역(시·도)별 색 ──
 var SIDO=[["서울",/서울/,"#2f5d9b"],["부산",/부산/,"#0f7c86"],["광주",/광주/,"#7a3fa0"],["전북",/전주|전북|군산|익산/,"#3c7d34"],["전남",/광양|전남|순천|여수|목포/,"#c06a1a"],["경남",/밀양|경남|창원|김해/,"#b03a48"],["경북",/포항|구미|경북/,"#8a6d1c"]];
+
+// ── 카카오맵 위치 (열쇠 없이 카카오맵 검색 링크로 열기 — 폰에서는 카카오맵 앱으로) ──
+function mapQ(s){if(s.map)return s.map;var v="";(s.info||[]).forEach(function(r){if(!v&&/^위치/.test(r[0]))v=String(r[1])});
+ v=v.split(/\s+[—(]/)[0].replace(/번지.*$/,"").replace(/\s*일원.*$/,"").trim();
+ return /(시|구|군|동|읍|면|리|가|역)(\s|$|\d)/.test(v)&&!/바탕화면|폴더/.test(v)?v:""}
+function mapUrl(q){return"https://map.kakao.com/link/search/"+encodeURIComponent(q)}
+function mapOpen(q){window.open(mapUrl(q),"_blank")}
+function mapBtns(s){var q=mapQ(s);if(!q)return"";var ex=(s.maps||[]);
+ return'<div style="margin:10px 0 6px"><button class="btn p" onclick="mapOpen(this.dataset.q)" data-q="'+esc(q)+'">📍 카카오맵에서 위치 보기</button>'+
+  ex.map(function(m){return' <button class="btn" onclick="mapOpen(this.dataset.q)" data-q="'+esc(m[1])+'">📍 '+esc(m[0])+'</button>'}).join("")+
+  '<div class="sm" style="margin-top:4px">'+esc(q)+' — 카카오맵에서 「길찾기」를 누르면 가는 길이 나옵니다</div></div>'}
+function mapView(){var L=SITES.map(function(s,i){return{s:s,i:i,q:mapQ(s)}}).filter(function(x){return x.q});
+ return'<div class="card"><h3>🗺 현장 지도</h3><p class="sm">현장을 누르면 카카오맵에서 그 위치가 열립니다. 폰에서는 카카오맵 앱으로 열립니다.</p>'+
+  L.map(function(x){return'<div class="doc"><span class="ext">📍</span><div class="n"><b>'+esc(nm(x.s))+'</b><small>'+esc(x.q)+'</small></div><div class="acts"><button class="btn p" onclick="mapOpen(this.dataset.q)" data-q="'+esc(x.q)+'">지도</button> <button class="btn" onclick="pick('+x.i+')">현장</button></div></div>'}).join("")+
+  '</div>'}
 function isSite(s){var c=catOf(s);return c==="정비사업 현장"||c==="보관 현장"||c==="총회대행"}
 function sido(s){if(!isSite(s))return null;var t=(s.region||"")+" "+(s.place||"");for(var i=0;i<SIDO.length;i++)if(SIDO[i][1].test(t))return SIDO[i];return null}
 var rf="";
