@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794794824012";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794794876103";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#1f3a5f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=MaruBuri:wght@700&display=swap" rel="stylesheet">
@@ -975,7 +975,7 @@ function postCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(
  var rows=[["올린 때","현장","쓴 사람","내용","상태","정리 메모","사진","파일","답글","확인한 분"]].concat(a.map(function(o){return[(o.at||"").slice(0,16).replace("T"," "),o.site,o.by,o.text,o.status,o.note,(o.photos||[]).length,(o.files||[]).map(function(f){return f.n}).join(" / "),(o.replies||[]).map(function(r){return r.by+": "+r.text}).join(" / "),(o.seen||[]).join(", ")]}));
  var b=new Blob(["\ufeff"+rows.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv;charset=utf-8"}),l=document.createElement("a");l.href=URL.createObjectURL(b);l.download="올린글-"+today()+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(l.href);l.remove()},2000);toast("글 "+a.length+"건을 엑셀 파일로 받았습니다")}
 // ── 새로 생긴 기능 안내 (바뀔 때 한 번) ──
-var NEWV="2026-11-16b",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
+var NEWV="2026-11-16c",NEWS_L=["💳 경비·영수증: 위쪽 「💳 경비」 — 월 합계·정산서 인쇄","📍 오늘 어디: 첫 화면에서 사무실·외근·현장·휴가 알리기","📎 글에 PDF·한글·엑셀 파일 붙이기","📷 답글에 사진 · 💬 빠른 대답","✏️ 일정 고치기 · ▶ 시작 · 🗓 주간 일정표 인쇄","🏠 첫 화면이 길면 ❓ 사용법에서 보일 것 고르기","✅ 승인 요청 · 🗳 의견 묻기 · 👉 할 일 넘기기","🗑 지운 것은 휴지통에서 되살리기 · 🔔 중요 일정 3·7일 전 알림","📝 글 틀(점검·통화·민원·회의) · ↩ 답글에 답장 · 🔄 사진 돌리기 · ⏳ 할 일 남은 날","👥 팀 할 일 현황·카톡용 복사 · 🏗 오래 소식 없는 현장 · 🆕 새 글 표시 · ⌨️ PC 단축키","🔊 오늘 일 들려주기 · ▶ 진행 며칠째·📝 진행 상황 · 📊 경비 막대그래프 · 🏷 현장 자동 고르기","📅 일정 = 달력 먼저 · 날짜 누르고 📝 메모 · 🗑 바로 지우기","📅 달력에 글·답글·경비·위치·기록·법정 기한까지 모두 표시","📅 달력 칸의 일정을 누르면 바로 고치기·지우기","달력에 공휴일 표시 · 좌우로 밀어 달 넘기기 · 끌어서 일정 옮기기 · 이달 한눈에","달력: 현장·사람 거르기 · 월간 인쇄 · 빠르게 넣기 · 사람별 색 · 달 바로 고르기","🧮 비례율 계산 — 8차 보고서 항목 그대로 · 8차 양식 인쇄 · 목표 비례율 역산 · 민감도 표 · 주변 참고 비례율","📋 현장마다 첫 화면 위쪽에 사업개요 (조합원 수·세대수·면적·동의·비례율)"];
 function newsCard(){if(!BD.me)return"";try{if(localStorage.getItem("pm_newv")===NEWV)return""}catch(e){return""}
  return'<div class="wel nws"><h3>✨ 새로 생긴 기능</h3><ul>'+NEWS_L.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul><button class="btn p" onclick="try{localStorage.setItem(\'pm_newv\',NEWV)}catch(e){};render()">잘 봤습니다</button> <button class="btn" onclick="go(\'사용법\')">사용법 보기</button></div>'}
 // ── 장소 자동완성 (최근 쓴 장소) ──
@@ -1247,7 +1247,7 @@ function rtNum(s){s=String(s==null?"":s).replace(/[,\s원%]/g,"");var m=s.match(
 // 입력 칸: data-p 경로에 값 넣기
 function rtIn(el){var p=el.dataset.p.split("."),o=RT;for(var i=0;i<p.length-1;i++)o=o[p[i]]||(o[p[i]]={});var k=p[p.length-1];o[k]=el.dataset.t==="s"?el.value:rtNum(el.value);rtKeep();rtDraw()}
 function rtI(p,v,t,w,ph){return`<input class="rti${t==="s"?" s":""}"${w?` style="width:${w}"`:""} data-p="${p}"${t?` data-t="${t}"`:""} value="${esc(t==="s"?(v||""):(v?fN(v,Math.abs(v)>=1e5?0:4):""))}" ${t==="s"?"":'inputmode="decimal"'} placeholder="${esc(ph||"")}" onchange="rtIn(this)" aria-label="${esc(ph||p)}">`}
-function rtView(){bdInit();rtInit();return`<div id="rtW">${rtBody()}</div>`}
+function rtView(){bdInit();rtInit();RT_NEAR=false;return`<div id="rtW">${rtBody()}</div>`}
 function rtDraw(){var w=$("rtW");if(!w)return;var y=window.scrollY;w.innerHTML=rtBody();window.scrollTo(0,y)}
 function rtBody(){var R=RT,o=rtCalc(R),L=rtLs(),B=L.base?rtCalc(L.base.R):null,d=B?o.ratio-B.ratio:null,h="";
  h+=`<div class="rtTop"><div class="rtBig"><small>추정 비례율</small><b>${fPct(o.ratio)}</b>${B?`<em class="${d>=0?"up":"dn"}">${L.base.name} ${fPct(B.ratio)} 대비 ${d>=0?"+":""}${d.toFixed(2)}%p</em>`:""}</div>
@@ -1313,8 +1313,8 @@ function rtSumTxt(){var R=RT,o=rtCalc(R),L=rtLs(),B=L.base?rtCalc(L.base.R):null
 function rtShare(){var t=rtSumTxt();if(navigator.share)navigator.share({text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("결과 요약을 복사했습니다 — 카톡에 붙여 넣으세요")});else prompt("복사해서 보내세요",t)}
 
 // ── 📍 주변 비례율 보기 (지도) ──
-var RT_MAP=null,RT_MV=null,RT_PICK=false,RT_SEL=-1,RT_NEAR=(function(){try{return localStorage.getItem("pm_rtnear")!=="0"}catch(e){return true}})();
-function rtNearT(){RT_NEAR=!RT_NEAR;try{localStorage.setItem("pm_rtnear",RT_NEAR?"1":"0")}catch(e){}rtDraw()}
+var RT_MAP=null,RT_MV=null,RT_PICK=false,RT_SEL=-1,RT_NEAR=false;
+function rtNearT(){RT_NEAR=!RT_NEAR;rtDraw()}
 function rtFillLoc(){(RT.refs||[]).forEach(function(r){if(r.lat==null){var d=RT_REFS.filter(function(x){return x.n===r.n})[0];if(d){r.lat=d.lat;r.lng=d.lng}}});if(!RT.loc){var k=Object.keys(RT_LOC).filter(function(k){return(RT.title||"").indexOf(k)>=0||rtSiteNm()===k})[0];if(k)RT.loc=RT_LOC[k]}}
 function rtKm(a,b){var r=Math.PI/180,x=(b.lng-a.lng)*r*Math.cos((a.lat+b.lat)/2*r),y=(b.lat-a.lat)*r;return Math.sqrt(x*x+y*y)*6371}
 function rtNearBox(o){rtFillLoc();var me=RT.loc,a=(RT.refs||[]).map(function(r,i){return{r:r,i:i,km:me&&r.lat!=null?rtKm(me,r):null}}).filter(function(x){return+x.r.v});
