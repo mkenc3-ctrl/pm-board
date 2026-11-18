@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1794978788787";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1794985090937";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -469,6 +469,127 @@ body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic"
 .ovi .t b{font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.025em}
 .fmPan .ixP .tool{border-radius:10px}
 .ovg .ovi{border-top:1px solid var(--line)!important}.ovg .ovi:hover{border-top-color:var(--line2)!important}
+
+/* 비례율 지도: 창원 정비구역 회색 점 (2026-11-18) */
+.rtCtx{white-space:nowrap;transform:translate(-50%,-50%);font:600 11px/1.25 "Pretendard Variable",Pretendard,"Noto Sans KR",sans-serif;color:#3d4650;background:rgba(255,255,255,.9);border:1px solid #a3acb4;border-radius:999px;padding:2px 8px 2px 5px;box-shadow:0 1px 2px rgba(0,0,0,.15);cursor:pointer}
+.rtCtx i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#98a2ab;margin-right:4px;vertical-align:0}
+.rtCtx.s5 i,.rtCtx.s6 i{background:#4a5560}
+.rtLg i.cx{background:#98a2ab;border-radius:50%}
+.rtG{display:block;color:#b3261e}
+.rtCxN{margin:6px 2px 0;color:#5b636b}
+
+/* 전국 정비사업 지도 (2026-11-18) — PM 3톤(먹·청록·인주) */
+.nz{max-width:1180px;margin:0 auto}
+.nzWait{padding:60px 0;text-align:center;color:var(--sub);font-size:16px}
+.nzHd{background:linear-gradient(120deg,#0f1218,#1d3a3e 55%,#57221f);color:#fff;border-radius:16px;padding:20px 22px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(15,18,24,.18)}
+.nzK{display:block;font-size:13px;opacity:.78}
+.nzHd h2{color:#fff;font-size:28px;margin:6px 0 10px}
+.nzTot{display:flex;gap:28px;flex-wrap:wrap}
+.nzTot div{display:flex;align-items:baseline;gap:6px}
+.nzTot span{font-size:15px;opacity:.82}
+.nzTot b{font-size:34px;font-weight:800;letter-spacing:-.02em}
+.nzTot small{font-size:15px;opacity:.82}
+.nzMine{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+.nzMine>span{font-size:14px;font-weight:700;color:#ffd9d4;margin-right:2px}
+.nzMine button{border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:6px 13px;font:inherit;font-size:15px;cursor:pointer}
+.nzMine button small{opacity:.75;margin-left:3px;font-size:13px}
+.nzMine button:hover{background:rgba(255,255,255,.22)}
+.nzQ{margin-top:12px}
+.nzQ input{width:100%;box-sizing:border-box;border:0;border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;color:var(--ink);background:#fff}
+.nzHits{background:#fff;color:var(--ink);border-radius:12px;margin-top:6px;max-height:340px;overflow:auto;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.nzHits button{display:flex;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:10px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.nzHits button:hover{background:#f2f6f5}
+.nzHits small{color:var(--sub);flex:1;font-size:13px}
+.nzHits .nzS{padding:6px 12px}
+#nzHit>.nzS{color:#fff;opacity:.9;margin:6px 2px 0}
+.nzG{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
+.nzC{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,18,24,.07);border:1px solid rgba(15,18,24,.06)}
+.nzMap{min-height:420px}
+.nzSvg{display:block;width:100%;height:auto;max-height:600px}
+.nzSvg path{stroke:#fff;stroke-width:.8;cursor:pointer}
+.nzSvg path:hover{stroke:#b3261e;stroke-width:1.6}
+.nzSvg path.on{stroke:#b3261e;stroke-width:2.4}
+.nzSvg text{font-size:11px;font-weight:600;fill:#243034;text-anchor:middle;cursor:pointer;paint-order:stroke;stroke:rgba(255,255,255,.8);stroke-width:2.5px;stroke-linejoin:round}
+.nzSvg.sg text{font-size:10px}
+.nzSvg text.dk{fill:#fff;stroke:rgba(15,18,24,.45)}
+.nzSvg text.sel{font-size:13px;font-weight:800;fill:#b3261e;stroke:#fff;stroke-width:3px}
+.nzSvg text .n{font-size:11px;font-weight:700}
+.nzSvg circle.me{fill:#b3261e;stroke:#fff;stroke-width:1.5;pointer-events:none}
+.nzMh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.nzMh .btn{margin-left:0;border-radius:999px}
+.nzMh b{font-size:18px}
+.nzHint{margin:6px 0 0;text-align:center;color:var(--sub);font-size:14px}
+.nzLeg{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:center;margin-top:8px;font-size:13px;color:var(--sub)}
+.nzLeg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid rgba(0,0,0,.08)}
+.nzK2{display:block;font-size:13px;color:var(--sub)}
+.nzNm{font-family:"MaruBuri","Noto Sans KR",serif;font-size:25px;margin:2px 0 4px}
+.nzBig{margin:2px 0;font-size:15px;color:var(--sub)}
+.nzBig b{font-size:34px;color:#1d3a3e;font-weight:800;margin-right:2px}
+.nzS{font-size:14px;color:var(--sub);margin:4px 0}
+.nzS.sm{font-size:12.5px}
+.nzR{margin-top:12px}
+.nzRh{display:flex;justify-content:space-between;align-items:baseline;font-size:15px}
+.nzBar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:#eef1f0;margin:5px 0 4px}
+.nzBar i{display:block;height:100%}
+.nzRl{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:13px;color:var(--sub)}
+.nzRl i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:3px}
+.nzA{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.nzA .btn{margin-left:0;border-radius:999px;padding:8px 16px;text-decoration:none;color:inherit}
+.nzA .btn.p{color:#fff}
+.nzSgL{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;max-height:340px;overflow:auto}
+.nzSgL>b{display:block;font-size:14px;margin-bottom:6px}
+.nzSgL button{display:flex;justify-content:space-between;width:100%;border:0;border-bottom:1px solid #f0f1f2;background:none;padding:8px 4px;font:inherit;font-size:15px;cursor:pointer;text-align:left;color:var(--ink)}
+.nzSgL button:hover{background:#f2f6f5}
+.nzSgL button b{color:#1d3a3e}
+.nzPh{margin-top:10px}
+.nzPh div{display:grid;grid-template-columns:118px 1fr 34px;align-items:center;gap:8px;font-size:14px;margin:5px 0}
+.nzPh i{display:block;height:9px;border-radius:99px;background:#3f7f78;min-width:2px}
+.nzPh b{text-align:right}
+.nzRank{margin-bottom:14px}
+.nzRt{display:block;font-size:15px;margin-bottom:8px}
+.nzRank .rk{display:grid;grid-template-columns:1fr 1fr;column-gap:24px}
+.nzRank button{display:grid;grid-template-columns:44px 1fr 56px;align-items:center;gap:8px;width:100%;border:0;background:none;padding:5px 4px;font:inherit;font-size:15px;cursor:pointer;text-align:left;border-radius:8px;color:var(--ink)}
+.nzRank button:hover{background:#f2f6f5}
+.nzRank button i{display:block;height:12px;border-radius:99px;background:linear-gradient(90deg,#7fb0a8,#1d3a3e)}
+.nzRank button b{text-align:right}
+.nzRank button.on span{color:#b3261e;font-weight:800}
+.nzLst{margin-bottom:14px;scroll-margin-top:12px}
+.nzLst>h3{font-family:"MaruBuri","Noto Sans KR",serif;font-size:23px;margin:2px 0 6px}
+.nzNote{background:#f2f6f5;border-radius:10px;padding:9px 12px;font-size:14px;color:#2a3236;margin:6px 0 12px}
+.nzZl{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:10px}
+.nzZ{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;transition:box-shadow .3s;scroll-margin-top:12px}
+.nzZ.mine{border:2px solid #b3261e}
+.nzZ.hit{box-shadow:0 0 0 4px rgba(179,38,30,.35)}
+.nzZh{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
+.nzZh b{font-size:17px;margin-right:4px}
+.nzT{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:#eef1f0;color:#3d4650;white-space:nowrap}
+.nzT.s0{background:#eef1f0;color:#4a5560}
+.nzT.s1{background:#e3ecea;color:#2c4a4d}
+.nzT.s2{background:#cfe2de;color:#1d3a3e}
+.nzT.s3{background:#a9cbc5;color:#14302f}
+.nzT.s4{background:#3f7f78;color:#fff}
+.nzT.s5{background:#1d3a3e;color:#fff}
+.nzT.gs{background:#fff;color:#b3261e;box-shadow:inset 0 0 0 1px #b3261e}
+.nzT.gx{background:#5b636b;color:#fff}
+.nzT.me{background:#b3261e;color:#fff}
+.nzZm{margin:6px 0 4px;font-size:14.5px;color:var(--sub)}
+.nzZa{display:flex;gap:8px;margin:3px 0;font-size:14.5px}
+.nzZa>span{flex:none;width:62px;color:var(--sub);font-size:13px;padding-top:1px}
+.nzZg em{font-style:normal;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.nzZc{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-size:14px}
+.nzZa a,.nzZc a,.nzStar a{color:#1d3a3e}
+.nzStar{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.nzStar ul{margin:6px 0 0;padding-left:18px;font-size:14px}
+.nzStar li{margin:4px 0}
+.nzSrc{font-size:12.5px;color:var(--sub);margin:4px 4px 20px;line-height:1.6}
+@media(max-width:760px){.nzG{grid-template-columns:1fr}.nzMap{min-height:0}.nzHd{padding:16px}.nzHd h2{font-size:23px}.nzTot b{font-size:28px}.nzRank .rk{grid-template-columns:1fr}.nzZl{grid-template-columns:1fr}.nzPh div{grid-template-columns:104px 1fr 30px}}
+
+.nzSvg path.mi{stroke:#b3261e;stroke-width:1.8;stroke-dasharray:4 3}
+.nzMi{color:#b3261e;font-weight:700}
+.nzLeg i.me{background:#b3261e;border-radius:50%;border-color:#fff}
+.nzNote.mi{background:#fbeceb;color:#7a1d17}
+
+.nzLst,.nzZ,#nzSide{scroll-margin-top:78px}
 </style></head><body>
 <script>/* 선 아이콘: 화면의 그림 글자를 선 아이콘으로 바꿔 보여 줌 (저장 내용은 그대로) */
 (function(){
@@ -1684,7 +1805,11 @@ function monthPrint(m){var p=m.split("-"),y=+p[0],mo=+p[1]-1,first=new Date(y,mo
 var RT_BASES=[["","없음 (고정액만)"],["con","신축비(공사비)"],["mem","조합원 분양수입"],["gen","일반 분양수입"],["gc","일반분양+근생"],["sales","종후자산 소계"]];
 var RT_ITEMS=[["design","설계비 및 전문관리 용역비","개략 추정","설계·정비계획·PM 용역"],["super","감리비","공사비 비례","건축·기반시설·석면 감리"],["build","건축시설공사비","","건축공사(철거·부가세 포함)"],["move","지장물 이설비용","개략 추정","한전·가스·통신 이설"],["cause","원인자 부담금 등","관련 법률","학교용지·광역교통·상하수도"],["fin","금융비용","","사업비·이주비·중도금 이자"],["out","각종 외주용역비용","용역비 추정","영향평가·측량·인증 등"],["comp","손실보상비 등","","현금청산·영업손실·이전비"],["appr","감정평가수수료","수수료율","종전·종후·국공유지 감정"],["mgmt","관리비","운영비 추정","추진위·조합 운영, 총회"],["sale","분양경비 및 법무등기비용","개략 추정","분양보증·보존등기"],["law","법률비용","개략 추정","소송·명도소송"],["tax","제세공과금","개략 추정","법인세·부가세·재산세"],["util","인입 부담금","개략 추정","전기·가스 부담금 기타"],["res","예비비","추가지출 대비","부득이한 지출 대비"]];
 // 주변 참고 비례율 — 언론 보도 기준 참고용 (시점·단계가 서로 다름, 사용자가 고치고 더할 수 있음)
-var RT_REFS=[{n:"온천4구역 (동래)",v:109.25,s:"관리처분 인가 (2018)",src:"위클리한국주택경제신문",lat:35.2078,lng:129.0796,b:1},{n:"온천4구역 (동래)",v:115,s:"관리처분 변경 (2021)",src:"위클리한국주택경제신문",lat:35.2078,lng:129.0796,b:1},{n:"엄궁1구역 (사상)",v:105.62,s:"관리처분 변경 (2025 총회)",src:"위클리한국주택경제신문",lat:35.1268,lng:128.9745,b:1},{n:"연산10구역 (연제)",v:105,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1832,lng:129.0905,b:1},{n:"양정4구역 (부산진)",v:103.8,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1722,lng:129.0702,b:1},{n:"망미5구역 (수영)",v:102,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1762,lng:129.1078,b:1},{n:"대연3구역 (부산 남구)",v:104,s:"조합원 분양계약 (2023.12)",src:"KNN",url:"https://news.knn.co.kr/news/article/149273",lat:35.131,lng:129.098},{n:"대연3구역 (부산 남구)",v:138,s:"관리처분 변경 총회 (2024.6)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=44579",lat:35.131,lng:129.098},{n:"중동5구역 오산마을 (부산 해운대)",v:110,s:"조합 추정 (2022)",src:"파이낸셜뉴스",url:"https://www.fnnews.com/news/202502180943187581",lat:35.165,lng:129.17},{n:"중동5구역 오산마을 (부산 해운대)",v:92.13,s:"정비사업통합홈페이지 게재값 (2025.2)",src:"파이낸셜뉴스",url:"https://www.fnnews.com/news/202502180943187581",lat:35.165,lng:129.17},{n:"영주1구역 (부산 중구)",v:103.61,s:"정비구역 지정안 공람 추정 (2024.5)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=44004",lat:35.115,lng:129.034},{n:"문현6구역 (부산 남구)",v:100.73,s:"정비구역 지정 추정 (2024.11)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=46235",lat:35.137,lng:129.067},{n:"사직5구역 (부산 동래)",v:105,s:"정비구역 지정 추정 (2024.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45691",lat:35.199,lng:129.063},{n:"온천5구역 (부산 동래)",v:124,s:"정비구역 지정 추정 (2024.1)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=42621",lat:35.212,lng:129.075},{n:"구포8구역 (부산 북구)",v:114.75,s:"정비구역 지정 추정 (2024.2)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=42942",lat:35.208,lng:128.998},{n:"당리2구역 재건축 (부산 사하)",v:101.83,s:"정비구역 지정 추정 (2024.8)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45420",lat:35.103,lng:128.977},{n:"괴정5구역 (부산 사하)",v:110,s:"관리처분 총회 조합 제시 (2021.11)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=43436",lat:35.1,lng:128.99},{n:"수성구30-11구역 (대구 수성)",v:103.59,s:"정비구역 지정 추정 (2025.8)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=50423",lat:35.86,lng:128.623},{n:"동구10구역 (대구 동구)",v:100.11,s:"정비구역 지정 추정 (2025.4)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=48554",lat:35.877,lng:128.62},{n:"남산4-7구역 (대구 중구)",v:100.2,s:"정비구역 지정 추정 (2024.10)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45965",lat:35.861,lng:128.588},{n:"평리4재정비촉진구역 (대구 서구)",v:100.3,s:"관리처분 총회 의결 (2021.1)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=23613",lat:35.873,lng:128.553},{n:"현대백조타운 재건축 (대구 달서)",v:100.05,s:"관리처분 변경 의결 (2021.5)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=24915",lat:35.838,lng:128.54},{n:"남구B-04구역 (울산 남구)",v:135.96,s:"정비구역 지정 추정 (2023.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=41062",lat:35.535,lng:129.31},{n:"남구B-01구역 (울산 남구)",v:107.07,s:"정비구역 지정 추정 (2025.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=50787",lat:35.54,lng:129.318},{n:"사파1구역 재건축 (창원 성산)",v:100.26,s:"정비구역 지정 추정 (2025.3)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=48161",lat:35.226,lng:128.684},{n:"환호동 재개발 (포항 북구)",v:101.81,s:"정비구역 지정안 공람 추정 (2026.11)",src:"경북매일",url:"https://www.kbmaeil.com/article/20261111500602",lat:36.068,lng:129.395},{n:"대신1구역 (포항 북구)",v:106.24,s:"정비구역 지정 전 추정 (2023.12)",src:"영남경제",url:"https://www.ynenews.kr/news/articleView.html?idxno=44162",lat:36.049,lng:129.37},{n:"광천동 재개발 (광주 서구)",v:105.29,s:"관리처분 총회 가결 (2023.1)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=45049",lat:35.163,lng:126.883},{n:"신가동 재개발 (광주 광산)",v:120,s:"관리처분 변경 총회 (2024.5, 비대위 반박 있음)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=43884",lat:35.184,lng:126.828},{n:"전라중교 일원 재개발 (전주 덕진)",v:101,s:"시공사 가계약 무렵 (2026.4)",src:"전북일보",url:"https://www.jjan.kr/article/20260408500334",lat:35.84,lng:127.125},{n:"송천무지개아파트 재건축 (전주 덕진)",v:89.19,s:"정비구역 지정 추정 (2025.6)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=49166",lat:35.858,lng:127.12},{n:"봉천13구역 공공재개발 (서울 관악)",v:105.24,s:"정비계획 수정가결 추정 (2025.8)",src:"하우징워치",url:"https://housingwatch.co.kr/news/article.html?no=25870",lat:37.4777,lng:126.946},{n:"봉천4-1-2구역 (서울 관악)",v:102,s:"첫 관리처분계획안 (2024 이전)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=24766",lat:37.475,lng:126.9571},{n:"봉천4-1-2구역 (서울 관악)",v:88.61,s:"관리처분 변경안 (2024.11)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=24766",lat:37.475,lng:126.9571},{n:"신림8구역 (서울 관악)",v:102.3,s:"정비계획 공람 추정 (2025.9)",src:"한국경제",url:"https://www.hankyung.com/article/2025090433901",lat:37.4869,lng:126.9282},{n:"신림6구역 (서울 관악)",v:103.46,s:"정비구역 지정 고시 추정 (2026.5)",src:"서울시 고시 제2026-303호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11000TTC202606240003/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%EA%B3%A0%EC%8B%9C%20%EC%A0%9C2026-303%ED%98%B8.pdf",lat:37.4869,lng:126.9282},{n:"청파2구역 (서울 용산)",v:99.7,s:"정비계획 주민의견 청취 추정 (2023.10)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=23687",lat:37.5488,lng:126.9667},{n:"효창공원앞역세권 (서울 용산)",v:97.26,s:"정비구역 지정 고시 추정 (2026.4)",src:"서울시 고시 제2026-215호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11170TTC202604200001/%EA%B3%A0%EC%8B%9C%EB%AC%B8%28%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A0%9C2026-215%ED%98%B8%29.pdf",lat:37.5434,lng:126.9604},{n:"노량진6구역 (서울 동작)",v:110,s:"관리처분 총회 의결 (2019.12)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=11785",lat:37.5126,lng:126.9421},{n:"노량진1구역 (서울 동작)",v:100.6,s:"관리처분계획 수립 (2025.3)",src:"헤럴드경제",url:"https://biz.heraldcorp.com/article/10449709",lat:37.5126,lng:126.9421},{n:"대방동 393-66 역세권활성화 (서울 동작)",v:115.87,s:"정비구역 지정 고시 추정 (2026.4)",src:"서울시보 고시 제2026-203호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11000TTC202607010005/%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%9B%90%EB%B3%B8%20seoulsibo_20260415175605_91939.pdf",lat:37.5068,lng:126.9291},{n:"신길 역세권시프트 (서울 영등포)",v:106.93,s:"정비계획 주민의견 청취 추정 (2023.6)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=23255",lat:37.5065,lng:126.9119},{n:"여의도 공작아파트 재건축 (서울 영등포)",v:93.7,s:"정비계획 변경 고시 추정 (2026)",src:"영등포구 고시 제2026-116호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11560TTC202609020004/%EA%B3%A0%EC%8B%9C%EB%AC%B8%28%EC%98%81%EB%93%B1%ED%8F%AC%EA%B3%A0%EC%8B%9C%20%EC%A0%9C2026-116%ED%98%B8%29.pdf",lat:37.5285,lng:126.9301},{n:"산곡6구역 (인천 부평)",v:100.31,s:"관리처분 변경 총회 (2025.12)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=52217",lat:37.4992,lng:126.7024},{n:"십정3구역 (인천 부평)",v:106.68,s:"관리처분 총회 의결 (2021.2)",src:"하우징헤럴드",url:"https://www.housingherald.co.kr/news/articleView.html?idxno=40598",lat:37.4766,lng:126.6974},{n:"금송구역 (인천 송림동)",v:99.47,s:"변경 전 관리처분계획 (2021 이전)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=41635",lat:37.4774,lng:126.6488},{n:"금송구역 (인천 송림동)",v:100.7,s:"관리처분 변경 총회 (2021.7)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=41635",lat:37.4774,lng:126.6488},{n:"수진1구역 공공재개발 (성남 수정)",v:100.64,s:"관리처분계획 총회 (2026.2)",src:"하우징타임즈",url:"https://www.housingtimes.co.kr/news/articleView.html?idxno=1747",lat:37.4389,lng:127.1296},{n:"안양냉천지구 주거환경개선 (안양 만안)",v:121.83,s:"관리처분 변경 총회 (2024.10)",src:"더팩트",url:"https://news.tf.co.kr/read/national/2139320.htm",lat:37.3977,lng:126.9226}]; // 2026-11-17 전국 43건 추가 (언론·고시 원문 확인, 좌표는 동 중심 대략)
+var RT_REFS=[{n:"온천4구역 (동래)",v:109.25,s:"관리처분 인가 (2018)",src:"위클리한국주택경제신문",lat:35.2078,lng:129.0796,b:1},{n:"온천4구역 (동래)",v:115,s:"관리처분 변경 (2021)",src:"위클리한국주택경제신문",lat:35.2078,lng:129.0796,b:1},{n:"엄궁1구역 (사상)",v:105.62,s:"관리처분 변경 (2025 총회)",src:"위클리한국주택경제신문",lat:35.1268,lng:128.9745,b:1},{n:"연산10구역 (연제)",v:105,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1832,lng:129.0905,b:1},{n:"양정4구역 (부산진)",v:103.8,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1722,lng:129.0702,b:1},{n:"망미5구역 (수영)",v:102,s:"정비구역 지정 추정",src:"위클리한국주택경제신문",lat:35.1762,lng:129.1078,b:1},{n:"대연3구역 (부산 남구)",v:104,s:"조합원 분양계약 (2023.12)",src:"KNN",url:"https://news.knn.co.kr/news/article/149273",lat:35.131,lng:129.098},{n:"대연3구역 (부산 남구)",v:138,s:"관리처분 변경 총회 (2024.6)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=44579",lat:35.131,lng:129.098},{n:"중동5구역 오산마을 (부산 해운대)",v:110,s:"조합 추정 (2022)",src:"파이낸셜뉴스",url:"https://www.fnnews.com/news/202502180943187581",lat:35.165,lng:129.17},{n:"중동5구역 오산마을 (부산 해운대)",v:92.13,s:"정비사업통합홈페이지 게재값 (2025.2)",src:"파이낸셜뉴스",url:"https://www.fnnews.com/news/202502180943187581",lat:35.165,lng:129.17},{n:"영주1구역 (부산 중구)",v:103.61,s:"정비구역 지정안 공람 추정 (2024.5)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=44004",lat:35.115,lng:129.034},{n:"문현6구역 (부산 남구)",v:100.73,s:"정비구역 지정 추정 (2024.11)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=46235",lat:35.137,lng:129.067},{n:"사직5구역 (부산 동래)",v:105,s:"정비구역 지정 추정 (2024.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45691",lat:35.199,lng:129.063},{n:"온천5구역 (부산 동래)",v:124,s:"정비구역 지정 추정 (2024.1)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=42621",lat:35.212,lng:129.075},{n:"구포8구역 (부산 북구)",v:114.75,s:"정비구역 지정 추정 (2024.2)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=42942",lat:35.208,lng:128.998},{n:"당리2구역 재건축 (부산 사하)",v:101.83,s:"정비구역 지정 추정 (2024.8)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45420",lat:35.103,lng:128.977},{n:"괴정5구역 (부산 사하)",v:110,s:"관리처분 총회 조합 제시 (2021.11)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=43436",lat:35.1,lng:128.99},{n:"수성구30-11구역 (대구 수성)",v:103.59,s:"정비구역 지정 추정 (2025.8)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=50423",lat:35.86,lng:128.623},{n:"동구10구역 (대구 동구)",v:100.11,s:"정비구역 지정 추정 (2025.4)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=48554",lat:35.877,lng:128.62},{n:"남산4-7구역 (대구 중구)",v:100.2,s:"정비구역 지정 추정 (2024.10)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=45965",lat:35.861,lng:128.588},{n:"평리4재정비촉진구역 (대구 서구)",v:100.3,s:"관리처분 총회 의결 (2021.1)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=23613",lat:35.873,lng:128.553},{n:"현대백조타운 재건축 (대구 달서)",v:100.05,s:"관리처분 변경 의결 (2021.5)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=24915",lat:35.838,lng:128.54},{n:"남구B-04구역 (울산 남구)",v:135.96,s:"정비구역 지정 추정 (2023.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=41062",lat:35.535,lng:129.31},{n:"남구B-01구역 (울산 남구)",v:107.07,s:"정비구역 지정 추정 (2025.9)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=50787",lat:35.54,lng:129.318},{n:"사파1구역 재건축 (창원 성산)",v:100.26,s:"정비구역 지정 추정 (2025.3)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=48161",lat:35.226,lng:128.684},{n:"환호동 재개발 (포항 북구)",v:101.81,s:"정비구역 지정안 공람 추정 (2026.11)",src:"경북매일",url:"https://www.kbmaeil.com/article/20261111500602",lat:36.068,lng:129.395},{n:"대신1구역 (포항 북구)",v:106.24,s:"정비구역 지정 전 추정 (2023.12)",src:"영남경제",url:"https://www.ynenews.kr/news/articleView.html?idxno=44162",lat:36.049,lng:129.37},{n:"광천동 재개발 (광주 서구)",v:105.29,s:"관리처분 총회 가결 (2023.1)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=45049",lat:35.163,lng:126.883},{n:"신가동 재개발 (광주 광산)",v:120,s:"관리처분 변경 총회 (2024.5, 비대위 반박 있음)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=43884",lat:35.184,lng:126.828},{n:"전라중교 일원 재개발 (전주 덕진)",v:101,s:"시공사 가계약 무렵 (2026.4)",src:"전북일보",url:"https://www.jjan.kr/article/20260408500334",lat:35.84,lng:127.125},{n:"송천무지개아파트 재건축 (전주 덕진)",v:89.19,s:"정비구역 지정 추정 (2025.6)",src:"위클리한국주택경제신문",url:"http://www.arunews.com/news/articleView.html?idxno=49166",lat:35.858,lng:127.12},{n:"봉천13구역 공공재개발 (서울 관악)",v:105.24,s:"정비계획 수정가결 추정 (2025.8)",src:"하우징워치",url:"https://housingwatch.co.kr/news/article.html?no=25870",lat:37.4777,lng:126.946},{n:"봉천4-1-2구역 (서울 관악)",v:102,s:"첫 관리처분계획안 (2024 이전)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=24766",lat:37.475,lng:126.9571},{n:"봉천4-1-2구역 (서울 관악)",v:88.61,s:"관리처분 변경안 (2024.11)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=24766",lat:37.475,lng:126.9571},{n:"신림8구역 (서울 관악)",v:102.3,s:"정비계획 공람 추정 (2025.9)",src:"한국경제",url:"https://www.hankyung.com/article/2025090433901",lat:37.4869,lng:126.9282},{n:"신림6구역 (서울 관악)",v:103.46,s:"정비구역 지정 고시 추정 (2026.5)",src:"서울시 고시 제2026-303호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11000TTC202606240003/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%EA%B3%A0%EC%8B%9C%20%EC%A0%9C2026-303%ED%98%B8.pdf",lat:37.4869,lng:126.9282},{n:"청파2구역 (서울 용산)",v:99.7,s:"정비계획 주민의견 청취 추정 (2023.10)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=23687",lat:37.5488,lng:126.9667},{n:"효창공원앞역세권 (서울 용산)",v:97.26,s:"정비구역 지정 고시 추정 (2026.4)",src:"서울시 고시 제2026-215호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11170TTC202604200001/%EA%B3%A0%EC%8B%9C%EB%AC%B8%28%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A0%9C2026-215%ED%98%B8%29.pdf",lat:37.5434,lng:126.9604},{n:"노량진6구역 (서울 동작)",v:110,s:"관리처분 총회 의결 (2019.12)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=11785",lat:37.5126,lng:126.9421},{n:"노량진1구역 (서울 동작)",v:100.6,s:"관리처분계획 수립 (2025.3)",src:"헤럴드경제",url:"https://biz.heraldcorp.com/article/10449709",lat:37.5126,lng:126.9421},{n:"대방동 393-66 역세권활성화 (서울 동작)",v:115.87,s:"정비구역 지정 고시 추정 (2026.4)",src:"서울시보 고시 제2026-203호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11000TTC202607010005/%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%9B%90%EB%B3%B8%20seoulsibo_20260415175605_91939.pdf",lat:37.5068,lng:126.9291},{n:"신길 역세권시프트 (서울 영등포)",v:106.93,s:"정비계획 주민의견 청취 추정 (2023.6)",src:"하우징워치",url:"https://www.housingwatch.co.kr/news/article.html?no=23255",lat:37.5065,lng:126.9119},{n:"여의도 공작아파트 재건축 (서울 영등포)",v:93.7,s:"정비계획 변경 고시 추정 (2026)",src:"영등포구 고시 제2026-116호",url:"https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11560TTC202609020004/%EA%B3%A0%EC%8B%9C%EB%AC%B8%28%EC%98%81%EB%93%B1%ED%8F%AC%EA%B3%A0%EC%8B%9C%20%EC%A0%9C2026-116%ED%98%B8%29.pdf",lat:37.5285,lng:126.9301},{n:"산곡6구역 (인천 부평)",v:100.31,s:"관리처분 변경 총회 (2025.12)",src:"위클리한국주택경제신문",url:"https://www.arunews.com/news/articleView.html?idxno=52217",lat:37.4992,lng:126.7024},{n:"십정3구역 (인천 부평)",v:106.68,s:"관리처분 총회 의결 (2021.2)",src:"하우징헤럴드",url:"https://www.housingherald.co.kr/news/articleView.html?idxno=40598",lat:37.4766,lng:126.6974},{n:"금송구역 (인천 송림동)",v:99.47,s:"변경 전 관리처분계획 (2021 이전)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=41635",lat:37.4774,lng:126.6488},{n:"금송구역 (인천 송림동)",v:100.7,s:"관리처분 변경 총회 (2021.7)",src:"하우징헤럴드",url:"http://www.housingherald.co.kr/news/articleView.html?idxno=41635",lat:37.4774,lng:126.6488},{n:"수진1구역 공공재개발 (성남 수정)",v:100.64,s:"관리처분계획 총회 (2026.2)",src:"하우징타임즈",url:"https://www.housingtimes.co.kr/news/articleView.html?idxno=1747",lat:37.4389,lng:127.1296},{n:"안양냉천지구 주거환경개선 (안양 만안)",v:121.83,s:"관리처분 변경 총회 (2024.10)",src:"더팩트",url:"https://news.tf.co.kr/read/national/2139320.htm",lat:37.3977,lng:126.9226}];
+// 창원 정비구역 (조합ONE 공개 화면과 같은 자료: 창원시 2026년 2월 공개 현황 + 2026.11 고시·보도 반영) — 비례율 값 없음, 지도에 회색 점으로만. 위치는 OSM 주소 찾기(지번·건물·동 기준)
+var RT_CW_AS="2026.11.18",RT_PH=["사업 준비","구역 지정·추진위","조합설립","사업시행인가","관리처분·이주","공사·준공"],RT_CTX=true,RT_CW=[{"n":"상남·산호구역","t":"재개발","p":4,"s":"사업시행인가 (2024.01.05.)","h":3167,"lat":35.21211,"lng":128.57518,"b":"랜드마크사업단 (포스코건설·중흥토건·신동아건설)"},{"n":"자산구역","t":"재개발","p":6,"s":"착공신고 (2025.09.09.)","h":1250,"lat":35.20429,"lng":128.55893,"g":["2026.04.15.","관리처분계획(변경)인가","창원시 고시 제2026-86호"]},{"n":"반월구역","t":"재개발","p":4,"s":"사업시행인가 (2024.09.25.)","h":1702,"lat":35.18993,"lng":128.56032},{"n":"문화구역","t":"재개발","p":4,"s":"사업시행인가 (2024.12.20.)","h":1650,"lat":35.18776,"lng":128.55657},{"n":"회원2구역","t":"재개발","p":5,"s":"관리처분(변경)인가 (2026.03.31.)","h":2016,"lat":35.21944,"lng":128.55842,"b":"한신공영","g":["2026.03.31.","관리처분계획(변경)인가","창원시 고시 제2026-80호"]},{"n":"양덕3구역","t":"재개발","p":5,"s":"관리처분(변경)인가 (2025.04.11.)","h":487,"lat":35.22398,"lng":128.58473,"g":["2026.08.31.","사업시행계획 변경인가","창원시 고시 제2026-221호"]},{"n":"양덕4구역","t":"재개발","p":6,"s":"준공인가 (2025.01.15.)","h":981,"lat":35.22398,"lng":128.58473},{"n":"대야구역","t":"재개발","p":6,"s":"공사 중","h":2638,"lat":35.15855,"lng":128.66016,"a":1,"g":["2026.06.15.","정비계획 경미한 변경","창원시 고시 제2026-163호"]},{"n":"경화구역","t":"재개발","p":5,"s":"관리처분인가 (2025.01.15.)","h":1415,"lat":35.15998,"lng":128.69073,"g":["2026.08.31.","사업시행계획(변경)인가","창원시 고시 제2026-220호"]},{"n":"대원1구역","t":"재건축","p":6,"s":"준공인가 (2026.04.15.)","h":951,"lat":35.22968,"lng":128.65254,"a":1,"g":["2026.04.30.","관리처분계획(변경)인가","창원시 고시 제2026-112호"]},{"n":"신월1구역","t":"재건축","p":3,"s":"정비계획 변경 (2025.06.30.)","h":1810,"lat":35.22824,"lng":128.69003,"b":"GS건설"},{"n":"신월2구역","t":"재건축","p":6,"s":"준공인가 (2026.09.15.)","h":1509,"lat":35.22824,"lng":128.69003,"b":"HDC현대산업개발","g":["2026.10.15.","관리처분계획(변경)인가","창원시 고시 제2026-261호"]},{"n":"신월3구역","t":"재건축","p":5,"s":"관리처분계획인가 (2026.02.27.)","h":701,"lat":35.22824,"lng":128.69003,"b":"대우건설","a":1,"g":["2026.02.27.","관리처분계획인가","창원시 고시 제2026-36호"]},{"n":"반지1구역","t":"재건축","p":3,"s":"건축심의 (2025.09.25.)","h":498,"lat":35.24075,"lng":128.66307,"b":"포스코이앤씨","g":["2026.02.27.","정비계획 경미한 변경","창원시 고시 제2026-45호"]},{"n":"내2구역","t":"재건축","p":5,"s":"관리처분계획인가 (2025.12.31.)","h":1048,"lat":35.22107,"lng":128.66157,"b":"동양건설산업","a":1,"g":["2025.12.31.","관리처분계획인가","창원시 고시 제2025-335호"]},{"n":"상남1구역","t":"재건축","p":5,"s":"해체공사","h":728,"lat":35.21831,"lng":128.68951,"b":"대우건설","g":["2025.10.15.","정비계획·정비구역 변경 지정","창원시 고시 제2025-273호"]},{"n":"가음1구역","t":"재건축","p":3,"s":"조합설립인가 (2018.07.20.)","h":458,"lat":35.20903,"lng":128.69688,"b":"한신공영","a":1},{"n":"가음2구역","t":"재건축","p":3,"s":"조합설립인가 (2025.09.29.)","h":462,"lat":35.20903,"lng":128.69688,"b":"태영건설","a":1},{"n":"가음3구역","t":"재건축","p":3,"s":"조합설립인가 (2025.09.29.)","h":484,"lat":35.20903,"lng":128.69688,"b":"금호건설","a":1},{"n":"가음4구역","t":"재건축","p":6,"s":"공사 중","h":570,"lat":35.20903,"lng":128.69688,"b":"대우건설","a":1},{"n":"신촌2구역","t":"재건축","p":6,"s":"공사 중","h":258,"lat":35.19777,"lng":128.63891,"b":"SGC이앤씨","a":1,"g":["2026.08.31.","관리처분계획(변경)인가","창원시 고시 제2026-218호"]},{"n":"봉암연립","t":"재건축","p":2,"s":"추진위 구성 (2003.12.24.)","h":539,"lat":35.22655,"lng":128.60664},{"n":"용호1구역","t":"재건축","p":3,"s":"조합설립인가","h":1245,"lat":35.23571,"lng":128.68267,"b":"삼성물산"},{"n":"용호2구역","t":"재건축","p":3,"s":"조합설립인가 (2025.07.18.)","h":812,"lat":35.23571,"lng":128.68267,"b":"GS건설"},{"n":"용호3구역","t":"재건축","p":3,"s":"조합설립인가 (2025.07.22.)","h":1048,"lat":35.23571,"lng":128.68267,"b":"롯데건설","a":1},{"n":"사파1구역","t":"재건축","p":2,"s":"조합설립추진위 구성 (2025.08.14.)","h":2960,"lat":35.22476,"lng":128.70799},{"n":"외2구역","t":"재건축 정비예정","p":1,"s":"정비예정구역 지정 (2012.11.07.)","h":175,"lat":35.21203,"lng":128.67475,"a":1},{"n":"해바라기 소규모재건축","t":"소규모주택","p":5,"s":"관리처분인가 (2020.08.14.)","h":154,"lat":35.18734,"lng":128.5619},{"n":"신촌1구역","t":"재건축 정비예정","p":1,"s":"정비예정구역 지정 (2012.11.07.)","h":630,"lat":35.19777,"lng":128.63891,"a":1},{"n":"신촌3구역","t":"재건축 정비예정","p":1,"s":"정비예정구역 지정 (2012.11.07.)","h":500,"lat":35.19777,"lng":128.63891,"a":1},{"n":"신촌4구역","t":"재건축 정비예정","p":2,"s":"추진위 구성 동의서 검인","h":410,"lat":35.19843,"lng":128.62939},{"n":"신촌5구역","t":"재건축 정비예정","p":1,"s":"정비예정구역 지정 (2012.11.07.)","h":260,"lat":35.19777,"lng":128.63891,"a":1},{"n":"신포삼익","t":"재건축 정비예정","p":2,"s":"조합설립추진위 구성","h":346,"lat":35.20101,"lng":128.57316},{"n":"합성무학","t":"재건축 정비예정","p":2,"s":"조합설립추진위 구성 (2025.08.29.)","h":390,"lat":35.25141,"lng":128.57304},{"n":"경화주공","t":"재건축 정비예정","p":1,"s":"재건축진단 준비 중","h":420,"lat":35.15998,"lng":128.69073},{"n":"자산2구역","t":"재건축","p":2,"s":"정비구역 지정 (2026.04.15.)","h":890,"lat":35.20429,"lng":128.55893,"g":["2026.04.30.","정비구역 지정 정정 고시","창원시 고시 제2026-117호"]},{"n":"반림1구역","t":"재건축 정비예정","p":2,"s":"정비구역 지정 신청","h":2595,"lat":35.23775,"lng":128.67297,"a":1},{"n":"남양1구역","t":"재건축","p":3,"s":"정비구역·사업시행자 지정 (2026.06.15.)","h":967,"lat":35.1962,"lng":128.69517,"g":["2026.06.15.","정비구역 및 사업시행자 지정","창원시 고시 제2026-164호"]},{"n":"반림2구역(럭키반림)","t":"재건축 정비예정","p":2,"s":"재건축진단 통과 · 추진위 구성 동의 중","h":1620,"lat":35.23775,"lng":128.67297},{"n":"동마산풀비체 가로주택정비","t":"소규모주택","p":3,"s":"조합설립인가 (2021.12.02.)","h":196,"lat":35.25656,"lng":128.5908},{"n":"내동한화 가로주택정비","t":"소규모주택","p":3,"s":"조합설립인가 (2022.03.08.)","h":112,"lat":35.22107,"lng":128.66157,"a":1},{"n":"중부시장 소규모재건축","t":"소규모주택","p":3,"s":"조합설립인가 (2022.03.23.)","h":156,"lat":35.15998,"lng":128.69073},{"n":"무학맨션 소규모재건축","t":"소규모주택","p":3,"s":"조합설립인가 (2022.10.27.)","h":292,"lat":35.21712,"lng":128.58357},{"n":"산호1구역 가로주택정비","t":"소규모주택","p":3,"s":"조합설립인가 (2025.02.28.)","h":496,"lat":35.21712,"lng":128.58357},{"n":"북마산중앙시장 가로주택정비","t":"소규모주택","p":3,"s":"조합설립인가 (2025.04.30.)","h":360,"lat":35.21211,"lng":128.57518},{"n":"석전동 226-5번지 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2022.04.20.)","h":81,"lat":35.23047,"lng":128.56697},{"n":"구암동 27-14번지 일대 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2022.05.19.)","h":93,"lat":35.25656,"lng":128.5908},{"n":"양덕동 158-8번지 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2022.07.29.)","h":279,"lat":35.22398,"lng":128.58473},{"n":"석전동 238번지 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"신탁 지정 동의서 검인 (2023.05.09.)","h":221,"lat":35.23047,"lng":128.56697},{"n":"서성1구역 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2023.08.17.)","h":72,"lat":35.2029,"lng":128.57058},{"n":"월영동 529-1번지 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2023.12.20.)","h":64,"lat":35.17524,"lng":128.5572},{"n":"대동화천아파트 소규모재건축","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2021.09.29.)","h":80,"lat":35.22107,"lng":128.66157,"a":1},{"n":"월영건화아파트 소규모재건축","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2023.10.23.)","h":45,"lat":35.17524,"lng":128.5572},{"n":"구암동 80-3번지 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2024.12.17.)","h":103,"lat":35.25656,"lng":128.5908},{"n":"반월시장 일원 가로주택정비","t":"소규모주택 정비예정","p":2,"s":"조합설립 동의서 검인 (2025.03.19.)","h":41,"lat":35.18993,"lng":128.56032},{"n":"남양성원","t":"재건축 정비예정","p":1,"s":"재건축진단 신청","h":1350,"lat":35.1962,"lng":128.69517,"a":1}];
+// 비례율 참고 구역의 최근 고시 (토지이음 고시정보, 2026.04~11 모은 것)
+var RT_GOSI={"사직5구역 (부산 동래)":["2026.09.30.","정비계획 변경","부산 동래구 고시 제2026-349호",641927],"괴정5구역 (부산 사하)":["2026.04.22.","정비계획 변경","부산 사하구 고시 제2026-140호",633059],"십정3구역 (인천 부평)":["2026.11.02.","관리처분계획 변경인가","인천 부평구 고시 제2026-139호",644541]}; // 2026-11-17 전국 43건 추가 (언론·고시 원문 확인, 좌표는 동 중심 대략)
 // 현장 위치 (대략) — 없으면 지도에서 눌러 정함
 var RT_LOC={"온천8구역":{lat:35.2112,lng:129.0752}};
 function rtBlank(){return{v:1,title:"OO구역 재개발정비사업",org:"(가칭)OO구역 재개발정비사업 조합설립추진위원회",rev:"제1차",date:today(),py:3.3058,mp:0,gp:0,rp:0,
@@ -1807,6 +1932,152 @@ function rtIn(el){var p=el.dataset.p.split("."),o=RT;for(var i=0;i<p.length-1;i+
 function rtI(p,v,t,w,ph){return`<input class="rti${t==="s"?" s":""}"${w?` style="width:${w}"`:""} data-p="${p}"${t?` data-t="${t}"`:""} value="${esc(t==="s"?(v||""):(v?fN(v,Math.abs(v)>=1e5?0:4):""))}" ${t==="s"?"":'inputmode="decimal"'} placeholder="${esc(ph||"")}" onchange="rtIn(this)" aria-label="${esc(ph||p)}">`}
 var RT_ON=false; // 「주변 비례율」 따로 보기 화면
 function rtNearView(){bdInit();rtInit();RT_ON=true;RT_NEAR=true;return'<div id="rtW">'+rtNearOnly()+'</div>'}
+// ── 🧭 전국 정비사업 지도 (2026-11-18) — 조합ONE 공개 화면과 같은 자료(국토부 통계·통합 데이터, 창원시 공개 현황, 토지이음 고시). 자료 파일은 지도자료/ (node 앱/전국지도자료.js 로 새로 만듦)
+var NZS={sd:"경남",v:null,g:null,ok:0,ld:0,c2s:{},mine:[]};
+var NZ_EUM="https://www.eum.go.kr/web/gs/gv/gvGosiDet.jsp?seq=";
+var NZ_TAG=["사업 준비","구역 지정·추진위","조합설립","사업시행인가","관리처분·이주","공사·준공"];
+var NZ_NST=[[0,"#eef1f0"],[1,"#dbe7e4"],[15,"#b5d0ca"],[40,"#7fb0a8"],[100,"#3f7f78"],[300,"#1d3a3e"]];
+var NZ_SST=[[0,"#eef1f0"],[1,"#dbe7e4"],[10,"#b5d0ca"],[20,"#7fb0a8"],[30,"#3f7f78"],[45,"#1d3a3e"]];
+var NZ_CWC={의창구:"38111",성산구:"38112",마산합포구:"38113",마산회원구:"38114",진해구:"38115"};
+var NZ_AL={서울:["서울특별시","서울시"],부산:["부산광역시","부산시"],대구:["대구광역시","대구시"],인천:["인천광역시","인천시"],광주:["광주광역시"],대전:["대전광역시","대전시"],울산:["울산광역시","울산시"],세종:["세종특별자치시","세종시"],경기:["경기도"],강원:["강원특별자치도","강원도"],충북:["충청북도"],충남:["충청남도"],전북:["전북특별자치도","전라북도"],전남:["전라남도"],경북:["경상북도"],경남:["경상남도"],제주:["제주특별자치도","제주도"]};
+function nzN(n){return Number(n||0).toLocaleString("ko-KR")}
+function nzCol(n,S){var c=S[0][1];S.forEach(function(x){if(n>=x[0])c=x[1]});return c}
+function nzGoN(k){var x=NZ.NAT[k];return x.rd[3]+x.rd[4]+x.rb[2]+x.rb[3]+x.ga[2]+x.ga[3]} // 준공 전(추진 중)
+function nzAllN(k){var x=NZ.NAT[k];return x.rd[0]+x.rb[0]+x.ga[0]}
+function nzView(){setTimeout(nzStart,0);return'<div id="nzW" class="nz"><p class="nzWait">전국 지도를 불러오는 중…</p></div>'}
+function nzStart(){
+ if(NZS.ok)return nzDraw();if(NZS.ld)return;NZS.ld=1;
+ var d=new Date(),day=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+ var one=function(f,v,cb){var s=document.createElement("script");s.src="지도자료/"+f+".js?v="+v;s.onload=function(){cb(1)};s.onerror=function(){cb(0)};document.head.appendChild(s)};
+ one("전국현황",day,function(ok){
+  if(!ok||!window.NZ){NZS.ld=0;var w=$("nzW");if(w)w.innerHTML='<p class="nzWait">지도 자료를 찾지 못했습니다 — PM업무관리/지도자료 폴더를 확인해 주세요</p>';return}
+  var F=["kmap","ksgg","ksgz","kgosi"],n=F.length;
+  F.forEach(function(f){one(f,NZ.ver,function(){if(--n)return;NZS.ok=1;NZS.ld=0;nzIdx();if(view==="전국 정비사업")nzDraw()})});
+ });
+}
+// 내 현장(현장 정보의 「위치」) → 시·도·시·군·구
+function nzIdx(){
+ NZS.c2s={};if(window.KSGG)Object.keys(KSGG).forEach(function(sd){KSGG[sd].p.forEach(function(p){NZS.c2s[p[0]]=sd})});
+ NZS.mine=[];(window.SITES||[]).forEach(function(s,i){var L="";try{L=String(mapQ(s)||"")}catch(e){}if(!L)return;var sd=nzSdOf(L),g=nzSgOf(L,sd);if(g&&!sd)sd=NZS.c2s[g];if(sd&&NZ.NAT[sd])NZS.mine.push({n:s.name,i:i,sd:sd,g:g})});
+}
+function nzSdOf(L){var r=null;Object.keys(NZ_AL).forEach(function(k){if(!r&&(NZ_AL[k].some(function(a){return L.indexOf(a)>=0})||new RegExp("(^|\\s)"+k+"(\\s|$)").test(L)))r=k});return r}
+function nzSgOf(L,sd){
+ if(!window.KSGG)return null;var best=null,bl=0,tie=0,T=L.replace(/\s/g,"");
+ (sd&&KSGG[sd]?[sd]:Object.keys(KSGG)).forEach(function(k){KSGG[k].p.forEach(function(p){
+  var nm=NZ.SGN[p[0]]||p[1],m=/^(.+?시)(.+구)$/.exec(nm),b=nm.replace(/(시|군)$/,""),ok;
+  if(m)ok=T.indexOf(m[2])>=0&&T.indexOf(m[1].replace(/시$/,""))>=0;else ok=T.indexOf(nm)>=0||(b!==nm&&b.length>=2&&new RegExp("(^|\\s)"+b+"(\\s|$)").test(L));
+  if(!ok)return;if(nm.length>bl){best=p[0];bl=nm.length;tie=0}else if(nm.length===bl&&best!==p[0])tie=1})});
+ return tie?null:best;
+}
+function nzRow(code){var sd=NZS.c2s[code];return(sd&&KSGG[sd].p.filter(function(p){return p[0]===code})[0])||[code,""]}
+function nzSgName(code,short){var p=nzRow(code),n=NZ.SGN[p[0]]||p[1],m=/^(.+?시)(.+구)$/.exec(n);return m?(short?m[2]:m[1]+" "+m[2]):n}
+function nzDraw(){var w=$("nzW");if(!w||!window.NZ)return;w.innerHTML=nzHead()+'<div class="nzG"><div class="nzC nzMap" id="nzMap">'+nzMapBox()+'</div><div class="nzC nzSide" id="nzSide">'+nzSide()+'</div></div><div id="nzRankW">'+(NZS.v?'':nzRank())+'</div><div id="nzList">'+(NZS.g?nzList(NZS.g):'')+'</div>'+nzSrc();nzFit()}
+function nzRef(){var m=$("nzMap");if(!m)return nzDraw();m.innerHTML=nzMapBox();nzFit();$("nzSide").innerHTML=nzSide();$("nzRankW").innerHTML=NZS.v?"":nzRank();$("nzList").innerHTML=NZS.g?nzList(NZS.g):""}
+function nzFit(){var sv=document.querySelector("#nzMap .nzSvg");if(!sv||!sv.getBBox)return;try{var b=sv.getBBox();if(b.width)sv.setAttribute("viewBox",[b.x-4,b.y-4,b.width+8,b.height+8].map(Math.round).join(" "))}catch(e){}} // 빈 바다 여백 잘라냄
+function nzPick(k){if(!NZ.NAT[k])return;NZS.sd=k;NZS.v=k;NZS.g=null;nzRef()}
+function nzBack(){NZS.v=null;NZS.g=null;nzRef()}
+function nzSg(code){NZS.g=code;nzRef();if(code&&window.innerWidth<760){var s=$("nzSide");if(s)s.scrollIntoView({behavior:"smooth",block:"start"})}}
+function nzHead(){
+ var K=Object.keys(NZ.NAT),tot=K.reduce(function(s,k){return s+nzGoN(k)},0),all=K.reduce(function(s,k){return s+nzAllN(k)},0);
+ return'<div class="nzHd"><span class="nzK">국토교통부 '+esc(NZ.natAs)+' 누계 · 구역 목록 '+esc(NZ.sgAs)+' · 토지이음 고시 '+esc(NZ.gAs)+'까지</span><h2>전국 정비사업 현황</h2>'+
+  '<div class="nzTot"><div><span>전국 추진 중</span><b>'+nzN(tot)+'</b><small>곳</small></div><div><span>지금까지 누계</span><b>'+nzN(all)+'</b><small>곳</small></div></div>'+
+  (NZS.mine.length?'<div class="nzMine"><span>내 현장</span>'+NZS.mine.map(function(m,j){return'<button onclick="nzMineGo('+j+')">'+esc(m.n)+' <small>'+esc(m.sd+(m.g?' '+nzSgName(m.g):''))+'</small></button>'}).join("")+'</div>':'')+
+  '<div class="nzQ"><input id="nzQ" type="search" placeholder="구역 이름으로 찾기 — 예: 온천, 사직, 용호" oninput="nzFind(this.value)" autocomplete="off"><div id="nzHit"></div></div></div>';
+}
+function nzLeg(S,unit,none){return'<div class="nzLeg">'+(!none&&NZS.mine.length?'<span><i class="me"></i>내 현장</span>':'')+(none?'<span><i style="background:'+NZ_SST[0][1]+'"></i>자료 없음</span>':'')+S.map(function(s,i){var nx=S[i+1];return'<span><i style="background:'+s[1]+'"></i>'+s[0]+(nx?'~'+(nx[0]-1):'+')+'</span>'}).join("")+'<span>'+unit+'</span></div>'}
+function nzMapBox(){
+ if(!NZS.v)return nzNat()+'<p class="nzHint">시·도를 누르면 시·군·구 지도가 나옵니다</p>'+nzLeg(NZ_NST.slice(1),"곳 (추진 중)");
+ var head='<div class="nzMh"><button class="btn" onclick="nzBack()">← 전국 지도</button><b>'+esc(NZ.NAT[NZS.v].f)+'</b></div>';
+ if(!window.KSGG||!KSGG[NZS.v])return head+'<p class="nzHint">이 지역 지도를 불러오지 못했습니다</p>';
+ var mi=NZS.mine.some(function(m){return m.sd===NZS.v&&m.g});return head+nzSgMap()+'<p class="nzHint">시·군·구를 누르면 구역 목록이 나옵니다'+(mi?' · <span class="nzMi">빨간 점선</span> = 내 현장':'')+'</p>'+nzLeg(NZ_SST.slice(1),"곳 (정비구역)",1);
+}
+function nzNat(){
+ var M=window.KMAP;if(!M)return"";var P=M.p.slice().sort(function(a,b){return(a[0]===NZS.sd)-(b[0]===NZS.sd)}),me={};NZS.mine.forEach(function(m){me[m.sd]=1});
+ return'<svg class="nzSvg" viewBox="0 0 '+M.w+' '+M.h+'" role="img" aria-label="전국 시·도별 정비사업 지도">'+P.map(function(p){var k=p[0],n=nzGoN(k);return'<path d="'+p[1]+'" fill="'+nzCol(n,NZ_NST)+'"'+(k===NZS.sd?' class="on"':'')+' onclick="nzPick(\''+k+'\')"><title>'+esc(NZ.NAT[k].f)+' 추진 중 '+nzN(n)+'곳</title></path>'}).join("")+
+  P.map(function(p){var k=p[0],n=nzGoN(k),xy=NZ.LBL[k]||[p[2],p[3]],on=k===NZS.sd;return'<text x="'+xy[0]+'" y="'+xy[1]+'" class="'+(on?"sel":n>=100?"dk":"")+'" onclick="nzPick(\''+k+'\')">'+(on?'<tspan x="'+xy[0]+'" dy="-4">'+k+'</tspan><tspan x="'+xy[0]+'" dy="17" class="n">'+nzN(n)+'곳</tspan>':k)+'</text>'+(me[k]?'<circle class="me" cx="'+(xy[0]+k.length*(on?6.5:5.5)+6)+'" cy="'+(xy[1]-(on?9:4))+'" r="4.5"></circle>':'')}).join("")+'</svg>';
+}
+function nzSgMap(){
+ var M=KSGG[NZS.v],G=NZS.g,P=M.p.slice().sort(function(a,b){return(a[0]===G)-(b[0]===G)}),me={},prov=/^3/.test(M.p[0][0]),city={},out="",dots="";NZS.mine.forEach(function(m){if(m.g)me[m.g]=1});
+ var lab=function(code,x,y,nm,n,on,dk){return'<text x="'+x+'" y="'+y+'" class="'+(on?"sel":dk?"dk":"")+'" onclick="nzSg(\''+code+'\')">'+(n||on?'<tspan x="'+x+'" dy="-3">'+esc(nm)+'</tspan><tspan x="'+x+'" dy="13" class="n">'+(n?n+"곳":"")+'</tspan>':esc(nm))+'</text>'};
+ P.forEach(function(p){var d=NZ.SGG[p[0]],on=p[0]===G,m=prov&&/^(.+시)(.+구)$/.exec(p[1]);
+  if(m){var c=city[m[1]]=city[m[1]]||{x:0,y:0,k:0,n:0,code:p[0],on:null};c.x+=p[3];c.y+=p[4];c.k++;c.n+=d?d[0]:0;if(on)c.on=p;return}
+  out+=lab(p[0],p[3],p[4],nzSgName(p[0],1),d?d[0]:0,on,d&&d[0]>=30)});
+ Object.keys(city).forEach(function(nm){var c=city[nm];if(c.on){var d=NZ.SGG[c.on[0]];out+=lab(c.on[0],c.on[3],c.on[4],nm+" "+nzSgName(c.on[0],1),d?d[0]:0,true)}else out+=lab(c.code,Math.round(c.x/c.k),Math.round(c.y/c.k),nm,c.n,false,c.n>=30)});
+ return'<svg class="nzSvg sg" viewBox="0 0 '+M.w+' '+M.h+'" role="img" aria-label="'+esc(NZ.NAT[NZS.v].f)+' 시·군·구 지도">'+P.map(function(p){var d=NZ.SGG[p[0]];return'<path d="'+p[2]+'" fill="'+(d?nzCol(d[0],NZ_SST):NZ_SST[0][1])+'"'+(p[0]===G?' class="on"':me[p[0]]?' class="mi"':'')+' onclick="nzSg(\''+p[0]+'\')"><title>'+esc(nzSgName(p[0]))+(d?' 정비구역 '+d[0]+'곳':' (자료 없음)')+(me[p[0]]?' · 내 현장':'')+'</title></path>'}).join("")+out+'</svg>';
+}
+function nzSide(){
+ if(NZS.v&&NZS.g)return nzSgPanel(NZS.g);
+ var k=NZS.v||NZS.sd,x=NZ.NAT[k],hh=x.rd[1]+x.rb[1]+x.ga[1],C1=["#c9d6d3","#1d3a3e","#7fb0a8"],C2=["#7fb0a8","#1d3a3e","#c9d6d3"];
+ var row=function(nm,a,labs,col){var t=a[0]||1;return'<div class="nzR"><div class="nzRh"><b>'+nm+'</b><span><b>'+nzN(a[0])+'</b>곳</span></div><span class="nzBar">'+labs.map(function(l,i){return'<i style="width:'+(a[i+2]/t*100)+'%;background:'+col[i]+'"></i>'}).join("")+'</span><div class="nzRl">'+labs.map(function(l,i){return'<span><i style="background:'+col[i]+'"></i>'+l+' '+nzN(a[i+2])+'</span>'}).join("")+'</div></div>'};
+ var h='<span class="nzK2">'+(NZS.v?'고른 시·도':'고른 지역')+'</span><h3 class="nzNm">'+esc(x.f)+'</h3><p class="nzBig"><b>'+nzN(nzGoN(k))+'</b>곳 <span>준공 전 추진 중</span></p><p class="nzS">지금까지 누계 '+nzN(nzAllN(k))+'곳 · 계획 '+nzN(hh)+'가구</p>'+
+  row("재개발",x.rd,["완료","시행 중","미시행"],C1)+row("재건축",x.rb,["조합인가","사업계획승인","준공"],C2)+(x.ga[0]?row("가로주택",x.ga,["조합인가","사업계획승인","준공"],C2):"");
+ if(NZS.v&&window.KSGG&&KSGG[k]){var L=KSGG[k].p.filter(function(p){return NZ.SGG[p[0]]}).sort(function(a,b){return NZ.SGG[b[0]][0]-NZ.SGG[a[0]][0]});
+  h+='<div class="nzSgL"><b>시·군·구별 정비구역 (눌러서 목록 보기)</b>'+(L.length?L.map(function(p){return'<button onclick="nzSg(\''+p[0]+'\')"><span>'+esc(nzSgName(p[0]))+'</span><b>'+NZ.SGG[p[0]][0]+'곳</b></button>'}).join(""):'<p class="nzS">이 지역은 시·군·구별 공개 자료가 아직 없습니다</p>')+'</div>'+(x.link?'<div class="nzA"><a class="btn" href="'+esc(x.link[1])+'" target="_blank" rel="noopener">'+esc(x.link[0])+' ↗</a></div>':'')}
+ else h+='<div class="nzA"><button class="btn p" onclick="nzPick(\''+k+'\')">'+esc(k)+' 시·군·구 지도 보기</button>'+(x.link?'<a class="btn" href="'+esc(x.link[1])+'" target="_blank" rel="noopener">'+esc(x.link[0])+' ↗</a>':'')+'</div>';
+ return h;
+}
+function nzSgPanel(code){
+ var d=NZ.SGG[code],nm=nzSgName(code),f=NZ.NAT[NZS.v].f,back='<button class="btn" onclick="nzSg(null)">'+esc(f)+' 전체 보기</button>';
+ if(!d)return'<span class="nzK2">고른 시·군·구 · '+esc(f)+'</span><h3 class="nzNm">'+esc(nm)+'</h3><p class="nzS">이 지역의 구역별 공개 자료는 아직 들어 있지 않습니다. 시·군·구청 정비사업 담당 부서에서 확인하세요.</p><div class="nzA">'+back+'</div>';
+ var src=NZ.SRC[d[3]]||["",""],mx=Math.max.apply(null,d[1])||1,nos=d[1][6]===d[0],types=Object.keys(d[2]).map(function(t){return t+" "+d[2][t]}).join(" · ");
+ return'<span class="nzK2">고른 시·군·구 · '+esc(f)+'</span><h3 class="nzNm">'+esc(nm)+'</h3><p class="nzBig"><b>'+d[0]+'</b>곳 <span>공개된 정비구역</span></p><p class="nzS">'+esc(types)+'</p>'+
+  (nos?'<p class="nzS">이 자료에는 단계 정보가 없습니다.</p>':'<div class="nzPh">'+NZ.PH.map(function(h,i){return'<div><span>'+h+'</span><i style="width:'+(d[1][i]/mx*100)+'%"></i><b>'+d[1][i]+'</b></div>'}).join("")+(d[1][6]?'<div><span>단계 확인 필요</span><i style="width:'+(d[1][6]/mx*100)+'%;background:#c6c9cd"></i><b>'+d[1][6]+'</b></div>':'')+'</div>')+
+  '<p class="nzS sm">출처: '+esc(src[0])+' ('+esc(src[1])+')</p><div class="nzA"><button class="btn p" onclick="nzToList()">구역 목록 보기 ↓</button>'+back+'</div>';
+}
+function nzRank(){var ks=Object.keys(NZ.NAT).sort(function(a,b){return nzGoN(b)-nzGoN(a)}),mx=nzGoN(ks[0])||1;
+ return'<div class="nzC nzRank"><b class="nzRt">시·도별 추진 중 (눌러서 시·군·구 보기)</b><div class="rk">'+ks.map(function(k){var n=nzGoN(k);return'<button class="'+(k===NZS.sd?"on":"")+'" onclick="nzPick(\''+k+'\')"><span>'+k+'</span><i style="width:'+Math.max(3,Math.sqrt(n/mx)*100)+'%"></i><b>'+nzN(n)+'</b></button>'}).join("")+'</div></div>'}
+function nzNorm(s){return String(s||"").replace(/\(.*?\)|\s|주택|재개발|재건축|정비사업|정비구역|구역|아파트|가로주택|소규모/g,"")}
+function nzMineN(){var o={};NZS.mine.forEach(function(m){var k=nzNorm(m.n);if(k.length>=2)o[k]=m.n});return o}
+function nzGd(s){return"20"+s.slice(0,2)+"."+s.slice(2,4)+"."+s.slice(4,6)+"."}
+function nzGO(G,z){var g=G[z[0]]||[],s=z[1],x=0;g.forEach(function(e){if(e[4]==="x")x=1;else if(e[4]>s)s=e[4]});return{g:g,s:s,x:x,up:s>z[1]}} // 고시가 더 뒤 단계일 때만 올림
+function nzAddr(a){return String(a||"").replace(/\s*(번지)?\s*(일원|일대|외\s*\d*필지|외).*$/,"").replace(/번지$/,"").trim()}
+function nzLinks(addr,tel,tel2,web){var a=nzAddr(addr),o=[];
+ if(a)o.push('<a href="https://map.naver.com/p/search/'+encodeURIComponent(a)+'" target="_blank" rel="noopener">네이버지도 ↗</a>');
+ if(tel)o.push('<a href="tel:'+String(tel).replace(/[^0-9]/g,"")+'">조합 ☏ '+esc(tel)+'</a>');
+ if(tel2)o.push('<a href="tel:'+String(tel2).replace(/[^0-9]/g,"")+'">담당 부서 ☏ '+esc(tel2)+'</a>');
+ if(web&&/^https?:/i.test(web))o.push('<a href="'+esc(web)+'" target="_blank" rel="noopener">누리집 ↗</a>');
+ return o.length?'<p class="nzZc">'+o.join("")+'</p>':''}
+function nzMiss(code,names){var o=NZS.mine.filter(function(m){return m.g===code&&!names.some(function(n){return nzNorm(n)===nzNorm(m.n)})});return o.length?'<p class="nzNote mi">내 현장 '+o.map(function(m){return'「'+esc(m.n)+'」'}).join(" ")+'은(는) 이 목록에 아직 없습니다 — 새로 지정됐거나 이름이 달라 맞추지 못한 경우입니다.</p>':''}
+function nzList(code){
+ var d=NZ.SGG[code],nm=nzSgName(code),f=NZ.NAT[NZS.v].f,me=nzMineN();
+ if(d&&d[3]==="cw")return nzCwList(code,f,me);
+ var L=(window.KSGZ&&KSGZ[code])||null,G=(window.KGOSI&&KGOSI[code])||{},GO=function(z){return nzGO(G,z)};
+ var head='<div class="nzC nzLst" id="nzLst"><span class="nzK2">'+esc(f)+' · 국토교통부 '+esc(NZ.sgAs)+' 기준'+(NZ.gAs?' · 고시 '+esc(NZ.gAs)+'까지 반영':'')+'</span><h3>'+esc(nm)+' 정비구역 '+(d?d[0]+'곳':'')+'</h3>';
+ if(!d||!L)return head+'<p class="nzS">이 지역은 공개된 구역 목록이 없거나 자료에 들어 있지 않습니다.</p></div>';
+ var order=L.slice().sort(function(a,b){return(me[nzNorm(b[0])]?1:0)-(me[nzNorm(a[0])]?1:0)||GO(b).s-GO(a).s||String(a[0]).localeCompare(b[0],"ko")});
+ var n=L.filter(function(z){return(G[z[0]]||[]).length}).length,u=L.filter(function(z){return GO(z).up}).length,st=G["*"]||[];
+ return head+nzMiss(code,L.map(function(z){return z[0]}))+(window.KGOSI?'<p class="nzNote">토지이음 고시('+esc(NZ.gFrom)+'~'+esc(NZ.gAs)+')에서 이 지역 구역 '+n+'곳의 최근 고시를 찾아 넣었습니다'+(u?' (단계가 올라간 곳 '+u+'곳)':'')+(st.length?'. 맞추지 못한 고시 '+st.length+'건은 맨 아래에 있습니다':'')+'. 구역 이름으로 맞춘 것이라 원문으로 확인하세요.</p>':'')+
+  '<div class="nzZl">'+order.map(function(z){var o=GO(z),mine=me[nzNorm(z[0])];
+   return'<div class="nzZ'+(mine?' mine':'')+'" data-z="'+esc(z[0])+'"><div class="nzZh"><b>'+esc(z[0])+'</b><span class="nzT'+(o.s>=0?' s'+o.s:'')+'">'+(o.s>=0?NZ_TAG[o.s]:'단계 확인 필요')+'</span>'+(o.x?'<span class="nzT gx">해제 고시</span>':o.up?'<span class="nzT gs">고시 반영</span>':'')+(mine?'<span class="nzT me">내 현장</span>':'')+'</div>'+
+    '<p class="nzZm">'+esc(z[2])+(z[3]?' · 시행 '+esc(z[3]):'')+(z[4]?' · '+nzN(z[4])+'세대 예정':'')+'</p>'+
+    (z[9]?'<p class="nzZa"><span>시공사</span><b>'+esc(z[9])+'</b></p>':'')+(z[5]?'<p class="nzZa"><span>위치</span>'+esc(z[5])+'</p>':'')+(z[8]?'<p class="nzZa"><span>사무실</span>'+esc(z[8])+'</p>':'')+
+    (o.g.length?'<p class="nzZa nzZg"><span>최근 고시</span><em>'+o.g.map(function(e){return'<a href="'+NZ_EUM+e[3]+'" target="_blank" rel="noopener">'+nzGd(e[0])+' '+esc(e[1])+' ('+esc(e[2])+') ↗</a>'}).join("")+'</em></p>':'')+
+    nzLinks(z[5],z[6],z[10],z[7])+'</div>'}).join("")+'</div>'+
+  (st.length?'<div class="nzStar"><b>목록과 맞추지 못한 최근 고시</b> <small>새로 지정된 구역·이름이 겹치는 구역 등 · 토지이음</small><ul>'+st.map(function(e){return'<li><b>'+nzGd(e[0])+'</b> <a href="'+NZ_EUM+e[3]+'" target="_blank" rel="noopener">'+esc(e[5]||e[1])+' ↗</a> <small>'+esc(e[2])+'</small></li>'}).join("")+'</ul></div>':'')+'</div>';
+}
+function nzCwList(code,f,me){
+ var gu=Object.keys(NZ_CWC).filter(function(g){return NZ_CWC[g]===code})[0],L=NZ.CW.filter(function(z){return z[2]===gu});
+ var order=L.slice().sort(function(a,b){return(me[nzNorm(b[0])]?1:0)-(me[nzNorm(a[0])]?1:0)||b[6]-a[6]||String(a[0]).localeCompare(b[0],"ko")});
+ return'<div class="nzC nzLst" id="nzLst"><span class="nzK2">'+esc(f)+' · 창원시 '+esc(NZ.cwAs)+' 공개 현황'+(NZ.cwUp?' + '+esc(NZ.cwUp)+' 고시·보도 반영':'')+'</span><h3>창원시 '+esc(gu)+' 정비구역 '+L.length+'곳</h3>'+nzMiss(code,L.map(function(z){return z[0]}))+
+  '<div class="nzZl">'+order.map(function(z){var mine=me[nzNorm(z[0])];
+   return'<div class="nzZ'+(mine?' mine':'')+'" data-z="'+esc(z[0])+'"><div class="nzZh"><b>'+esc(z[0])+'</b><span class="nzT s'+(z[6]-1)+'">'+NZ_TAG[z[6]-1]+'</span>'+(z[11]===2?'<span class="nzT gs">새로 넣음</span>':z[11]?'<span class="nzT gs">바뀜</span>':'')+(mine?'<span class="nzT me">내 현장</span>':'')+'</div>'+
+    '<p class="nzZm">'+esc(NZ.TN[z[1]]||z[1])+(z[4]?' · '+nzN(z[4])+'세대'+(z[5]?' ('+esc(z[5])+')':''):'')+(z[12]?' · 예전 이름 '+esc(z[12]):'')+'</p>'+
+    (z[7]?'<p class="nzZa"><span>추진 현황</span>'+esc(z[7])+'</p>':'')+(z[8]?'<p class="nzZa"><span>시공사</span><b>'+esc(z[8])+'</b></p>':'')+'<p class="nzZa"><span>위치</span>'+esc(z[3])+'</p>'+(z[9]?'<p class="nzZa"><span>비고</span>'+esc(z[9])+'</p>':'')+
+    (z[10].length?'<p class="nzZa nzZg"><span>바뀐 내용</span><em>'+z[10].map(function(e){var t=esc(e[0]+' '+e[1])+(e[2]?' ('+esc(e[2])+')':'');return typeof e[3]==="number"?'<a href="'+NZ_EUM+e[3]+'" target="_blank" rel="noopener">'+t+' ↗</a>':/^https?:/.test(e[3]||"")?'<a href="'+esc(e[3])+'" target="_blank" rel="noopener">'+t+' ↗</a>':'<span>'+t+'</span>'}).join("")+'</em></p>':'')+
+    nzLinks(z[3])+'</div>'}).join("")+'</div><p class="nzS sm">창원시 정비사업 통합누리집 '+esc(NZ.cwAs)+' 공개 현황에 그 뒤 고시(토지이음)·보도·사진 자료로 바뀐 내용을 덧붙였습니다. 사진 자료로 넣은 것은 원자료로 다시 확인하세요.</p></div>';
+}
+function nzFind(q){var h=$("nzHit");if(!h)return;q=String(q||"").trim();var k=nzNorm(q)||q.replace(/\s/g,""),R=[];
+ if(k.length<2){h.innerHTML="";return}
+ if(window.KSGZ)Object.keys(KSGZ).forEach(function(code){var G=(window.KGOSI&&KGOSI[code])||{};KSGZ[code].forEach(function(z){if(R.length<60&&(nzNorm(z[0]).indexOf(k)>=0||String(z[0]).indexOf(q)>=0))R.push({n:z[0],c:code,s:nzGO(G,z).s})})});
+ NZ.CW.forEach(function(z){if(R.length<60&&(nzNorm(z[0]).indexOf(k)>=0||z[0].indexOf(q)>=0||(z[12]&&z[12].indexOf(q)>=0)))R.push({n:z[0],c:NZ_CWC[z[2]],s:z[6]-1})});
+ h.innerHTML=R.length?'<div class="nzHits">'+R.slice(0,30).map(function(r){return'<button data-n="'+esc(r.n)+'" onclick="nzHitGo(\''+r.c+'\',this.dataset.n)"><b>'+esc(r.n)+'</b><small>'+esc((NZS.c2s[r.c]||"")+" "+nzSgName(r.c))+'</small><span class="nzT'+(r.s>=0?' s'+r.s:'')+'">'+(r.s>=0?NZ_TAG[r.s]:'단계 확인 필요')+'</span></button>'}).join("")+(R.length>30?'<p class="nzS">더 있습니다 — 이름을 조금 더 넣어 주세요</p>':'')+'</div>':'<p class="nzS">찾는 구역이 없습니다 — 다른 이름으로 넣어 보세요</p>';
+}
+function nzHitGo(code,name){var sd=NZS.c2s[code];if(!sd)return;NZS.sd=sd;NZS.v=sd;NZS.g=code;$("nzHit").innerHTML="";$("nzQ").value="";nzRef();nzToList(name)}
+function nzMineGo(j){var m=NZS.mine[j];if(!m)return;NZS.sd=m.sd;NZS.v=m.sd;NZS.g=m.g||null;nzRef();if(m.g)nzToList(m.n)}
+function nzToList(name){setTimeout(function(){var el=null,k=nzNorm(name);if(name)[].forEach.call(document.querySelectorAll("#nzLst .nzZ"),function(z){if(!el&&(z.dataset.z===name||nzNorm(z.dataset.z)===k))el=z});
+ el=el||$("nzLst");if(!el)return;el.scrollIntoView({behavior:"smooth",block:"start"});if(el.classList.contains("nzZ")){el.classList.add("hit");setTimeout(function(){el.classList.remove("hit")},2600)}},60)}
+function nzSrc(){return'<p class="nzSrc">출처: 국토교통부 「도시정비사업현황」('+esc(NZ.natAs)+' 누계, 국토교통 통계누리) · 「전국 도시정비사업 통합 데이터」('+esc(NZ.sgAs)+', 공공데이터포털) · 창원시 정비사업 통합누리집('+esc(NZ.cwAs)+') · 토지이음 고시정보('+esc(NZ.gFrom)+'~'+esc(NZ.gAs)+'). 조합ONE 공개 화면과 같은 자료입니다. 추진 중 = 재개발 시행 중·미시행 + 재건축·가로주택 조합인가·사업계획승인 단계. 고시는 구역 이름으로 맞춘 것이라 틀릴 수 있으니 참고용으로 보고 원문을 확인하세요.<span class="pcOnly"> 자료 새로 고치기: node 앱/전국지도자료.js → 폰에 올리기</span></p>'}
+
 var NLOC=(function(){try{return JSON.parse(localStorage.getItem("pm_nearloc")||"null")}catch(e){return null}})();
 function nlSet(v){NLOC=v;try{v?localStorage.setItem("pm_nearloc",JSON.stringify(v)):localStorage.removeItem("pm_nearloc")}catch(e){}}
 function rtFree(){return!!(RT_ON&&NLOC&&NLOC.loc)}
@@ -1895,7 +2166,7 @@ function rtYr(s){var m=String(s||"").match(/(19|20)\d\d/);return m?+m[0]:0}
 function rtZSrc(){return rtFree()?rtRefMaster():(RT.refs||[])}
 function rtZones(){rtFillLoc();var me=rtMe(),g={},out=[];rtZSrc().forEach(function(r,i){if(!+r.v||!r.n)return;var k=r.n.trim();(g[k]=g[k]||[]).push({r:r,i:i})});
  Object.keys(g).forEach(function(k){var L=g[k].sort(function(a,b){return rtYr(a.r.s)-rtYr(b.r.s)}),z=L[L.length-1];
-  out.push({n:k.replace(/\s*\(.*\)/,""),gu:(k.match(/\((.*)\)/)||[])[1]||"",v:+z.r.v,s:z.r.s||"",old:L.slice(0,-1).map(function(x){return fPct(x.r.v)+(rtYr(x.r.s)?" ("+rtYr(x.r.s)+")":"")}),i:z.i,lat:z.r.lat,lng:z.r.lng,km:me&&z.r.lat!=null?rtKm(me,z.r):null,firm:/관리처분/.test(z.r.s||"")})});
+  out.push({n:k.replace(/\s*\(.*\)/,""),gu:(k.match(/\((.*)\)/)||[])[1]||"",v:+z.r.v,s:z.r.s||"",old:L.slice(0,-1).map(function(x){return fPct(x.r.v)+(rtYr(x.r.s)?" ("+rtYr(x.r.s)+")":"")}),i:z.i,lat:z.r.lat,lng:z.r.lng,km:me&&z.r.lat!=null?rtKm(me,z.r):null,firm:/관리처분/.test(z.r.s||""),g:RT_GOSI[k]||null})});
  out.sort(function(a,b){return(a.km==null?1e9:a.km)-(b.km==null?1e9:b.km)});out.forEach(function(z,j){z.no=j+1});return out}
 function rtRecCalc(o,Z){if(!rtMe())return null;var c=Z.filter(function(z){return z.km!=null}),near=c.filter(function(z){return z.km<=5});if(near.length<2)near=c.slice(0,3);if(!near.length)return null;
  var sw=0,sv=0;near.forEach(function(z){var w=1/(z.km+0.5)*(z.firm?1.5:1);sw+=w;sv+=w*z.v});var tg=sv/sw,lo=tg<100?tg-3:Math.max(100,tg-3),hi=tg+2;
@@ -1912,9 +2183,9 @@ function rtNearBox(o){var Z=rtZones(),rc=rtRecCalc(o,Z),me=o.ratio,avg=Z.length?
   if(rc.st!=="ok"){var go=rc.st==="hi"?rc.hi:rc.lo,sg=rtSolve("gp",go),sm=rtSolve("mp",go),bt=function(f,x,t){return x==null?'':'<button class="btn" onclick="rtGoalUse(\''+f+'\','+Math.round(x/1e4)*1e4+')">'+t+' '+fMan(Math.round(x/1e4)*1e4)+'으로 맞추기</button>'};h+='<div class="rtBar">'+bt("gp",sg,"일반분양가")+bt("mp",sm,"조합원 분양가")+'</div>'}
   h+='</div>'}else h+='<div class="rtNK"><p><b>현장 위치를 먼저 정해 주세요.</b> 아래 「📌 현장 위치 정하기」를 누르고 지도에서 현장을 누르면 추천 비례율이 나옵니다.</p></div>';
  // ② 지도
- h+='<div id="rtMap" class="rtMap"><p class="sm" style="padding:12px">지도 불러오는 중…</p></div><div class="rtMapBar"><button class="btn'+(RT_PICK?' p':'')+'" onclick="RT_PICK=RT_PICK?false:true;rtDraw()">'+(RT_PICK?'👆 지도에서 '+(RT_ON?'보고 싶은 곳':'현장')+'을 누르세요 (취소)':RT_ON?'📌 지도에서 다른 곳 고르기':'📌 현장 위치 '+(RT.loc?'고치기':'정하기'))+'</button>'+(SERVER?'<div class="rtGeo"><input id="rtGq" class="rti" placeholder="'+(RT_ON?'보고 싶은 곳 주소 (예: 부산 동래구 사직동)':'주소로 현장 위치 찍기 (예: 부산 동래구 온천동 1459-5)')+'" value="'+esc(rtFree()?(NLOC.addr||""):RT_ON?"":(RT.addr||rtSiteAddr()))+'" onkeydown="if(event.key===\'Enter\')rtGeo()"><button class="btn p" onclick="rtGeo()">📍 위치 찍기</button></div>':'')+'<span class="rtLg">'+(FR?'<i class="me"></i>고른 곳 <i class="hi"></i>근처 평균보다 높음 <i class="lo"></i>낮음':'<i class="me"></i>우리 <i class="hi"></i>우리보다 높음 <i class="lo"></i>우리보다 낮음')+'</span></div>';
+ h+='<div id="rtMap" class="rtMap"><p class="sm" style="padding:12px">지도 불러오는 중…</p></div><div class="rtMapBar"><button class="btn'+(RT_PICK?' p':'')+'" onclick="RT_PICK=RT_PICK?false:true;rtDraw()">'+(RT_PICK?'👆 지도에서 '+(RT_ON?'보고 싶은 곳':'현장')+'을 누르세요 (취소)':RT_ON?'📌 지도에서 다른 곳 고르기':'📌 현장 위치 '+(RT.loc?'고치기':'정하기'))+'</button>'+(SERVER?'<div class="rtGeo"><input id="rtGq" class="rti" placeholder="'+(RT_ON?'보고 싶은 곳 주소 (예: 부산 동래구 사직동)':'주소로 현장 위치 찍기 (예: 부산 동래구 온천동 1459-5)')+'" value="'+esc(rtFree()?(NLOC.addr||""):RT_ON?"":(RT.addr||rtSiteAddr()))+'" onkeydown="if(event.key===\'Enter\')rtGeo()"><button class="btn p" onclick="rtGeo()">📍 위치 찍기</button></div>':'')+'<span class="rtLg">'+(FR?'<i class="me"></i>고른 곳 <i class="hi"></i>근처 평균보다 높음 <i class="lo"></i>낮음':'<i class="me"></i>우리 <i class="hi"></i>우리보다 높음 <i class="lo"></i>우리보다 낮음')+(RT_CTX?' <i class="cx"></i>창원 정비구역':'')+'</span><button class="btn" onclick="RT_CTX=!RT_CTX;rtDraw()">'+(RT_CTX?'정비구역 점 숨기기':'창원 정비구역 점 보기')+'</button></div>'+(RT_CTX?'<p class="sm rtCxN">회색 점은 창원 정비구역 '+RT_CW.length+'곳입니다 (창원시 2026년 2월 공개 현황 + '+RT_CW_AS+' 고시·보도 반영). 비례율 값은 없고 위치는 지번·동 기준이라 조금 다를 수 있습니다. 점을 누르면 단계·시공사가 나옵니다.</p>':'');
  // ③ 목록 (지도 번호와 같음)
- h+='<div class="rtNL">'+(FR?Z.filter(function(z){return z.km!=null}).slice(0,20):Z).map(function(z){var d=z.v-base;return'<button class="rtNR'+(RT_SEL===z.i?' on':'')+'" onclick="rtNearSel('+z.i+')"><em class="no '+(d>=0?'hi':'lo')+'">'+z.no+'</em><span><b>'+esc(z.n)+'</b> <small>'+esc(z.gu)+(z.km!=null?' · '+z.km.toFixed(1)+'km':'')+'</small><small>'+esc(z.s)+(z.old.length?' · 예전 '+esc(z.old.join(", ")):'')+'</small></span><strong>'+fPct(z.v)+'</strong></button>'}).join("")+'</div>';
+ h+='<div class="rtNL">'+(FR?Z.filter(function(z){return z.km!=null}).slice(0,20):Z).map(function(z){var d=z.v-base;return'<button class="rtNR'+(RT_SEL===z.i?' on':'')+'" onclick="rtNearSel('+z.i+')"><em class="no '+(d>=0?'hi':'lo')+'">'+z.no+'</em><span><b>'+esc(z.n)+'</b> <small>'+esc(z.gu)+(z.km!=null?' · '+z.km.toFixed(1)+'km':'')+'</small><small>'+esc(z.s)+(z.old.length?' · 예전 '+esc(z.old.join(", ")):'')+'</small>'+(z.g?'<small class="rtG">최근 고시 '+esc(z.g[0]+' '+z.g[1])+' (토지이음)</small>':'')+'</span><strong>'+fPct(z.v)+'</strong></button>'}).join("")+'</div>';
  h+='<p class="sm">※ 언론 보도 기준 참고용 · 위치는 대략</p></div>';
  setTimeout(rtMapGo,0);return h}
 function rtSiteAddr(){var st=SITES.filter(function(x){return x.name===rtSiteNm()})[0],v="";if(st)JSON.stringify(st).replace(/"위치",\s*"([^"]+)"/,function(m,a){v=a});return v.replace(/\s*[—–].*$/,"")}
@@ -1932,6 +2203,8 @@ function rtMapGo(){var el=$("rtMap");if(!el)return;rtLeaflet(function(){el=$("rt
  var near=[],ico=function(html,cls,w){return L.divIcon({className:"",html:'<div class="rtPin '+cls+'">'+html+'</div>',iconSize:null})};
  if(me){L.circle([me.lat,me.lng],{radius:5000,color:"#151719",weight:1.5,fillColor:"#151719",fillOpacity:.04,dashArray:"6 6"}).addTo(m);L.marker([me.lat,me.lng],{icon:ico(FR?"📍 여기"+(rc?" · 평균 "+fPct(rc.tg):""):"⭐ 우리 "+fPct(o.ratio),"me"),zIndexOffset:1000}).addTo(m);near.push([me.lat,me.lng])}
  rtZones().forEach(function(z){if(z.lat==null)return;var hi=z.v>=bv;L.marker([z.lat,z.lng],{icon:ico('<b>'+z.no+'</b>'+esc(z.n)+' '+fPct(z.v),(hi?"hi":"lo")+(RT_SEL===z.i?" on":"")),zIndexOffset:RT_SEL===z.i?900:0}).addTo(m).on("click",function(){rtNearSel(z.i)});if(z.km==null||z.km<=6)near.push([z.lat,z.lng])});
+ var rtSame=function(n){return String(n).replace(/\s*\(.*?\)|\s*(재건축|재개발)|구역|\s/g,"")},rtZN=rtZones().map(function(z){return rtSame(z.n)});
+ if(RT_CTX)RT_CW.forEach(function(c){if(rtZN.indexOf(rtSame(c.n))>=0)return;L.marker([c.lat,c.lng],{icon:L.divIcon({className:"",html:'<div class="rtCtx s'+c.p+'"><i></i>'+esc(c.n.replace(/\s*\(.*\)/,""))+'</div>',iconSize:null}),zIndexOffset:-200}).addTo(m).on("click",function(){toast(c.n+" · "+c.t+" · "+RT_PH[c.p-1]+" — "+c.s+(c.b?" · 시공 "+c.b:"")+(c.g?" · 최근 고시 "+c.g[0]+" "+c.g[1]:"")+(c.a?" (위치는 동 기준 대략)":""))})});
  if(RT_MV){m.setView(RT_MV.c,RT_MV.z);RT_MV=null}else if(near.length>1)m.fitBounds(near,{padding:[40,40]});else m.setView(near[0]||[35.18,129.07],near.length?14:11);
  m.on("click",function(e){if(!RT_PICK)return;var p={lat:+e.latlng.lat.toFixed(5),lng:+e.latlng.lng.toFixed(5)};if(RT_PICK==="ref"&&RT_SEL>=0){RT.refs[RT_SEL].lat=p.lat;RT.refs[RT_SEL].lng=p.lng;toast("구역 위치를 정했습니다")}else if(RT_ON){nlSet({loc:p,addr:"지도에서 고른 곳"});toast("고른 곳 근처 비례율입니다");rtRgeo(p)}else{RT.loc=p;toast("현장 위치를 정했습니다")}RT_PICK=false;RT_MV={c:RT_ON?[p.lat,p.lng]:m.getCenter(),z:RT_ON?Math.min(m.getZoom(),13):m.getZoom()};rtKeep();rtDraw()})})}
 var RT_SA=false;
@@ -2057,9 +2330,9 @@ function evCsv(){var q=function(v){v=String(v==null?"":v);return/[",\n]/.test(v)
 function render(){
  $("siteSel").innerHTML=CATS.map(function(c){var opts=SITES.map(function(x,i){return catOf(x)===c?'<option value="'+i+'"'+(i===cur?" selected":"")+'>'+esc(nm(x))+'</option>':''}).join("");return opts?'<optgroup label="'+c+'">'+opts+'</optgroup>':''}).join("");
  $("catTag").textContent=catOf(S());$("catTag").className="cat c"+CATS.indexOf(catOf(S()));
- var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비|비례율|주변 비례율|PM업무)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+(window.icSvg&&TABI[t[0]]?icSvg(TABI[t[0]]):t[1])+'</b>'+t[0]+'</button>'}).join("");
+ var BV=/^(전체|일정|올리기|연락처|보고서|사진|사용법|찾기|경비|비례율|주변 비례율|전국 정비사업|PM업무)$/.test(view);$("tabs").hidden=BV;$("catTag").hidden=BV;$("tabs").innerHTML=TABS.filter(function(t){return t[0]!=="전체"}).map(function(t){return'<button class="'+(t[0]===view?"on":"")+'" onclick="go(\''+t[0]+'\')"><b>'+(window.icSvg&&TABI[t[0]]?icSvg(TABI[t[0]]):t[1])+'</b>'+t[0]+'</button>'}).join("");
  $("side").innerHTML=side();$("curName").textContent=view==="전체"?"":BV?view:nm(S());
- $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,"주변 비례율":rtNearView,PM업무:pmView,집계:cntView,지도:mapView,최근문서:rcView,비교표:cmpView}[view]();bdThumbs();
+ $("main").innerHTML={전체:overview,홈:home,단계:stages,서류:docs,결과:results,기록:logs,일정:bdSched,올리기:bdPost,연락처:contacts,보고서:report,사진:album,사용법:help,찾기:findAll,경비:expView,비례율:rtView,"주변 비례율":rtNearView,"전국 정비사업":nzView,PM업무:pmView,집계:cntView,지도:mapView,최근문서:rcView,비교표:cmpView}[view]();bdThumbs();
  if(BD.pre){var ps=$(view==="일정"?"evS":"poS");if(ps){ps.value=BD.pre;BD.pre=""}}
  else if(view==="올리기"||view==="경비"){var pz=$(view==="경비"?"exS":"poS"),ls=lastSite();if(pz&&!pz.value&&ls&&[].some.call(pz.options,function(x){return x.value===ls}))pz.value=ls}
  $("backB").hidden=(depth===0&&view==="전체");
@@ -2109,7 +2382,7 @@ function toolbar(){var pc=!window.__AT,G=[],T=function(on,ic,lb,cls,extra){retur
  G.push(["📅 일정·소통",[T("go('일정')","📅","일정","",'<span data-bd="event">'+badge('event')+'</span>'),T("go('올리기')","📮","여기에 올리기","",'<span data-bd="post">'+badge('post')+'</span>'),T("go('보고서')","🗒","주간 보고"),T("goAlbum()","📷","사진첩"),T("pmGo('todo')","📝","회의록→<wbr>할&nbsp;일")]]);
  G.push(["🗂 PM 업무",[T("pmGo('ctr')","📑","계약·용역"),T("pmGo('mtg')","🏛","총회·이사회"),T("pmGo('due')","⏰","인허가 기한"),T("pmGo('cmp')","🙋","민원·문의")]]);
  G.push(["💰 돈·사업성",[T("go('경비')","💳","경비"),T("pmGo('fund')","🏦","자금 계획"),T("go('비례율')","🧮","비례율 계산","rtTool"),T("go('주변 비례율')","📍","주변 비례율","rtTool")]]);
- G.push(["📍 현장 한눈에",[T("go('지도')","🗺","현장 지도"),T("go('비교표')","📊","현장 비교표")].concat(v>=0?[T("pick("+v+")","🗳","투·개표")]:[])]);
+ G.push(["📍 현장 한눈에",[T("go('지도')","🗺","현장 지도"),T("go('비교표')","📊","현장 비교표"),T("go('전국 정비사업')","🧭","전국 정비사업")].concat(v>=0?[T("pick("+v+")","🗳","투·개표")]:[])]);
  G.push(["📁 문서·서식·연락처",[T("go('서류',1)","🔍","서류 찾기")].concat(pc?[T("RECENT=null;go('최근문서')","🆕","최근 문서"),T("openRoot()","🗂","문서함")]:[]).concat(['<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>',T("go('연락처')","📞","연락처")]).concat(k>=0?[T("pick("+k+")","📇","명함·회사")]:[]).concat([T("go('사용법')","❓","사용법")])]);
  var o=window.TG_OPEN;if(o==null){try{o=localStorage.getItem("pm_tg")}catch(e){}o=o==null?"":o;window.TG_OPEN=o}
  var L=pmAlertD(),t=today(),d=new Date(t+"T00:00:00"),cnt={},bz="",bi=-1;
