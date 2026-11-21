@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795067020165";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795254425121";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -598,6 +598,63 @@ body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic"
 .nzMy em{font-style:normal;display:flex;flex-direction:column;gap:3px;font-size:14px}
 .nzMy em i{font-style:normal}
 .nzT.my{background:#57221f;color:#fff}
+
+/* 일반 계산기 (2026-11-21) — PC는 오른쪽 서랍, 폰은 아래에서 올라오는 판 */
+.calcP{position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:#f4f6f6;z-index:1000;box-shadow:-14px 0 40px rgba(15,18,24,.28);display:flex;flex-direction:column;transform:translateX(105%);visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s}
+.calcP.on{transform:none;visibility:visible;transition:transform .22s ease,visibility 0s}
+.calcHd{display:flex;align-items:center;gap:8px;padding:12px 14px;color:#fff;background:linear-gradient(120deg,#0f1218 0%,#1d3a3e 58%,#57221f 100%)}
+.calcHd b{font-size:19px;flex:1;letter-spacing:-.2px}
+.calcHd button{background:rgba(255,255,255,.16);color:#fff;border:0;width:42px;height:42px;border-radius:12px;font-size:20px;cursor:pointer}
+.calcTabs{display:flex;gap:6px;padding:10px 12px 0}
+.calcTabs button{flex:1;padding:10px 2px;border:1px solid #cdd5d5;background:#fff;border-radius:12px;font-size:15px;font-weight:700;color:#1d3a3e;cursor:pointer;white-space:nowrap}
+.calcTabs button.on{background:#1d3a3e;color:#fff;border-color:#1d3a3e}
+.calcBd{flex:1;min-height:0;overflow:auto;padding:12px 12px calc(18px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
+.calcDisp{background:#fff;border:1px solid #cdd5d5;border-radius:16px;padding:10px 14px 8px}
+.calcDisp input{width:100%;box-sizing:border-box;border:0;outline:0;font-size:22px;text-align:right;background:transparent;color:#3a4646;font-family:inherit;padding:2px 0}
+.calcRes{font-size:30px;font-weight:800;text-align:right;color:#0f1218;line-height:1.25;word-break:break-all;font-variant-numeric:tabular-nums}
+.calcRes.wait{color:#9aa5a5}
+.calcKor{font-size:16px;text-align:right;color:#57221f;min-height:22px;font-weight:600}
+.calcKeys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.calcKeys button{height:56px;border-radius:14px;border:1px solid #d3dada;background:#fff;font-size:22px;font-weight:700;color:#0f1218;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.calcKeys button.op{background:#e2ebea;color:#1d3a3e}
+.calcKeys button.un{background:#f4ebe3;color:#57221f;font-size:20px}
+.calcKeys button.cl{color:#b3261e}
+.calcKeys button.eq{background:#b3261e;border-color:#b3261e;color:#fff}
+.calcKeys button:active{filter:brightness(.92)}
+.calcRow{display:flex;gap:8px;margin-top:10px}
+.calcRow .btn{flex:1;font-size:16px;padding:10px}
+.calcNote{font-size:13.5px;color:#667272;margin:8px 2px 0;line-height:1.5}
+.calcHist{margin-top:12px}
+.calcHist h4{margin:0 0 4px;font-size:15px;color:#1d3a3e;display:flex;justify-content:space-between;align-items:center}
+.calcHist h4 button{font-size:13px;border:0;background:none;color:#7a8585;cursor:pointer;text-decoration:underline}
+.calcHist p{margin:0;padding:9px 6px;border-bottom:1px dashed #d3dada;cursor:pointer;font-size:15px;display:flex;justify-content:space-between;gap:10px}
+.calcHist p:hover{background:#e9f0ef}
+.calcHist p span{color:#5a6666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.calcHist p b{white-space:nowrap}
+.calcSec{background:#fff;border:1px solid #d3dada;border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.calcSec h4{margin:0 0 6px;font-size:16.5px;color:#1d3a3e}
+.calcSec label{display:block;font-size:14.5px;color:#4a5656;margin:8px 0 4px}
+.calcSec input,.calcSec select{width:100%;box-sizing:border-box;font-size:19px;padding:9px 10px;border:1px solid #cdd5d5;border-radius:10px;background:#fbfcfc;font-family:inherit;color:#0f1218}
+.calcPair{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:end}
+.calcPair.two{grid-template-columns:1fr 92px}
+.calcPair .eqs{font-size:20px;padding-bottom:11px;color:#7a8585}
+.calcOut{margin-top:10px;padding:10px 12px;background:#eef3f2;border-radius:12px;font-size:15.5px;line-height:1.7}
+.calcOut b{font-size:19px;color:#0f1218;font-variant-numeric:tabular-nums}
+.calcOut .k{color:#57221f;font-size:14.5px}
+.calcChips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.calcChips button{border:1px solid #cdd5d5;background:#fff;border-radius:999px;padding:7px 12px;font-size:15px;cursor:pointer;color:#1d3a3e}
+.calcChips button.on{background:#1d3a3e;color:#fff;border-color:#1d3a3e}
+.calcCp{border:1px solid #cdd5d5;background:#fff;border-radius:8px;padding:2px 8px;font-size:13px;margin-left:4px;cursor:pointer;vertical-align:2px}
+.calcOn .toast{z-index:1001}
+.calcBg{display:none}
+@media (max-width:700px){
+ .calcP{top:auto;left:0;right:0;width:auto;max-height:92vh;border-radius:20px 20px 0 0;box-shadow:0 -12px 40px rgba(15,18,24,.3);transform:translateY(105%)}
+ .calcP.on{transform:none}
+ .calcBg{position:fixed;inset:0;background:rgba(15,18,24,.38);z-index:999}
+ .calcOn .calcBg{display:block}
+ .calcKeys button{height:52px}
+ .calcRes{font-size:28px}
+}
 </style></head><body>
 <script>/* 선 아이콘: 화면의 그림 글자를 선 아이콘으로 바꿔 보여 줌 (저장 내용은 그대로) */
 (function(){
@@ -703,6 +760,7 @@ new MutationObserver(function(rs){rs.forEach(function(r){if(r.type==="characterD
   <span id="catTag" class="cat"></span>
   <b class="curName" id="curName"></b><select class="site" id="siteSel" aria-label="현장 선택" hidden></select>
   <button class="ib phoneOnly" title="처음으로" aria-label="처음으로" onclick="toggleNav(0);go('전체')">🏠</button><button class="ib phoneOnly" title="새로 고침" aria-label="새로 고침" onclick="location.replace(location.pathname+'?v='+Date.now())">↻</button>
+  <button class="ib" title="계산기" aria-label="계산기" onclick="calcToggle()">🔢</button>
   <button class="ib" title="전체 찾기 (/)" onclick="go('찾기')">🔍</button>
   <button class="ib" title="메뉴" onclick="toggleMenu()">⋯</button>
  </div>
@@ -710,6 +768,7 @@ new MutationObserver(function(rs){rs.forEach(function(r){if(r.type==="characterD
 </div>
 <nav class="side" id="side"></nav><div class="shade" id="shade" onclick="toggleNav(0)"></div>
 <div class="menu" id="menu" hidden>
+ <button onclick="toggleMenu();calcOpen()">🔢 계산기</button>
  <button onclick="newSiteDlg.showModal();toggleMenu()">＋ 새 현장 시작</button>
  <button onclick="backup()">⬇ 백업 파일 받기</button>
  <button onclick="restoreFile.click()">⬆ 백업 불러오기</button>
@@ -1952,6 +2011,121 @@ function nzN(n){return Number(n||0).toLocaleString("ko-KR")}
 function nzCol(n,S){var c=S[0][1];S.forEach(function(x){if(n>=x[0])c=x[1]});return c}
 function nzGoN(k){var x=NZ.NAT[k];return x.rd[3]+x.rd[4]+x.rb[2]+x.rb[3]+x.ga[2]+x.ga[3]} // 준공 전(추진 중)
 function nzAllN(k){var x=NZ.NAT[k];return x.rd[0]+x.rb[0]+x.ga[0]}
+// ══ 일반 계산기 (2026-11-21): 사칙연산(억·만 단위 그대로) · 평↔㎡ · 단가 · 부가세 · 증감률 ══
+// 여는 곳: 머리줄 🔢 · ⋯ 메뉴 · 업무 목차 「💰 돈·사업성」. 최근 계산 12개는 이 기기에만 기억(pm_calc_h)
+var CALC={tab:"calc",just:false,last:NaN,vat:0,h:null},CALC_PY=400/121;
+function calcEval(src){
+ var s=String(src==null?"":src).replace(/[,\s원]/g,"").replace(/[xX*✕]/g,"×").replace(/\//g,"÷").replace(/[−–—]/g,"-").replace(/（/g,"(").replace(/）/g,")"),i=0;
+ if(!s)throw 0;
+ function num(){var tot=0,last=Infinity,any=false;
+  while(i<s.length&&/[0-9.]/.test(s[i])){var j=i;while(i<s.length&&/[0-9.]/.test(s[i]))i++;var t=s.slice(j,i);if(t==="."||(t.match(/\./g)||[]).length>1)throw 0;var n=parseFloat(t);
+   if(s[i]==="천"){n*=1000;i++}
+   var u=s[i]==="조"?1e12:s[i]==="억"?1e8:s[i]==="만"?1e4:1;
+   if(u>1){i++;if(u>=last)throw 0;last=u}
+   tot+=n*u;any=true;if(u===1)break}
+  if(!any)throw 0;return tot}
+ function prim(){var c=s[i];
+  if(c==="("){i++;var v=expr();if(s[i]!==")")throw 0;i++;return v}
+  if(c==="-"){i++;return -prim()}
+  if(c==="+"){i++;return prim()}
+  if(c!=null&&/[0-9.]/.test(c))return num();
+  throw 0}
+ function fac(){var v=prim(),p=false;while(s[i]==="%"){v/=100;p=true;i++}return{v:v,p:p}}
+ function term(){var f=fac(),v=f.v,p=f.p;while(s[i]==="×"||s[i]==="÷"){var o=s[i++],g=fac();v=o==="×"?v*g.v:v/g.v;p=false}return{v:v,p:p}}
+ function expr(){var v=term().v;while(s[i]==="+"||s[i]==="-"){var o=s[i++],r=term(),d=r.p?v*r.v:r.v;v=o==="+"?v+d:v-d}return v}
+ var v=expr();if(i<s.length||!isFinite(v))throw 0;return +v.toPrecision(15)}
+function calcNum(s){try{return calcEval(s)}catch(e){return NaN}}
+function calcFmt(v,d){return typeof v==="number"&&isFinite(v)?v.toLocaleString("ko-KR",{maximumFractionDigits:d==null?4:d}):""}
+function calcKor(v){if(typeof v!=="number"||!isFinite(v))return"";var a=Math.abs(v),n=Math.round(a);if(n<1e4)return"";
+ var j=Math.floor(n/1e12),e=Math.floor(n%1e12/1e8),m=Math.floor(n%1e8/1e4),r=n%1e4,o=[],L=function(x){return x.toLocaleString("ko-KR")};
+ if(j)o.push(L(j)+"조");if(e)o.push(L(e)+"억");if(m)o.push(L(m)+"만");if(r)o.push(L(r));
+ return(a!==n?"약 ":"")+(v<0?"−":"")+o.join(" ")}
+function calcH(){if(!CALC.h){try{CALC.h=JSON.parse(localStorage.getItem("pm_calc_h")||"[]")}catch(e){CALC.h=[]}if(!Array.isArray(CALC.h))CALC.h=[]}return CALC.h}
+function calcSaveH(){try{localStorage.setItem("pm_calc_h",JSON.stringify(calcH().slice(0,12)))}catch(e){}}
+function calcSet(id,v){var e=$(id);if(e)e.value=v}
+function calcHtml(){
+ var K=[["억","un"],["만","un"],["(","op"],[")","op"],["C","cl"],["⌫","op"],["%","op"],["÷","op"],["7"],["8"],["9"],["×","op"],["4"],["5"],["6"],["−","op"],["1"],["2"],["3"],["+","op"],["0"],["00"],["."],["=","eq"]];
+ var pair=function(id1,l1,p1,f1,mid,id2,l2,p2,f2,im){var a=im?' inputmode="decimal"':'';return'<div class="calcPair"><div><label for="'+id1+'">'+l1+'</label><input id="'+id1+'"'+a+' autocomplete="off" placeholder="'+p1+'" oninput="'+f1+'"></div><span class="eqs">'+mid+'</span><div><label for="'+id2+'">'+l2+'</label><input id="'+id2+'"'+a+' autocomplete="off" placeholder="'+p2+'" oninput="'+f2+'"></div></div>'};
+ return'<div class="calcHd"><b>🔢 계산기</b><button type="button" onclick="calcClose()" title="닫기 (Esc)" aria-label="닫기">✕</button></div>'+
+ '<div class="calcTabs"><button type="button" data-t="calc" onclick="calcTab(\'calc\')">➗ 계산</button><button type="button" data-t="area" onclick="calcTab(\'area\')">📐 평·㎡·단가</button><button type="button" data-t="tax" onclick="calcTab(\'tax\')">🧾 부가세·증감</button></div>'+
+ '<div class="calcBd">'+
+ '<section data-p="calc"><div class="calcDisp"><input id="calcIn" inputmode="none" autocomplete="off" spellcheck="false" aria-label="계산식" placeholder="예) 4억9750만 + 5억" oninput="CALC.just=false;calcLive()" onkeydown="calcInKey(event)"><div class="calcRes" id="calcRes">0</div><div class="calcKor" id="calcKor"></div></div>'+
+ '<div class="calcKeys">'+K.map(function(k){return'<button type="button"'+(k[1]?' class="'+k[1]+'"':'')+' onmousedown="event.preventDefault()" onclick="calcKey(\''+k[0]+'\')">'+k[0]+'</button>'}).join("")+'</div>'+
+ '<div class="calcRow"><button type="button" class="btn" onclick="calcCopy(CALC.last)">📋 결과 복사 (쉼표 없이)</button></div>'+
+ '<p class="calcNote">억·만 단위 그대로 넣어도 됩니다 (4억9750만, 2천만). 10% 더하기는 「+ 10%」. PC에서는 자판으로 치고 Enter.</p>'+
+ '<div class="calcHist" id="calcHist"></div></section>'+
+ '<section data-p="area" hidden>'+
+  '<div class="calcSec"><h4>① 넓이: ㎡ ↔ 평</h4>'+pair("kcM","㎡ (제곱미터)","예) 84","calcArea(\'m\')","=","kcP","평","예) 25.4","calcArea(\'p\')",1)+
+  '<div class="calcChips">'+[59,74,84,101,114,135].map(function(n){return'<button type="button" onclick="calcSet(\'kcM\','+n+');calcArea(\'m\')">'+n+'㎡</button>'}).join("")+'</div>'+
+  '<p class="calcNote">1평 = 3.3058㎡ (400÷121). 아파트 「34평형」은 공급면적(전용+공용) 기준이라 전용 84㎡(약 25.4평)와 다릅니다.</p></div>'+
+  '<div class="calcSec"><h4>② 단가: 3.3㎡당 ↔ ㎡당</h4>'+pair("kcU3","3.3㎡당 (평당)","예) 2200만","calcUnit(3)","=","kcU1","㎡당","예) 665만","calcUnit(1)")+'<div class="calcOut" id="kcUo" hidden></div></div>'+
+  '<div class="calcSec"><h4>③ 넓이 × 3.3㎡당 단가 = 금액</h4><label for="kcA">넓이</label><div class="calcPair two"><input id="kcA" inputmode="decimal" autocomplete="off" placeholder="예) 112" oninput="calcAmt()"><select id="kcAu" aria-label="넓이 단위" onchange="calcAmt()"><option value="m">㎡</option><option value="p">평</option></select></div>'+
+  '<label for="kcAp">3.3㎡당 (평당) 가격</label><input id="kcAp" autocomplete="off" placeholder="예) 2200만" oninput="calcAmt()"><div class="calcOut" id="kcAo" hidden></div></div>'+
+ '</section>'+
+ '<section data-p="tax" hidden>'+
+  '<div class="calcSec"><h4>① 부가세 10%</h4><label for="kcT">금액</label><input id="kcT" autocomplete="off" placeholder="예) 4억9750만" oninput="calcTax()">'+
+  '<div class="calcChips"><button type="button" id="kcT0" class="on" onclick="CALC.vat=0;calcTax()">부가세 별도 금액</button><button type="button" id="kcT1" onclick="CALC.vat=1;calcTax()">부가세 포함 금액</button></div>'+
+  '<div class="calcOut" id="kcTo" hidden></div><p class="calcNote">원 단위는 반올림이라 세금계산서와 1원 차이가 날 수 있습니다.</p></div>'+
+  '<div class="calcSec"><h4>② 얼마나 늘었나 (증감률)</h4>'+pair("kcG1","처음","예) 6553억","calcGrow()","→","kcG2","나중","예) 7000억","calcGrow()")+'<div class="calcOut" id="kcGo" hidden></div></div>'+
+ '</section></div>'}
+function calcOpen(tab){
+ if(!$("calcP")){var bg=document.createElement("div");bg.className="calcBg";bg.onclick=calcClose;document.body.appendChild(bg);
+  var p=document.createElement("div");p.id="calcP";p.className="calcP";p.setAttribute("role","dialog");p.setAttribute("aria-label","계산기");p.innerHTML=calcHtml();document.body.appendChild(p);calcHist();void p.offsetWidth}
+ if(window.innerWidth<=900&&typeof toggleNav==="function")toggleNav(0);
+ document.body.classList.add("calcOn");calcTab(tab||CALC.tab);$("calcP").classList.add("on");
+ if(CALC.tab==="calc"&&window.matchMedia&&matchMedia("(pointer:fine)").matches)setTimeout(function(){var el=$("calcIn");if(el)el.focus()},80)}
+function calcClose(){var p=$("calcP");if(p)p.classList.remove("on");document.body.classList.remove("calcOn")}
+function calcToggle(){var p=$("calcP");if(p&&p.classList.contains("on"))calcClose();else calcOpen()}
+function calcTab(t){CALC.tab=t;var p=$("calcP");if(!p)return;
+ [].forEach.call(p.querySelectorAll(".calcTabs button"),function(b){b.classList.toggle("on",b.getAttribute("data-t")===t)});
+ [].forEach.call(p.querySelectorAll("section[data-p]"),function(s){s.hidden=s.getAttribute("data-p")!==t})}
+function calcCaret(el,n){if(document.activeElement===el){try{el.setSelectionRange(n,n)}catch(e){}}}
+function calcKey(k){var el=$("calcIn");if(!el)return;
+ if(k==="="){calcDo();return}
+ if(k==="C"){el.value="";CALC.just=false;calcLive();return}
+ var v=el.value,f=document.activeElement===el,a=f?el.selectionStart:v.length,b=f?el.selectionEnd:v.length;
+ if(k==="⌫"){if(CALC.just){el.value="";CALC.just=false;calcLive();return}
+  var pre=v.slice(0,a);if(a===b){pre=/\s$/.test(pre)?pre.replace(/\s*[+−×÷*\/-]?\s*$/,""):/[+−×÷*\/-]$/.test(pre)?pre.replace(/\s*[+−×÷*\/-]$/,""):pre.slice(0,-1)}
+  el.value=pre+v.slice(b);calcCaret(el,pre.length);calcLive();return}
+ if(CALC.just&&/^([0-9.(]|00)$/.test(k)){v="";a=b=0}
+ CALC.just=false;var ins=/^[+−×÷]$/.test(k)?" "+k+" ":k;
+ el.value=v.slice(0,a)+ins+v.slice(b);calcCaret(el,a+ins.length);calcLive()}
+function calcLive(){var el=$("calcIn");if(!el)return;var s=el.value.trim(),v=NaN;if(s){try{v=calcEval(s)}catch(e){}}
+ var r=$("calcRes"),k=$("calcKor");
+ if(isFinite(v)){CALC.last=v;r.textContent="= "+calcFmt(v);r.classList.remove("wait");k.textContent=calcKor(v)}
+ else{CALC.last=NaN;r.textContent=s?"…":"0";r.classList.toggle("wait",!!s);k.textContent=""}}
+function calcDo(){var el=$("calcIn"),s=el.value.trim();if(!s)return;var v;try{v=calcEval(s)}catch(e){toast("식을 확인해 주세요 (예: 4억9750만 + 5억)");return}
+ if(!CALC.just&&/[+×÷*\/%()억만천조]|.-/.test(s.replace(/\s/g,"").replace(/[−–]/g,"-"))){var h=calcH();if(!(h[0]&&h[0].e===s)){h.unshift({e:s,v:v});if(h.length>12)h.length=12;calcSaveH()}}
+ el.value=calcFmt(v);CALC.just=true;calcLive();calcHist();calcCaret(el,el.value.length)}
+function calcInKey(e){if(e.isComposing)return;
+ if(e.key==="Enter"){e.preventDefault();calcDo();return}
+ if(CALC.just&&e.key.length===1&&/[0-9.(]/.test(e.key)&&!e.ctrlKey&&!e.metaKey){e.target.value="";CALC.just=false}}
+function calcHist(){var b=$("calcHist");if(!b)return;var h=calcH();
+ b.innerHTML=h.length?'<h4>최근 계산 <button type="button" onclick="calcHClear()">기록 지우기</button></h4>'+h.map(function(x,i){return'<p onclick="calcUse('+i+')" title="누르면 이 결과로 이어서 계산합니다"><span>'+esc(x.e)+'</span><b>= '+esc(calcFmt(x.v))+'</b></p>'}).join(""):""}
+function calcUse(i){var x=calcH()[i],el=$("calcIn");if(!x||!el)return;el.value=calcFmt(x.v);CALC.just=true;calcLive()}
+function calcHClear(){CALC.h=[];calcSaveH();calcHist()}
+function calcCopy(v){if(typeof v!=="number"||!isFinite(v)){toast("복사할 결과가 없습니다");return}
+ var t=String(+v.toPrecision(15)),done=function(){toast("복사했습니다: "+calcFmt(v))};
+ var old=function(){try{var a=document.createElement("textarea");a.value=t;a.setAttribute("readonly","");a.style.cssText="position:fixed;top:0;left:0;opacity:0";document.body.appendChild(a);a.select();var r=document.execCommand("copy");a.remove();if(r)done();else toast("복사가 안 되는 환경입니다: "+t)}catch(e){toast("복사가 안 되는 환경입니다: "+t)}};
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(done,old);else old()}
+function calcArea(w){var m=$("kcM"),p=$("kcP"),src=w==="m"?m:p,dst=w==="m"?p:m,v=calcNum(src.value);dst.value=src.value.trim()&&isFinite(v)?calcFmt(w==="m"?v/CALC_PY:v*CALC_PY,2):""}
+function calcUnit(w){var a=$("kcU3"),b=$("kcU1"),o=$("kcUo"),src=w===3?a:b,dst=w===3?b:a,v=calcNum(src.value),ok=src.value.trim()&&isFinite(v);
+ dst.value=ok?calcFmt(Math.round(w===3?v/CALC_PY:v*CALC_PY)):"";o.hidden=!ok;if(!ok)return;
+ var x=calcNum(a.value),y=calcNum(b.value);o.innerHTML='3.3㎡당 <b>'+calcFmt(x)+'</b> <span class="k">'+calcKor(x)+'</span><br>㎡당 <b>'+calcFmt(y)+'</b> <span class="k">'+calcKor(y)+'</span>'}
+function calcAmt(){var A=$("kcA"),P=$("kcAp"),o=$("kcAo"),a=calcNum(A.value),pr=calcNum(P.value),u=$("kcAu").value,ok=A.value.trim()&&P.value.trim()&&isFinite(a)&&isFinite(pr);o.hidden=!ok;if(!ok)return;
+ var py=u==="m"?a/CALC_PY:a,t=Math.round(py*pr);
+ o.innerHTML=(u==="m"?calcFmt(a,2)+'㎡ = '+calcFmt(py,2)+'평<br>':'')+'금액 <b>'+calcFmt(t)+'</b> <button type="button" class="calcCp" onclick="calcCopy('+t+')">복사</button><br><span class="k">'+calcKor(t)+'</span>'}
+function calcTax(){var A=$("kcT"),o=$("kcTo"),m=CALC.vat,a=calcNum(A.value),ok=A.value.trim()&&isFinite(a);$("kcT0").classList.toggle("on",!m);$("kcT1").classList.toggle("on",!!m);o.hidden=!ok;if(!ok)return;
+ var s,v,t;if(m){t=Math.round(a);s=Math.round(t/1.1);v=t-s}else{s=Math.round(a);v=Math.round(s*0.1);t=s+v}
+ o.innerHTML=[["공급가액 (부가세 빼고)",s],["부가세",v],["합계 (부가세 포함)",t]].map(function(r){return r[0]+' <b>'+calcFmt(r[1])+'</b> <button type="button" class="calcCp" onclick="calcCopy('+r[1]+')">복사</button>'+(calcKor(r[1])?'<br><span class="k">'+calcKor(r[1])+'</span>':'')}).join('<br>')}
+function calcGrow(){var A=$("kcG1"),B=$("kcG2"),o=$("kcGo"),a=calcNum(A.value),b=calcNum(B.value),ok=A.value.trim()&&B.value.trim()&&isFinite(a)&&isFinite(b)&&a!==0;o.hidden=!ok;if(!ok)return;
+ var d=b-a,r=d/a*100,sg=function(x){return x>0?"+":x<0?"−":""};
+ o.innerHTML=(d>=0?'늘어난 만큼 ':'줄어든 만큼 ')+'<b>'+sg(d)+calcFmt(Math.abs(d))+'</b>'+(calcKor(d)?' <span class="k">'+calcKor(Math.abs(d))+'</span>':'')+'<br>증감률 <b>'+sg(r)+calcFmt(Math.abs(r),2)+'%</b><br>나중은 처음의 <b>'+calcFmt(b/a*100,2)+'%</b>'}
+window.addEventListener("keydown",function(e){var p=$("calcP");if(!p||!p.classList.contains("on"))return;
+ if(e.key==="Escape"){e.preventDefault();e.stopPropagation();calcClose();return}
+ var t=e.target,tg=(t&&t.tagName)||"";if(e.isComposing||e.ctrlKey||e.metaKey||e.altKey||/INPUT|TEXTAREA|SELECT/.test(tg)||(t&&t.isContentEditable)||CALC.tab!=="calc")return;
+ var k={"*":"×","x":"×","X":"×","/":"÷","-":"−","Enter":"=","=":"=","Backspace":"⌫","Delete":"C"}[e.key]||e.key;
+ if(/^([0-9.()%+−×÷=⌫C])$/.test(k)){e.preventDefault();e.stopPropagation();calcKey(k)}},true);
 function nzView(){setTimeout(nzStart,0);return'<div id="nzW" class="nz"><p class="nzWait">전국 지도를 불러오는 중…</p></div>'}
 function nzStart(){
  if(NZS.ok)return nzDraw();if(NZS.ld)return;NZS.ld=1;
@@ -2391,7 +2565,7 @@ function toolbar(){var pc=!window.__AT,G=[],T=function(on,ic,lb,cls,extra){retur
  var v=siteIdx(/투·개표/),k=siteIdx(/기타 서류/);
  G.push(["📅 일정·소통",[T("go('일정')","📅","일정","",'<span data-bd="event">'+badge('event')+'</span>'),T("go('올리기')","📮","여기에 올리기","",'<span data-bd="post">'+badge('post')+'</span>'),T("go('보고서')","🗒","주간 보고"),T("goAlbum()","📷","사진첩"),T("pmGo('todo')","📝","회의록→<wbr>할&nbsp;일")]]);
  G.push(["🗂 PM 업무",[T("pmGo('ctr')","📑","계약·용역"),T("pmGo('mtg')","🏛","총회·이사회"),T("pmGo('due')","⏰","인허가 기한"),T("pmGo('cmp')","🙋","민원·문의")]]);
- G.push(["💰 돈·사업성",[T("go('경비')","💳","경비"),T("pmGo('fund')","🏦","자금 계획"),T("go('비례율')","🧮","비례율 계산","rtTool"),T("go('주변 비례율')","📍","주변 비례율","rtTool")]]);
+ G.push(["💰 돈·사업성",[T("go('경비')","💳","경비"),T("pmGo('fund')","🏦","자금 계획"),T("go('비례율')","🧮","비례율 계산","rtTool"),T("go('주변 비례율')","📍","주변 비례율","rtTool"),T("calcOpen()","🔢","계산기")]]);
  G.push(["📍 현장 한눈에",[T("go('지도')","🗺","현장 지도"),T("go('비교표')","📊","현장 비교표"),T("go('전국 정비사업')","🧭","전국 정비사업")].concat(v>=0?[T("pick("+v+")","🗳","투·개표")]:[])]);
  G.push(["📁 문서·서식·연락처",[T("go('서류',1)","🔍","서류 찾기")].concat(pc?[T("RECENT=null;go('최근문서')","🆕","최근 문서"),T("openRoot()","🗂","문서함")]:[]).concat(['<a class="tool" href="서식함/index.html"><b>📄</b>서식함</a>',T("go('연락처')","📞","연락처")]).concat(k>=0?[T("pick("+k+")","📇","명함·회사")]:[]).concat([T("go('사용법')","❓","사용법")])]);
  var o=window.TG_OPEN;if(o==null){try{o=localStorage.getItem("pm_tg")}catch(e){}o=o==null?"":o;window.TG_OPEN=o}
