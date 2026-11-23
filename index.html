@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795433132800";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795433415019";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -485,6 +485,9 @@ body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic"
 #omrB iframe{width:100%;height:calc(100vh - 170px);min-height:560px;border:1px solid #c9d3d6;background:#fff}
 .omrWait{padding:40px;text-align:center;font-size:17px}
 .omrNote{color:var(--sub,#667);margin:8px 2px}
+.omrSum{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0;font-size:16px}.omrSum .w{color:#b0563a}
+.omrT{width:100%;border-collapse:collapse;font-size:15px}.omrT th,.omrT td{border-bottom:1px solid #e3e0d8;padding:6px 4px;text-align:left}
+.omrT .ok{color:#2e7d4f;font-weight:700}.omrT .no{color:#b0563a;font-weight:700}
 /* 전국 정비사업 지도 (2026-11-18) — PM 3톤(먹·청록·인주) */
 .nz{max-width:1180px;margin:0 auto}
 .nzWait{padding:60px 0;text-align:center;color:var(--sub);font-size:16px}
@@ -2245,6 +2248,13 @@ window.addEventListener("keydown",function(e){var p=$("calcP");if(!p||!p.classLi
  if(/^([0-9.()%+−×÷=⌫C])$/.test(k)){e.preventDefault();e.stopPropagation();calcKey(k)}},true);
 // ── 🗳 OMR 총회 투표 (2026-11-23) — 바탕화면 「스캐너및 투표\자체프로그램」을 PM 안에 띄움. 꺼져 있으면 실행기가 켬. 자료는 그 프로그램 폴더에 저장
 function omrView(){setTimeout(omrStart,0);return'<div class="omrW"><div class="omrHd"><b>🗳 OMR 총회 투표</b><span>투표용지 만들기 · 서면결의서·현장투표 스캔 개표 · 결과 집계표</span><button class="btn" onclick="omrStart(1)">↻ 다시 열기</button><button class="btn p" onclick="omrPop()">새 창으로 크게</button></div><div id="omrB"><p class="omrWait">투표 프로그램을 켜는 중… (처음엔 몇 초 걸립니다)</p></div></div>'}
+// 폰 보기: 투표 프로그램 결과 숫자 (PC에서 「폰에 올리기」 때 함께 올라감, 이름·용지 그림 없음)
+function omrPhone(s){var o=s.omr;if(!o||!(o.현장||[]).length)return'<div class="card"><h2>🗳 투·개표 결과</h2><div class="empty">아직 올라온 결과가 없습니다 — PC에서 투표 프로그램을 켠 채로 「폰에 올리기」를 하면 여기에 나옵니다.</div></div>';
+ var tri=function(v){return typeof v==="number"?String(v):v.찬성+" / "+v.반대+" / "+v.기권무효};
+ return'<div class="card"><h2>🗳 투·개표 결과</h2><p class="omrNote">'+esc(o.at)+' 기준 · PC 투표 프로그램에서 올린 숫자 (찬성 / 반대 / 기권·무효)</p></div>'+o.현장.filter(function(x){return!x.오류}).map(function(x){var n=x.장수||{};
+  return'<details class="card fold"'+(x.출석합계?' open':'')+'><summary><b>'+esc(x.현장명||x.dir)+'</b><span class="sm">'+esc(x.총회명||"")+' '+esc(x.총회일||"")+' · 출석 '+(x.출석합계||0)+'명</span><i>▾</i></summary>'+
+  '<div class="omrSum"><span>서면결의서 <b>'+(n.서면결의서||0)+'</b>장</span><span>현장투표 <b>'+(n.현장투표용지||0)+'</b>장</span>'+(x.확인필요?'<span class="w">확인 필요 <b>'+x.확인필요+'</b>장</span>':'')+(x.무효?'<span class="w">무효 <b>'+x.무효+'</b>장</span>':'')+'<span>성원 '+(x.성원?"충족":"미달")+'</span></div>'+
+  (x.출석합계?'<table class="omrT"><tr><th>안건</th><th>합계</th><th>판정</th></tr>'+(x.안건||[]).map(function(a){return a.줄.filter(function(l){return!(l.이름==="무효"&&!l.합계)}).map(function(l){return'<tr><td>제'+a.번호+'호 '+esc(l.이름||a.제목)+'</td><td><b>'+tri(l.합계)+'</b></td><td>'+(l.이름==="무효"?"":l.가결?'<span class="ok">가결</span>':'<span class="no">부결</span>')+'</td></tr>'}).join("")}).join("")+'</table><p class="omrNote">판정은 입력한 정족수 기준 참고값입니다.</p>':'<div class="empty">아직 개표 전입니다.</div>')+'</details>'}).join("")}
 function omrPop(){window.open("http://127.0.0.1:8770/","omr")}
 function omrStart(again){var b=$("omrB");if(!b)return;if(!SERVER){b.innerHTML='<p class="omrWait">바탕화면 「PM업무관리」 아이콘으로 열어야 투표 프로그램을 켤 수 있습니다.</p>';return}
  if(again)b.innerHTML='<p class="omrWait">다시 여는 중…</p>';
@@ -3238,6 +3248,7 @@ function openBox(){var d=BOXD[S().name];if(!d)return toast("잠시 뒤 다시 �
 function boxSum(s){var b=boxOf(s);if(!b)return"";var o=b.filter(function(f){return f.sub==="_지난판"}).length,t=today(),nx=BD.ready?mtgOf(s).filter(function(x){return(x.pm.date||"")>=t}).pop():null;
  return(b.length?(b.length-o)+"건"+(o?" · 지난판 "+o+"건":""):"비어 있음")+(nx?" · 📅 "+esc(nx.pm.date.slice(5).replace("-","."))+" "+esc(mtgName(nx.pm))+" "+pmDday(nx.pm.date):"")+(b.length?" · 칸을 눌러 보세요":" — 계약서·공문 넣는 곳")}
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
+ if(s.kind==="투개표 프로그램"&&window.__AT)return omrPhone(s);
  if(s.kind==="투개표 프로그램"&&!window.__AT)return omrView()+'<p class="omrNote">예전 업체 프로그램(omr.exe)·스캐너 드라이버·판독 설정은 위쪽 <b>「서류」</b> 탭에 있습니다.</p>';
  if(!s.current){ // 단계 지정 안 한 현장
   h+='<div class="card now"><h2>'+esc(nm(s))+'</h2>'+(s.status?'<div>'+esc(s.status)+'</div>':'')+'</div>';
@@ -3814,6 +3825,9 @@ body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic"
 #omrB iframe{width:100%;height:calc(100vh - 170px);min-height:560px;border:1px solid #c9d3d6;background:#fff}
 .omrWait{padding:40px;text-align:center;font-size:17px}
 .omrNote{color:var(--sub,#667);margin:8px 2px}
+.omrSum{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0;font-size:16px}.omrSum .w{color:#b0563a}
+.omrT{width:100%;border-collapse:collapse;font-size:15px}.omrT th,.omrT td{border-bottom:1px solid #e3e0d8;padding:6px 4px;text-align:left}
+.omrT .ok{color:#2e7d4f;font-weight:700}.omrT .no{color:#b0563a;font-weight:700}
 /* 전국 정비사업 지도 (2026-11-18) — PM 3톤(먹·청록·인주) */
 .nz{max-width:1180px;margin:0 auto}
 .nzWait{padding:60px 0;text-align:center;color:var(--sub);font-size:16px}
@@ -5583,6 +5597,13 @@ window.addEventListener("keydown",function(e){var p=$("calcP");if(!p||!p.classLi
  if(/^([0-9.()%+−×÷=⌫C])$/.test(k)){e.preventDefault();e.stopPropagation();calcKey(k)}},true);
 // ── 🗳 OMR 총회 투표 (2026-11-23) — 바탕화면 「스캐너및 투표\자체프로그램」을 PM 안에 띄움. 꺼져 있으면 실행기가 켬. 자료는 그 프로그램 폴더에 저장
 function omrView(){setTimeout(omrStart,0);return'<div class="omrW"><div class="omrHd"><b>🗳 OMR 총회 투표</b><span>투표용지 만들기 · 서면결의서·현장투표 스캔 개표 · 결과 집계표</span><button class="btn" onclick="omrStart(1)">↻ 다시 열기</button><button class="btn p" onclick="omrPop()">새 창으로 크게</button></div><div id="omrB"><p class="omrWait">투표 프로그램을 켜는 중… (처음엔 몇 초 걸립니다)</p></div></div>'}
+// 폰 보기: 투표 프로그램 결과 숫자 (PC에서 「폰에 올리기」 때 함께 올라감, 이름·용지 그림 없음)
+function omrPhone(s){var o=s.omr;if(!o||!(o.현장||[]).length)return'<div class="card"><h2>🗳 투·개표 결과</h2><div class="empty">아직 올라온 결과가 없습니다 — PC에서 투표 프로그램을 켠 채로 「폰에 올리기」를 하면 여기에 나옵니다.</div></div>';
+ var tri=function(v){return typeof v==="number"?String(v):v.찬성+" / "+v.반대+" / "+v.기권무효};
+ return'<div class="card"><h2>🗳 투·개표 결과</h2><p class="omrNote">'+esc(o.at)+' 기준 · PC 투표 프로그램에서 올린 숫자 (찬성 / 반대 / 기권·무효)</p></div>'+o.현장.filter(function(x){return!x.오류}).map(function(x){var n=x.장수||{};
+  return'<details class="card fold"'+(x.출석합계?' open':'')+'><summary><b>'+esc(x.현장명||x.dir)+'</b><span class="sm">'+esc(x.총회명||"")+' '+esc(x.총회일||"")+' · 출석 '+(x.출석합계||0)+'명</span><i>▾</i></summary>'+
+  '<div class="omrSum"><span>서면결의서 <b>'+(n.서면결의서||0)+'</b>장</span><span>현장투표 <b>'+(n.현장투표용지||0)+'</b>장</span>'+(x.확인필요?'<span class="w">확인 필요 <b>'+x.확인필요+'</b>장</span>':'')+(x.무효?'<span class="w">무효 <b>'+x.무효+'</b>장</span>':'')+'<span>성원 '+(x.성원?"충족":"미달")+'</span></div>'+
+  (x.출석합계?'<table class="omrT"><tr><th>안건</th><th>합계</th><th>판정</th></tr>'+(x.안건||[]).map(function(a){return a.줄.filter(function(l){return!(l.이름==="무효"&&!l.합계)}).map(function(l){return'<tr><td>제'+a.번호+'호 '+esc(l.이름||a.제목)+'</td><td><b>'+tri(l.합계)+'</b></td><td>'+(l.이름==="무효"?"":l.가결?'<span class="ok">가결</span>':'<span class="no">부결</span>')+'</td></tr>'}).join("")}).join("")+'</table><p class="omrNote">판정은 입력한 정족수 기준 참고값입니다.</p>':'<div class="empty">아직 개표 전입니다.</div>')+'</details>'}).join("")}
 function omrPop(){window.open("http://127.0.0.1:8770/","omr")}
 function omrStart(again){var b=$("omrB");if(!b)return;if(!SERVER){b.innerHTML='<p class="omrWait">바탕화면 「PM업무관리」 아이콘으로 열어야 투표 프로그램을 켤 수 있습니다.</p>';return}
  if(again)b.innerHTML='<p class="omrWait">다시 여는 중…</p>';
@@ -6576,6 +6597,7 @@ function openBox(){var d=BOXD[S().name];if(!d)return toast("잠시 뒤 다시 �
 function boxSum(s){var b=boxOf(s);if(!b)return"";var o=b.filter(function(f){return f.sub==="_지난판"}).length,t=today(),nx=BD.ready?mtgOf(s).filter(function(x){return(x.pm.date||"")>=t}).pop():null;
  return(b.length?(b.length-o)+"건"+(o?" · 지난판 "+o+"건":""):"비어 있음")+(nx?" · 📅 "+esc(nx.pm.date.slice(5).replace("-","."))+" "+esc(mtgName(nx.pm))+" "+pmDday(nx.pm.date):"")+(b.length?" · 칸을 눌러 보세요":" — 계약서·공문 넣는 곳")}
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
+ if(s.kind==="투개표 프로그램"&&window.__AT)return omrPhone(s);
  if(s.kind==="투개표 프로그램"&&!window.__AT)return omrView()+'<p class="omrNote">예전 업체 프로그램(omr.exe)·스캐너 드라이버·판독 설정은 위쪽 <b>「서류」</b> 탭에 있습니다.</p>';
  if(!s.current){ // 단계 지정 안 한 현장
   h+='<div class="card now"><h2>'+esc(nm(s))+'</h2>'+(s.status?'<div>'+esc(s.status)+'</div>':'')+'</div>';
