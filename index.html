@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795580110808";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795580940249";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -968,7 +968,7 @@ async function bdInit(){if(BD.ready||BD.busy)return;BD.busy=1;
   if(window.__AT){raw=window.__KEY;cfg=window.__SUPA||{}}else if(SERVER){cfg=await api("/api/key");raw=cfg.key?ub64(cfg.key):null}
   if(!cfg.url)BD.err="아직 함께 쓰기 서버를 연결하기 전입니다.";else if(!raw)BD.err="열쇠가 없습니다. 사무실 PC의 실행기로 열어 주세요.";
   else{BD.url=cfg.url;BD.anon=cfg.anon;BD.key=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["encrypt","decrypt"]);
-   BD.tok=b64(new Uint8Array(await crypto.subtle.digest("SHA-256",raw)));BD.ready=true;["post","event"].forEach(function(k){if(!lastSeen(k))markSeen(k)});BD.err="";await bdLoad();clearInterval(BD.timer);BD.timer=setInterval(bdLoad,45000)}
+   BD.tok=b64(new Uint8Array(await crypto.subtle.digest("SHA-256",raw)));BD.ready=true;["post","event"].forEach(function(k){if(!lastSeen(k))markSeen(k)});BD.err="";await bdLoad();clearInterval(BD.timer);BD.timer=setInterval(bdLoad,45000);if(SERVER&&!BD.clT){BD.clT=setInterval(clAuto,600000);setTimeout(clAuto,20000)}}
  }catch(e){BD.err="함께 쓰기 서버에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요."}
  BD.busy=0;if(view==="일정"||view==="올리기"||view==="전체")render()}
 function rpc(fn,a){return fetch(BD.url+"/rest/v1/rpc/"+fn,{method:"POST",headers:{apikey:BD.anon,Authorization:"Bearer "+BD.anon,"Content-Type":"application/json"},body:JSON.stringify(Object.assign({tok:BD.tok},a||{}))})
@@ -3049,7 +3049,7 @@ function bxInner(s,mini){var b=boxOf(s)||[],g=bxGroups(b),ck=BOXK[s.name]||"",SE
 function bxMoreBtn(n){return'<button class="btn bxMore" onclick="BOXALL[S().name]=1;var l=$(\'boxList\');if(l)l.innerHTML=bxListOf(S())">▾ 나머지 '+n+'건 더 보기</button>'}
 function bxList(s,ck,L,N,mini){var full=BOXALL[s.name],pin=L.some(function(f){return(N.files[bxKey(f)]||{}).p}),
   hd='<div class="bxh">'+(ck?bxIc(ck)+' '+esc(bxName(ck))+(ck===MTG_CAT?' 파일':''):'🕘 최근 넣은 순서')+' <span>'+L.length+'건'+(pin?' · 📌 고정 먼저':'')+' · 새것부터</span></div>';
- if(SERVER&&ck&&!mini&&!/^06/.test(ck)&&ck!=="_지난판"&&ck.charAt(0)!=="@"&&L.some(function(f){return f.file&&!(N.files[bxKey(f)]||{}).c&&!(f.size>CLMAX)}))hd+='<div class="clAll"><button class="btn" onclick="clUpAll(this.dataset.s,this.dataset.k)" data-s="'+esc(s.name)+'" data-k="'+esc(ck)+'">📱 이 칸 파일 폰에도 올리기</button> <span class="sm">암호 걸어 올림 · 2.8MB까지 · 폰 파일 '+clMB(clUsed())+' / 250MB'+(clUsed()>=CLWARN?' <b class="unp">한도에 가까움 — 오래된 파일 내려 주세요</b>':'')+'</span></div>';
+ if(SERVER&&ck&&!mini&&!/^06/.test(ck)&&ck!=="_지난판"&&ck.charAt(0)!=="@"&&L.some(function(f){return f.file&&!(N.files[bxKey(f)]||{}).c&&!(f.size>CLMAX)&&!CLVID.test(f.name)}))hd+='<div class="clAll"><button class="btn" onclick="clUpAll(this.dataset.s,this.dataset.k)" data-s="'+esc(s.name)+'" data-k="'+esc(ck)+'">📱 이 칸 파일 폰에도 올리기</button> <span class="sm">암호 걸어 올림 · 60MB까지 · 폰 파일 '+clMB(clUsed())+' / 250MB'+(clUsed()>=CLWARN?' <b class="unp">한도에 가까움 — 오래된 파일 내려 주세요</b>':'')+'</span></div>';
  if(!L.length)return hd+'<div class="empty sm">'+(ck?'이 칸에는 아직 파일이 없습니다.'+(window.__AT?'':' 「📂 문서함 폴더 열기」에서 「'+esc(ck)+'」 폴더에 넣으면 바로 보입니다.'):'아직 넣은 문서가 없습니다.'+(window.__AT?' 사무실 PC의 문서함 폴더에 넣으면 여기에도 보입니다.':' 「📂 문서함 폴더 열기」를 눌러 계약서·공문 등을 해당 칸 폴더에 넣으면 바로 보입니다.'))+'</div>';
  if(!ck){var M=L.slice(0,full?300:mini?5:12);return hd+M.map(boxRow).join("")+(L.length>M.length?bxMoreBtn(L.length-M.length):"")}
  var top=L.filter(function(f){return!f.dir}),D={},dk=[];L.forEach(function(f){if(f.dir){var k=f.dir.split("/")[0];if(!D[k]){D[k]=[];dk.push(k)}D[k].push(f)}});dk.sort();
@@ -3070,16 +3070,23 @@ async function bnSave(){var t=$("bnT"),s=S();if(!t||!BN_E)return;var k=BN_E.slic
 function bxPho(s){if(!BD.ready)return"";var a=BD.items.filter(function(o){if(o.kind!=="post"||o.exp||o.pm||!(o.photos||[]).length)return false;var p=postSite(o)||"";return p===s.name||p===nm(s)});
  return a.length?'<div class="bxPho">📱 <b>폰으로 올린 사진</b> <span class="sm">'+a.length+'건 (일정·올리기에서 올린 것)</span><button class="btn s" data-p="'+esc(postSite(a[0]))+'" onclick="PHS=this.dataset.p;go(\'사진\')">사진첩에서 보기 ›</button></div>':""}
 // 파일 한 줄
-// ── 📱 폰에서도 열리게: 문서함 파일을 암호 걸어 함께 쓰기 서버에 올림 (2.8MB까지 · 표시는 문서함 메모 기록 files[칸/이름].c) ──
-var CLMAX=2800000;
+// ── 📱 폰에서도 열리게: 문서함 파일을 암호 걸어 함께 쓰기 서버에 올림 (60MB까지, 조각내 올림 · PC 켜져 있으면 최근 30일 새 파일 자동 · 표시는 문서함 메모 기록 files[칸/이름].c) ──
+var CLMAX=60e6,CLPART=2.5e6,CLVID=/\.(mp4|mov|avi|mkv|wmv|m4v)$/i; // 60MB까지 · 2.5MB씩 조각내 올림 · 동영상은 뺌
+function clGet(b){var ids=(b.dataset.ids||"").split(",").filter(Boolean),n=b.dataset.n;if(!ids.length)return;b.disabled=true;toast("받는 중…"+(ids.length>1?" (조각 "+ids.length+"개)":""));
+ (async function(){try{var parts=[],i;for(i=0;i<ids.length;i++){var x=await rpc("pm_file_get",{id_:ids[i]});if(!x)throw 0;parts.push(await unseal(x));if(ids.length>2)toast("받는 중… "+(i+1)+" / "+ids.length)}
+  var ext=(n.split(".").pop()||"").toLowerCase(),bl=new Blob(parts,{type:MIME[ext]||(/^(jpe?g|png|gif|webp)$/.test(ext)?"image/"+ext.replace("jpg","jpeg"):"application/octet-stream")}),u=URL.createObjectURL(bl),a=document.createElement("a");
+  a.href=u;a.download=n;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},8000);toast("「"+n+"」을 받았습니다")}catch(e){toast("받지 못했습니다 — 인터넷 연결 확인")}b.disabled=false})()}
+function clIds(c){return(c.ids||[c.id]).join(",")}
+function clOk(f){return!!f.file&&f.sub!=="_지난판"&&(!/^06/.test(f.sub)||/총괄/.test(f.name))&&!CLSKIP.test(f.dir||"")&&!CLVID.test(f.name)&&!(f.size>CLMAX)}
 function clSite(sn){return SITES.filter(function(x){return x.name===sn})[0]||S()}
 function clBtn(f,s,fm){var k=bxKey(f);
- if(fm.c)return(!f.file||window.__AT?'<button class="btn p" onclick="fileGet(this)" data-id="'+esc(fm.c.id)+'" data-n="'+esc(f.name)+'">열기</button> ':'')+(SERVER&&f.file?'<button class="btn s on" title="폰에서도 열림 — 누르면 폰에서 내리기" onclick="clOff(this.dataset.k,this.dataset.s)" data-k="'+esc(k)+'" data-s="'+esc(s.name)+'">📱✔</button> ':'');
- if(SERVER&&f.file&&!(f.size>CLMAX))return'<button class="btn s" title="폰에서도 열리게 올리기 (암호 걸어 올림)" onclick="clUp(this.dataset.k,this.dataset.s)" data-k="'+esc(k)+'" data-s="'+esc(s.name)+'">📱</button> ';
+ if(fm.c)return(!f.file||window.__AT?'<button class="btn p" onclick="clGet(this)" data-ids="'+esc(clIds(fm.c))+'" data-n="'+esc(f.name)+'">열기</button> ':'')+(SERVER&&f.file?'<button class="btn s on" title="폰에서도 열림 — 누르면 폰에서 내리기" onclick="clOff(this.dataset.k,this.dataset.s)" data-k="'+esc(k)+'" data-s="'+esc(s.name)+'">📱✔</button> ':'');
+ if(SERVER&&f.file&&!(f.size>CLMAX)&&!CLVID.test(f.name))return'<button class="btn s" title="폰에서도 열리게 올리기 (암호 걸어 올림)" onclick="clUp(this.dataset.k,this.dataset.s)" data-k="'+esc(k)+'" data-s="'+esc(s.name)+'">📱</button> ';
  return''}
 async function clPut(f){var r=await fetch("/api/raw?f="+encodeURIComponent(f.file),{headers:{"X-PM":"1"}});
  if(!r.ok){var j={};try{j=await r.json()}catch(e){}throw new Error(j.msg||"파일을 읽지 못했습니다")}
- var u8=new Uint8Array(await r.arrayBuffer()),id=await rpc("pm_file_add",{box_:await seal(u8)});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");return{id:id,n:u8.length,d:f.date||"",at:new Date().toISOString(),by:BD.me}}
+ var u8=new Uint8Array(await r.arrayBuffer()),ids=[],o;for(o=0;o<u8.length||!ids.length;o+=CLPART){var id=await rpc("pm_file_add",{box_:await seal(u8.subarray(o,o+CLPART))});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");ids.push(id)}
+ var c={id:ids[0],n:u8.length,d:f.date||"",at:new Date().toISOString(),by:BD.me||"자동"};if(ids.length>1)c.ids=ids;return c}
 var CLSKIP=/스캔|투표용지|DBF|손대지 않음|원본 명부|신분증/;
 // 용량: 폰 파일 합계 250MB까지 — 자동으로 지우지 않고 알림만 (200MB부터 미리 알림 · 넘으면 올리지 않음)
 var CLBUD=250e6,CLWARN=200e6;
@@ -3088,15 +3095,24 @@ function clUsed(){return clList().reduce(function(t,x){return t+(+x.c.n||0)},0)}
 function clMB(n){return(n/1e6).toFixed(n<1e7?1:0)+"MB"}
 function clWarnTxt(u){return u>CLBUD?"폰 파일이 "+clMB(u)+"로 한도(250MB)를 넘습니다. 오래된 파일의 📱✔를 눌러 폰에서 내린 뒤 올려 주세요.":u>=CLWARN?"폰 파일 "+clMB(u)+" — 한도 250MB에 가까워졌습니다. 오래된 파일은 📱✔를 눌러 내려 주세요.":""}
 async function clRoom(need){var u=clUsed()+(need||0);if(u>CLBUD){await uiConfirm(clWarnTxt(u)+"\n\n(이번 파일은 올리지 않았습니다)");return false}if(u>=CLWARN)toast(clWarnTxt(u));return true}
+// PC에서 PM 앱이 켜져 있으면: 최근 30일 안에 들어온 파일 중 아직 안 올린 것 자동으로 폰에 (명부·지난판·스캔·동영상·60MB 넘는 것 빼고 · 한도 넘으면 알림만)
+var CLA={busy:false,warned:false};
+async function clAuto(){if(!SERVER||!BD.ready||CLA.busy)return;CLA.busy=true;var since=addDays(today(),-30),cnt=0,me=BD.me;
+ try{BD.me=BD.me||"자동 올림";for(var i=0;i<SITES.length;i++){var s=SITES[i],b;try{b=(await api("/api/box?site="+encodeURIComponent(s.name))).files||[]}catch(e){continue}
+   var N=bnGet(s),L=b.filter(function(f){return clOk(f)&&(f.date||"")>=since&&!(N.files[bxKey(f)]||{}).c});if(!L.length)continue;
+   var need=L.reduce(function(t,f){return t+(f.size||0)},0);if(clUsed()+need>CLBUD){if(!CLA.warned){CLA.warned=true;toast(clWarnTxt(clUsed()+need)+" (자동 올리기 멈춤)")}break}
+   var done={};for(var j=0;j<L.length;j++){try{done[bxKey(L[j])]=await clPut(L[j])}catch(e){}}var ks=Object.keys(done);
+   if(ks.length&&await bnPut(s,function(V){ks.forEach(function(k){V.files[k]=Object.assign({},V.files[k],{c:done[k]})})}))cnt+=ks.length}
+  if(cnt)toast("📱 새 파일 "+cnt+"개를 폰에서도 열리게 올렸습니다")}finally{BD.me=me;CLA.busy=false}}
 function clReady(){if(!BD.ready){toast("함께 쓰기 서버에 연결된 뒤 다시 눌러 주세요");return false}if(!BD.me){toast("올리는 사람 이름을 먼저 넣어 주세요 (일정·올리기 화면)");return false}return true}
 async function clUp(key,sn){var s=clSite(sn),f=(boxOf(s)||[]).filter(function(x){return bxKey(x)===key})[0];if(!f)return toast("파일을 찾지 못했습니다 — ↻를 누른 뒤 다시 해 주세요");if(!clReady())return;
  if(/^06/.test(f.sub)&&!await uiConfirm("「"+f.name+"」은 명부·동의서 칸 파일입니다.\n개인정보가 들어 있을 수 있어요. 암호를 걸어 올리지만, 꼭 필요할 때만 올려 주세요.\n\n올릴까요?"))return;
  if(!await clRoom(f.size||0))return;toast("폰에 올리는 중…");try{var c=await clPut(f);if(await bnPut(s,function(V){V.files[key]=Object.assign({},V.files[key],{c:c})}))toast("「"+f.name+"」 — 이제 폰에서도 열립니다")}catch(e){toast(e.message||"올리지 못했습니다")}}
-async function clOff(key,sn){var s=clSite(sn);if(!clReady())return;if(!await uiConfirm("이 파일을 폰에서 내릴까요?\n(사무실 PC의 파일은 그대로 있습니다)"))return;var fc=(bnGet(s).files[key]||{}).c;if(fc&&fc.id){try{await rpc("pm_file_del",{id_:fc.id})}catch(e){}}
+async function clOff(key,sn){var s=clSite(sn);if(!clReady())return;if(!await uiConfirm("이 파일을 폰에서 내릴까요?\n(사무실 PC의 파일은 그대로 있습니다)"))return;var fc=(bnGet(s).files[key]||{}).c;if(fc&&fc.id){try{for(var q of(fc.ids||[fc.id]))await rpc("pm_file_del",{id_:q})}catch(e){}}
  if(await bnPut(s,function(V){if(V.files[key]){V.files[key]=Object.assign({},V.files[key]);delete V.files[key].c}}))toast("폰에서 내렸습니다")}
-async function clUpAll(sn,ck){var s=clSite(sn);if(!clReady())return;var N=bnGet(s),A=(boxOf(s)||[]).filter(function(f){return f.sub===ck&&f.file&&!CLSKIP.test(f.dir||"")&&!(N.files[bxKey(f)]||{}).c}),L=A.filter(function(f){return!(f.size>CLMAX)}),big=A.length-L.length;
- if(!L.length)return toast("새로 올릴 파일이 없습니다"+(big?" (2.8MB 넘는 "+big+"개는 올릴 수 없음)":""));
- if(!await uiConfirm("「"+bxName(ck)+"」 칸 파일 "+L.length+"개를 폰에서도 열리게 올릴까요?"+(big?"\n(2.8MB 넘는 "+big+"개는 빼고 올립니다)":"")))return;
+async function clUpAll(sn,ck){var s=clSite(sn);if(!clReady())return;var N=bnGet(s),A=(boxOf(s)||[]).filter(function(f){return f.sub===ck&&f.file&&!CLSKIP.test(f.dir||"")&&!(N.files[bxKey(f)]||{}).c}),L=A.filter(function(f){return!(f.size>CLMAX)&&!CLVID.test(f.name)}),big=A.length-L.length;
+ if(!L.length)return toast("새로 올릴 파일이 없습니다"+(big?" (60MB 넘는 파일·동영상 "+big+"개는 올릴 수 없음)":""));
+ if(!await uiConfirm("「"+bxName(ck)+"」 칸 파일 "+L.length+"개를 폰에서도 열리게 올릴까요?"+(big?"\n(60MB 넘는 파일·동영상 "+big+"개는 빼고 올립니다)":"")))return;
  if(!await clRoom(L.reduce(function(t,f){return t+(f.size||0)},0)))return;
  var done={},n=0,i;for(i=0;i<L.length;i++){toast("폰에 올리는 중… "+(++n)+" / "+L.length);try{done[bxKey(L[i])]=await clPut(L[i])}catch(e){}}
  var ks=Object.keys(done);if(!ks.length)return toast("올리지 못했습니다 — 인터넷 연결 확인");
