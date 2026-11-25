@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795579633879";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795579769463";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -3049,7 +3049,7 @@ function bxInner(s,mini){var b=boxOf(s)||[],g=bxGroups(b),ck=BOXK[s.name]||"",SE
 function bxMoreBtn(n){return'<button class="btn bxMore" onclick="BOXALL[S().name]=1;var l=$(\'boxList\');if(l)l.innerHTML=bxListOf(S())">▾ 나머지 '+n+'건 더 보기</button>'}
 function bxList(s,ck,L,N,mini){var full=BOXALL[s.name],pin=L.some(function(f){return(N.files[bxKey(f)]||{}).p}),
   hd='<div class="bxh">'+(ck?bxIc(ck)+' '+esc(bxName(ck))+(ck===MTG_CAT?' 파일':''):'🕘 최근 넣은 순서')+' <span>'+L.length+'건'+(pin?' · 📌 고정 먼저':'')+' · 새것부터</span></div>';
- if(SERVER&&ck&&!mini&&!/^06/.test(ck)&&ck!=="_지난판"&&ck.charAt(0)!=="@"&&L.some(function(f){return f.file&&!(N.files[bxKey(f)]||{}).c&&!(f.size>CLMAX)}))hd+='<div class="clAll"><button class="btn" onclick="clUpAll(this.dataset.s,this.dataset.k)" data-s="'+esc(s.name)+'" data-k="'+esc(ck)+'">📱 이 칸 파일 폰에도 올리기</button> <span class="sm">암호 걸어 올림 · 2.8MB까지</span></div>';
+ if(SERVER&&ck&&!mini&&!/^06/.test(ck)&&ck!=="_지난판"&&ck.charAt(0)!=="@"&&L.some(function(f){return f.file&&!(N.files[bxKey(f)]||{}).c&&!(f.size>CLMAX)}))hd+='<div class="clAll"><button class="btn" onclick="clUpAll(this.dataset.s,this.dataset.k)" data-s="'+esc(s.name)+'" data-k="'+esc(ck)+'">📱 이 칸 파일 폰에도 올리기</button> <span class="sm">암호 걸어 올림 · 2.8MB까지 · 폰 파일 '+clMB(clUsed())+' / 250MB (차면 예전 파일부터 내림)</span></div>';
  if(!L.length)return hd+'<div class="empty sm">'+(ck?'이 칸에는 아직 파일이 없습니다.'+(window.__AT?'':' 「📂 문서함 폴더 열기」에서 「'+esc(ck)+'」 폴더에 넣으면 바로 보입니다.'):'아직 넣은 문서가 없습니다.'+(window.__AT?' 사무실 PC의 문서함 폴더에 넣으면 여기에도 보입니다.':' 「📂 문서함 폴더 열기」를 눌러 계약서·공문 등을 해당 칸 폴더에 넣으면 바로 보입니다.'))+'</div>';
  if(!ck){var M=L.slice(0,full?300:mini?5:12);return hd+M.map(boxRow).join("")+(L.length>M.length?bxMoreBtn(L.length-M.length):"")}
  var top=L.filter(function(f){return!f.dir}),D={},dk=[];L.forEach(function(f){if(f.dir){var k=f.dir.split("/")[0];if(!D[k]){D[k]=[];dk.push(k)}D[k].push(f)}});dk.sort();
@@ -3079,16 +3079,31 @@ function clBtn(f,s,fm){var k=bxKey(f);
  return''}
 async function clPut(f){var r=await fetch("/api/raw?f="+encodeURIComponent(f.file),{headers:{"X-PM":"1"}});
  if(!r.ok){var j={};try{j=await r.json()}catch(e){}throw new Error(j.msg||"파일을 읽지 못했습니다")}
- var u8=new Uint8Array(await r.arrayBuffer()),id=await rpc("pm_file_add",{box_:await seal(u8)});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");return{id:id,n:u8.length,at:new Date().toISOString(),by:BD.me}}
+ var u8=new Uint8Array(await r.arrayBuffer()),id=await rpc("pm_file_add",{box_:await seal(u8)});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");return{id:id,n:u8.length,d:f.date||"",at:new Date().toISOString(),by:BD.me}}
+var CLSKIP=/스캔|투표용지|DBF|손대지 않음|원본 명부|신분증/;
+// 용량: 폰 파일 합계 250MB까지 · 서버 전체(무료 판 약 500MB) 430MB 넘으면 → 📌 고정 아닌 예전 파일(서류 날짜 순)부터 서버에서 지움
+var CLBUD=250e6,CLDBMAX=430e6;
+function clList(){var a=[];SITES.forEach(function(s){var N=bnGet(s);Object.keys(N.files).forEach(function(k){var v=N.files[k];if(v&&v.c&&v.c.id)a.push({s:s,k:k,c:v.c,p:!!v.p})})});return a}
+function clUsed(){return clList().reduce(function(t,x){return t+(+x.c.n||0)},0)}
+function clMB(n){return(n/1e6).toFixed(n<1e7?1:0)+"MB"}
+async function clDbSize(){try{return+(await rpc("pm_db_size",{}))||0}catch(e){return 0}}
+async function clRoom(need){var L=clList(),used=L.reduce(function(t,x){return t+(+x.c.n||0)},0),db=await clDbSize(),
+  over=function(){return used+need>CLBUD||(db>0&&db+need*1.4>CLDBMAX)};if(!over())return true;
+ var old=L.filter(function(x){return!x.p}).sort(function(a,b){return(a.c.d||a.c.at||"").localeCompare(b.c.d||b.c.at||"")}),gone={},n=0;
+ while(over()&&old.length){var x=old.shift();try{await rpc("pm_file_del",{id_:x.c.id})}catch(e){if(!n){toast("용량 정리 규칙이 서버에 아직 없습니다 — 「앱/폰파일-정리.sql」을 먼저 적용해 주세요");return false}break}
+  n++;used-=+x.c.n||0;if(db>0)db-=(+x.c.n||0)*1.4;(gone[x.s.name]=gone[x.s.name]||[]).push(x.k)}
+ var sns=Object.keys(gone);for(var i=0;i<sns.length;i++){var ks=gone[sns[i]];await bnPut(clSite(sns[i]),function(V){ks.forEach(function(k){if(V.files[k]){V.files[k]=Object.assign({},V.files[k]);delete V.files[k].c}})})}
+ if(n)toast("용량이 차서 예전 파일 "+n+"개를 폰에서 내렸습니다 (📌 고정 파일은 그대로)");if(over()){toast("용량이 모자랍니다 — 📌 고정을 풀거나 큰 파일을 빼 주세요");return false}return true}
 function clReady(){if(!BD.ready){toast("함께 쓰기 서버에 연결된 뒤 다시 눌러 주세요");return false}if(!BD.me){toast("올리는 사람 이름을 먼저 넣어 주세요 (일정·올리기 화면)");return false}return true}
 async function clUp(key,sn){var s=clSite(sn),f=(boxOf(s)||[]).filter(function(x){return bxKey(x)===key})[0];if(!f)return toast("파일을 찾지 못했습니다 — ↻를 누른 뒤 다시 해 주세요");if(!clReady())return;
  if(/^06/.test(f.sub)&&!await uiConfirm("「"+f.name+"」은 명부·동의서 칸 파일입니다.\n개인정보가 들어 있을 수 있어요. 암호를 걸어 올리지만, 꼭 필요할 때만 올려 주세요.\n\n올릴까요?"))return;
- toast("폰에 올리는 중…");try{var c=await clPut(f);if(await bnPut(s,function(V){V.files[key]=Object.assign({},V.files[key],{c:c})}))toast("「"+f.name+"」 — 이제 폰에서도 열립니다")}catch(e){toast(e.message||"올리지 못했습니다")}}
-async function clOff(key,sn){var s=clSite(sn);if(!clReady())return;if(!await uiConfirm("이 파일을 폰에서 내릴까요?\n(사무실 PC의 파일은 그대로 있습니다)"))return;
+ if(!await clRoom(f.size||0))return;toast("폰에 올리는 중…");try{var c=await clPut(f);if(await bnPut(s,function(V){V.files[key]=Object.assign({},V.files[key],{c:c})}))toast("「"+f.name+"」 — 이제 폰에서도 열립니다")}catch(e){toast(e.message||"올리지 못했습니다")}}
+async function clOff(key,sn){var s=clSite(sn);if(!clReady())return;if(!await uiConfirm("이 파일을 폰에서 내릴까요?\n(사무실 PC의 파일은 그대로 있습니다)"))return;var fc=(bnGet(s).files[key]||{}).c;if(fc&&fc.id){try{await rpc("pm_file_del",{id_:fc.id})}catch(e){}}
  if(await bnPut(s,function(V){if(V.files[key]){V.files[key]=Object.assign({},V.files[key]);delete V.files[key].c}}))toast("폰에서 내렸습니다")}
-async function clUpAll(sn,ck){var s=clSite(sn);if(!clReady())return;var N=bnGet(s),A=(boxOf(s)||[]).filter(function(f){return f.sub===ck&&f.file&&!(N.files[bxKey(f)]||{}).c}),L=A.filter(function(f){return!(f.size>CLMAX)}),big=A.length-L.length;
+async function clUpAll(sn,ck){var s=clSite(sn);if(!clReady())return;var N=bnGet(s),A=(boxOf(s)||[]).filter(function(f){return f.sub===ck&&f.file&&!CLSKIP.test(f.dir||"")&&!(N.files[bxKey(f)]||{}).c}),L=A.filter(function(f){return!(f.size>CLMAX)}),big=A.length-L.length;
  if(!L.length)return toast("새로 올릴 파일이 없습니다"+(big?" (2.8MB 넘는 "+big+"개는 올릴 수 없음)":""));
  if(!await uiConfirm("「"+bxName(ck)+"」 칸 파일 "+L.length+"개를 폰에서도 열리게 올릴까요?"+(big?"\n(2.8MB 넘는 "+big+"개는 빼고 올립니다)":"")))return;
+ if(!await clRoom(L.reduce(function(t,f){return t+(f.size||0)},0)))return;
  var done={},n=0,i;for(i=0;i<L.length;i++){toast("폰에 올리는 중… "+(++n)+" / "+L.length);try{done[bxKey(L[i])]=await clPut(L[i])}catch(e){}}
  var ks=Object.keys(done);if(!ks.length)return toast("올리지 못했습니다 — 인터넷 연결 확인");
  if(await bnPut(s,function(V){ks.forEach(function(k){V.files[k]=Object.assign({},V.files[k],{c:done[k]})})}))toast(ks.length+"개를 올렸습니다 — 폰에서도 열립니다"+(ks.length<L.length?" ("+(L.length-ks.length)+"개 실패)":""))}
