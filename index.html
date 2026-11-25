@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795580940249";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795581126131";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -3073,9 +3073,10 @@ function bxPho(s){if(!BD.ready)return"";var a=BD.items.filter(function(o){if(o.k
 // ── 📱 폰에서도 열리게: 문서함 파일을 암호 걸어 함께 쓰기 서버에 올림 (60MB까지, 조각내 올림 · PC 켜져 있으면 최근 30일 새 파일 자동 · 표시는 문서함 메모 기록 files[칸/이름].c) ──
 var CLMAX=60e6,CLPART=2.5e6,CLVID=/\.(mp4|mov|avi|mkv|wmv|m4v)$/i; // 60MB까지 · 2.5MB씩 조각내 올림 · 동영상은 뺌
 function clGet(b){var ids=(b.dataset.ids||"").split(",").filter(Boolean),n=b.dataset.n;if(!ids.length)return;b.disabled=true;toast("받는 중…"+(ids.length>1?" (조각 "+ids.length+"개)":""));
- (async function(){try{var parts=[],i;for(i=0;i<ids.length;i++){var x=await rpc("pm_file_get",{id_:ids[i]});if(!x)throw 0;parts.push(await unseal(x));if(ids.length>2)toast("받는 중… "+(i+1)+" / "+ids.length)}
+ (async function(){try{var parts=[],i;for(i=0;i<ids.length;i++){var x=await clRpc("pm_file_get",{id_:ids[i]});if(!x)throw 0;parts.push(await unseal(x));if(ids.length>2)toast("받는 중… "+(i+1)+" / "+ids.length)}
   var ext=(n.split(".").pop()||"").toLowerCase(),bl=new Blob(parts,{type:MIME[ext]||(/^(jpe?g|png|gif|webp)$/.test(ext)?"image/"+ext.replace("jpg","jpeg"):"application/octet-stream")}),u=URL.createObjectURL(bl),a=document.createElement("a");
   a.href=u;a.download=n;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},8000);toast("「"+n+"」을 받았습니다")}catch(e){toast("받지 못했습니다 — 인터넷 연결 확인")}b.disabled=false})()}
+async function clRpc(n,a){for(var t=0;;t++){try{return await rpc(n,a)}catch(e){if(t>=2)throw e;await new Promise(function(r){setTimeout(r,1500*(t+1))})}}} // 서버 일시 오류(500)는 3번까지 다시
 function clIds(c){return(c.ids||[c.id]).join(",")}
 function clOk(f){return!!f.file&&f.sub!=="_지난판"&&(!/^06/.test(f.sub)||/총괄/.test(f.name))&&!CLSKIP.test(f.dir||"")&&!CLVID.test(f.name)&&!(f.size>CLMAX)}
 function clSite(sn){return SITES.filter(function(x){return x.name===sn})[0]||S()}
@@ -3085,7 +3086,7 @@ function clBtn(f,s,fm){var k=bxKey(f);
  return''}
 async function clPut(f){var r=await fetch("/api/raw?f="+encodeURIComponent(f.file),{headers:{"X-PM":"1"}});
  if(!r.ok){var j={};try{j=await r.json()}catch(e){}throw new Error(j.msg||"파일을 읽지 못했습니다")}
- var u8=new Uint8Array(await r.arrayBuffer()),ids=[],o;for(o=0;o<u8.length||!ids.length;o+=CLPART){var id=await rpc("pm_file_add",{box_:await seal(u8.subarray(o,o+CLPART))});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");ids.push(id)}
+ var u8=new Uint8Array(await r.arrayBuffer()),ids=[],o;for(o=0;o<u8.length||!ids.length;o+=CLPART){var id=await clRpc("pm_file_add",{box_:await seal(u8.subarray(o,o+CLPART))});if(!id)throw new Error("올리지 못했습니다 — 인터넷 연결 확인");ids.push(id)}
  var c={id:ids[0],n:u8.length,d:f.date||"",at:new Date().toISOString(),by:BD.me||"자동"};if(ids.length>1)c.ids=ids;return c}
 var CLSKIP=/스캔|투표용지|DBF|손대지 않음|원본 명부|신분증/;
 // 용량: 폰 파일 합계 250MB까지 — 자동으로 지우지 않고 알림만 (200MB부터 미리 알림 · 넘으면 올리지 않음)
