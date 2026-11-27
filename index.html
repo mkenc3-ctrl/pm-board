@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795749898401";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795750186027";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -938,11 +938,101 @@ new MutationObserver(function(rs){rs.forEach(function(r){if(r.type==="characterD
 
 <div id="lock"><form id="lockF"><div class="lk-logo">PM</div><h2>PM업무관리</h2><p>비밀번호를 넣어 주세요</p><input id="lockPw" type="password" autocomplete="current-password"><label class="lk-keep"><input type="checkbox" id="lockKeep" checked> 이 폰에서 기억하기</label><button class="btn p">열기</button><p id="lockMsg"></p></form></div>
 <style>#lock{position:fixed;inset:0;background:#f4f1ea;z-index:999;display:flex;align-items:center;justify-content:center}#lockF{width:min(340px,88vw);text-align:center}#lockF input[type=password]{width:100%;font-size:20px;padding:12px;margin:8px 0;box-sizing:border-box}#lockF .btn{width:100%;font-size:19px;padding:12px}.lk-keep{display:block;margin:6px 0 14px;font-size:16px}.lk-logo{display:inline-block;background:#151719;color:#fff;font-weight:700;padding:8px 12px;font-size:22px}#lockMsg{color:#b0563a;min-height:1.4em}body.phone .pcOnly{display:none}body:not(.phone) .phoneOnly{display:none}</style>
-<script type="text/plain" id="appsrc">
+<script type="text/plain" id="appsrc">// ── 공동주택 사전진단 (2026-11-27) — 독립 모듈 ──
+// 이 폴더만 옮기면 됨: 화면.js(이 파일) + 현장/공동주택사전진단.js(처음 자료)
+// 앱과 닿는 곳: 업무관리.html home() 첫머리 한 줄 · CATS 목록 한 칸 · <script src> 한 줄 / 폰은 앱/server.js가 이 파일을 앱 코드 앞에 붙임
+// 저장: 현장/상태.json → sites["공동주택 사전진단"].pjd = {rows:[단지…], memo}
+// 앱의 공용 함수(S·SS·save·render·esc·today·toast·uiConfirm·$)를 씀
+(function(){
+var STEPS=["실시계획 수립","홍보 및 접수","일정 협의 및 통보","컨설팅 실시 (2일/단지)","결과통보 및 사후관리"];
+var STS=["대상","신청 접수","진행 중","완료","제외"],SST=["대기","진행 중","완료"],FXS=["미이행","진행중","이행"];
+var P={tab:"list",gu:"",st:"",q:""};
+function e(v){return esc(v)}
+function D(){var s=S(),X=SS();if(!X.pjd){var sd=s.pjd||{},y=sd.year||new Date().getFullYear();
+  X.pjd={memo:sd.memo||"",rows:(sd.list||[]).map(function(r,i){return mk(y,i+1,r[0],r[1],r[2],sd.memo)})};save()}
+ return X.pjd}
+function mk(y,n,name,gu,dong,memo){return{id:"PJD-"+y+"-"+String(n).padStart(2,"0"),name:name||"",gu:gu||"",dong:dong||"",st:"대상",own:"",memo:memo||"",
+ steps:STEPS.map(function(){return{s:"대기",d:""}}),fx:[],j1:{id:"",grade:"",report:"",at:""}}}
+function row(id){return D().rows.filter(function(r){return r.id===id})[0]}
+function cur(r){for(var i=0;i<STEPS.length;i++)if(r.steps[i].s!=="완료")return i;return STEPS.length}
+function gus(){var a=[];D().rows.forEach(function(r){if(r.gu&&a.indexOf(r.gu)<0)a.push(r.gu)});return a.sort()}
+function shown(){var q=P.q.trim();return D().rows.filter(function(r){return(!P.gu||r.gu===P.gu)&&(!P.st||r.st===P.st)&&(!q||(r.name+" "+r.gu+" "+r.dong+" "+r.own+" "+r.memo).indexOf(q)>=0)})}
+function opt(a,v,all){return(all?'<option value="">'+all+'</option>':'')+a.map(function(x){return'<option'+(x===v?' selected':'')+'>'+e(x)+'</option>'}).join("")}
+function chip(t){return'<span class="pjC pjC'+(STS.indexOf(t)>=0?STS.indexOf(t):SST.indexOf(t)>=0?"s"+SST.indexOf(t):"f"+FXS.indexOf(t))+'">'+e(t)+'</span>'}
+var CSS='.pjT{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}.pjT button{font:inherit;font-size:15px;padding:8px 14px;border:1px solid var(--line,#d7dbe0);background:#fff;cursor:pointer}.pjT button.on{background:#1d3a3e;color:#fff;border-color:#1d3a3e}'+
+ '.pjF{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}.pjF select,.pjF input{font:inherit;font-size:15px;padding:7px 8px}.pjF input{flex:1;min-width:160px}'+
+ '.pjG{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}.pjK{border:1px solid var(--line,#d7dbe0);background:#fff;padding:12px 14px}.pjK h4{margin:0 0 2px;font-size:17px}.pjK .sm{color:#66717a}'+
+ '.pjK label{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:14px;color:#55606a}.pjK label select,.pjK label input{font:inherit;font-size:15px;padding:5px 6px;flex:1;min-width:0}.pjK textarea{width:100%;box-sizing:border-box;font:inherit;font-size:14px;padding:6px;min-height:84px}'+
+ '.pjC{display:inline-block;padding:2px 8px;font-size:13px;border:1px solid #c9d0d6;background:#f4f6f7;white-space:nowrap}.pjC1,.pjCs1,.pjCf1{background:#fff6e0;border-color:#e8c46a}.pjC2{background:#e7f1fb;border-color:#8db6dd}.pjC3,.pjCs2,.pjCf2{background:#e6f4ea;border-color:#8cc29b}.pjC4,.pjCf0{background:#fbeaea;border-color:#e0a1a1}'+
+ '.pjB{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;align-items:flex-start}.pjCol{flex:0 0 230px;background:#f1f3f4;padding:8px}.pjCol h5{margin:2px 2px 8px;font-size:14px;line-height:1.35}.pjCol h5 i{font-style:normal;color:#8a949c;margin-right:4px}.pjCol h5 b{float:right;color:#1d3a3e}'+
+ '.pjBc{background:#fff;border:1px solid #d7dbe0;padding:8px 10px;margin-bottom:8px}.pjBc b{display:block;font-size:15px}.pjBc .sm{font-size:12.5px;color:#66717a}.pjBc .pjBb{display:flex;gap:6px;margin-top:6px}.pjBc .pjBb button{flex:1;font:inherit;font-size:13px;padding:5px;border:1px solid #c9d0d6;background:#fff;cursor:pointer}.pjBc .pjBb button.p{background:#1d3a3e;color:#fff;border-color:#1d3a3e}'+
+ '.pjBc details{margin-top:6px;font-size:13px}.pjBc details div{display:flex;gap:4px;align-items:center;margin-top:4px}.pjBc details select,.pjBc details input{font:inherit;font-size:12.5px;padding:3px;min-width:0}.pjBc details span{flex:1}'+
+ '.pjX{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.pjX th,.pjX td{border-bottom:1px solid #e3e6e9;padding:6px 4px;text-align:left;vertical-align:middle}.pjX input,.pjX select{font:inherit;font-size:14px;padding:4px;max-width:100%}.pjX td.w{width:100%}'+
+ '.pjS{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.pjS div{background:#fff;border:1px solid #d7dbe0;padding:8px 12px;min-width:90px}.pjS small{display:block;color:#66717a}.pjS b{font-size:20px}'+
+ '.pjN{background:#f7f5ef;border-left:3px solid #b08a3e;padding:10px 12px;font-size:14px;line-height:1.6;white-space:pre-line;margin-bottom:12px}'+
+ 'body.big .pjK h4{font-size:19px}';
+function css(){if(!document.getElementById("pjCss")){var t=document.createElement("style");t.id="pjCss";t.textContent=CSS;document.head.appendChild(t)}}
+function head(s){var d=D(),R=d.rows,done=R.filter(function(r){return cur(r)>=STEPS.length}).length,ing=R.filter(function(r){var c=cur(r);return c>0&&c<STEPS.length||r.steps[0].s==="진행 중"}).length,
+  fx=0;R.forEach(function(r){r.fx.forEach(function(f){if(f.s!=="이행")fx++})});
+ return'<div class="card now"><div class="st">'+e(s.place||"")+'</div><h2>🏢 공동주택 사전진단</h2><div class="pjS"><div><small>대상 단지</small><b>'+R.length+'</b></div><div><small>진행 중</small><b>'+ing+'</b></div><div><small>모두 마침</small><b>'+done+'</b></div><div><small>미이행 지적</small><b>'+fx+'</b></div></div>'+
+  '<div class="pjT">'+[["list","📋 대상 단지"],["board","🗂 진행 단계"],["post","🔧 사후관리"],["link","🔗 조합ONE 연동"]].map(function(t){return'<button class="'+(P.tab===t[0]?'on':'')+'" onclick="PJD.tab(\''+t[0]+'\')">'+t[1]+'</button>'}).join("")+'</div></div>'}
+function vList(){var d=D(),L=shown();
+ return'<div class="card"><h3>📋 대상 단지 관리 <span class="sm">'+L.length+' / '+d.rows.length+'곳</span></h3><div class="pjF"><select onchange="PJD.f(\'gu\',this.value)">'+opt(gus(),P.gu,"구 전체")+'</select><select onchange="PJD.f(\'st\',this.value)">'+opt(STS,P.st,"상태 전체")+'</select><input id="pjQ" placeholder="단지명·동·담당자 찾기" value="'+e(P.q)+'" oninput="PJD.q(this.value)"></div>'+
+  '<div class="pjG" id="pjL">'+lCards(L)+'</div>'+
+  '<details style="margin-top:12px"><summary class="btn">＋ 단지 넣기</summary><div class="pjF" style="margin-top:8px"><input id="pjNn" placeholder="단지명"><input id="pjNg" placeholder="구 (예: 성산구)" style="flex:0 1 140px"><input id="pjNd" placeholder="동" style="flex:0 1 120px"><button class="btn p" onclick="PJD.add()">넣기</button></div></details></div>'+
+  '<div class="card"><h3>📝 기본 메모 <span class="sm">새 단지 메모 칸에 처음 들어가는 글</span></h3><div class="pjN">'+e(d.memo)+'</div></div>'}
+function lCards(L){if(!L.length)return'<div class="empty">조건에 맞는 단지가 없습니다</div>';
+ return L.map(function(r){var c=cur(r);return'<div class="pjK"><div class="sm">'+e(r.id)+'</div><h4>'+e(r.name)+'</h4><div class="sm">'+e(r.gu)+' '+e(r.dong)+' · '+(c>=STEPS.length?'✔ 모두 마침':(c+1)+'단계 '+e(STEPS[c]))+'</div>'+
+  '<label>상태 <select onchange="PJD.set(\''+r.id+'\',\'st\',this.value)">'+opt(STS,r.st)+'</select> '+chip(r.st)+'</label>'+
+  '<label>담당자 <input value="'+e(r.own)+'" placeholder="이름" onchange="PJD.set(\''+r.id+'\',\'own\',this.value)"></label>'+
+  '<label>단지명 <input value="'+e(r.name)+'" onchange="PJD.set(\''+r.id+'\',\'name\',this.value)"></label>'+
+  '<label>구 <input value="'+e(r.gu)+'" onchange="PJD.set(\''+r.id+'\',\'gu\',this.value)"> 동 <input value="'+e(r.dong)+'" onchange="PJD.set(\''+r.id+'\',\'dong\',this.value)"></label>'+
+  '<details style="margin-top:8px"><summary class="sm" style="cursor:pointer">메모 '+(r.memo?'('+r.memo.split("\n").length+'줄)':'(비어 있음)')+'</summary><textarea onchange="PJD.set(\''+r.id+'\',\'memo\',this.value)">'+e(r.memo)+'</textarea><button class="btn" style="margin-top:6px" onclick="PJD.del(\''+r.id+'\')">이 단지 빼기</button></details></div>'}).join("")}
+function vBoard(){var L=shown(),cols=STEPS.map(function(){return[]}).concat([[]]);L.forEach(function(r){cols[cur(r)].push(r)});
+ return'<div class="card"><h3>🗂 진행 단계 보드 <span class="sm">「▶ 마침」을 누르면 그 단계를 마치고 다음 단계로 넘어갑니다</span></h3><div class="pjF"><select onchange="PJD.f(\'gu\',this.value)">'+opt(gus(),P.gu,"구 전체")+'</select><select onchange="PJD.f(\'st\',this.value)">'+opt(STS,P.st,"상태 전체")+'</select></div><div class="pjB">'+
+  cols.map(function(a,i){return'<div class="pjCol"><h5><i>'+(i<STEPS.length?(i+1):'✔')+'</i>'+(i<STEPS.length?e(STEPS[i]):'모두 마침')+'<b>'+a.length+'</b></h5>'+a.map(function(r){return bCard(r,i)}).join("")+'</div>'}).join("")+'</div></div>'}
+function bCard(r,i){var stp=r.steps[i];
+ return'<div class="pjBc"><b>'+e(r.name)+'</b><div class="sm">'+e(r.gu)+' '+e(r.dong)+(r.own?' · '+e(r.own):'')+(stp?' · '+chip(stp.s):'')+'</div>'+
+  '<div class="pjBb">'+(i>0?'<button onclick="PJD.mv(\''+r.id+'\',-1)">◀ 되돌리기</button>':'')+(i<STEPS.length?'<button class="p" onclick="PJD.mv(\''+r.id+'\',1)">▶ 마침</button>':'')+'</div>'+
+  '<details><summary>단계별 상태·날짜</summary>'+STEPS.map(function(t,k){var x=r.steps[k];return'<div><span>'+(k+1)+'. '+e(t)+'</span><select onchange="PJD.ss(\''+r.id+'\','+k+',\'s\',this.value)">'+opt(SST,x.s)+'</select><input type="date" value="'+e(x.d)+'" onchange="PJD.ss(\''+r.id+'\','+k+',\'d\',this.value)"></div>'}).join("")+'</details></div>'}
+function vPost(){var L=shown(),n={미이행:0,진행중:0,이행:0};L.forEach(function(r){r.fx.forEach(function(f){n[f.s]=(n[f.s]||0)+1})});
+ return'<div class="card"><h3>🔧 사후관리 <span class="sm">지적사항별 개선 이행 여부와 확인일</span></h3><div class="pjS"><div><small>미이행</small><b>'+n.미이행+'</b></div><div><small>진행중</small><b>'+n.진행중+'</b></div><div><small>이행</small><b>'+n.이행+'</b></div></div>'+
+  '<div class="pjF"><select onchange="PJD.f(\'gu\',this.value)">'+opt(gus(),P.gu,"구 전체")+'</select></div>'+
+  L.map(function(r){var open=r.fx.some(function(f){return f.s!=="이행"});return'<details class="pjK" style="margin-bottom:8px"'+(open?' open':'')+'><summary style="cursor:pointer"><b>'+e(r.name)+'</b> <span class="sm">'+e(r.gu)+' · 지적 '+r.fx.length+'건'+(open?' · 남은 것 있음':'')+'</span></summary>'+
+   (r.fx.length?'<table class="pjX"><tr><th>지적사항</th><th>이행 여부</th><th>확인일</th><th></th></tr>'+r.fx.map(function(f){return'<tr><td class="w"><input style="width:100%" value="'+e(f.t)+'" onchange="PJD.fs(\''+r.id+'\',\''+f.id+'\',\'t\',this.value)"></td><td><select onchange="PJD.fs(\''+r.id+'\',\''+f.id+'\',\'s\',this.value)">'+opt(FXS,f.s)+'</select></td><td><input type="date" value="'+e(f.d)+'" onchange="PJD.fs(\''+r.id+'\',\''+f.id+'\',\'d\',this.value)"></td><td><button class="btn" onclick="PJD.fd(\''+r.id+'\',\''+f.id+'\')" title="지우기">✕</button></td></tr>'}).join("")+'</table>':'<p class="sm">아직 적은 지적사항이 없습니다.</p>')+
+   '<div class="pjF" style="margin-top:8px"><input id="pjFx_'+r.id+'" placeholder="지적사항 적기 (예: 장기수선계획 검토 미흡)"><button class="btn p" onclick="PJD.fa(\''+r.id+'\')">＋ 넣기</button></div></details>'}).join("")+'</div>'}
+function vLink(){var L=shown();
+ return'<div class="card"><h3>🔗 조합ONE 연동 자리</h3><p class="sm">나중에 조합ONE 「공동주택 사전진단」 결과(등급·보고서)를 <b>단지 ID</b> 기준으로 불러올 자리입니다. 지금은 연결 칸만 있고, 결과 칸은 연동 뒤에 자동으로 채워집니다.</p>'+
+  '<table class="pjX"><tr><th>단지 ID</th><th>단지명</th><th>조합ONE 단지 ID</th><th>등급</th><th>보고서</th><th>불러온 날</th></tr>'+L.map(function(r){var j=r.j1||{};return'<tr><td>'+e(r.id)+'</td><td>'+e(r.name)+'</td><td><input value="'+e(j.id)+'" placeholder="연결할 ID" onchange="PJD.lk(\''+r.id+'\',this.value)"></td><td>'+(j.grade?e(j.grade):'—')+'</td><td>'+(j.report?'<a href="'+e(j.report)+'" target="_blank" rel="noopener">보기</a>':'—')+'</td><td>'+(j.at?e(j.at):'—')+'</td></tr>'}).join("")+'</table></div>'}
+function view(s){css();var b=P.tab==="board"?vBoard():P.tab==="post"?vPost():P.tab==="link"?vLink():vList();return head(s)+b}
+function ch(){S().updated=today();save();render()}
+window.PJD={view:view,STEPS:STEPS,
+ tab:function(t){P.tab=t;render()},
+ f:function(k,v){P[k]=v;render()},
+ q:function(v){P.q=v;var l=$("pjL");if(l)l.innerHTML=lCards(shown())},
+ set:function(id,k,v){var r=row(id);if(!r)return;r[k]=v;ch()},
+ add:function(){var n=($("pjNn").value||"").trim();if(!n)return toast("단지명을 넣어 주세요");var d=D(),y=new Date().getFullYear(),k=1;
+  while(d.rows.some(function(r){return r.id==="PJD-"+y+"-"+String(k).padStart(2,"0")}))k++;
+  d.rows.push(mk(y,k,n,($("pjNg").value||"").trim(),($("pjNd").value||"").trim(),d.memo));toast("넣었습니다");ch()},
+ del:async function(id){var r=row(id);if(!r||!await uiConfirm("「"+r.name+"」을(를) 목록에서 뺄까요?\n(단계·사후관리 기록도 함께 빠집니다)"))return;var d=D();d.rows=d.rows.filter(function(x){return x.id!==id});ch()},
+ mv:function(id,k){var r=row(id);if(!r)return;var c=cur(r),t=today();
+  if(k>0&&c<STEPS.length){r.steps[c]={s:"완료",d:t};if(c+1<STEPS.length&&r.steps[c+1].s==="대기")r.steps[c+1]={s:"진행 중",d:r.steps[c+1].d||t};if(r.st==="대상"||r.st==="신청 접수")r.st="진행 중";if(c+1>=STEPS.length)r.st="완료"}
+  else if(k<0&&c>0){if(c<STEPS.length&&r.steps[c].s==="진행 중")r.steps[c].s="대기";r.steps[c-1].s="진행 중";if(r.st==="완료")r.st="진행 중"}ch()},
+ ss:function(id,k,f,v){var r=row(id);if(!r)return;r.steps[k][f]=v;ch()},
+ fa:function(id){var r=row(id),i=$("pjFx_"+id),t=i&&(i.value||"").trim();if(!r||!t)return toast("지적사항을 적어 주세요");r.fx.push({id:"f"+Date.now().toString(36),t:t,s:"미이행",d:""});ch()},
+ fs:function(id,fid,k,v){var r=row(id);if(!r)return;r.fx.forEach(function(f){if(f.id===fid)f[k]=v});ch()},
+ fd:async function(id,fid){var r=row(id);if(!r||!await uiConfirm("이 지적사항을 지울까요?"))return;r.fx=r.fx.filter(function(f){return f.id!==fid});ch()},
+ lk:function(id,v){var r=row(id);if(!r)return;r.j1=r.j1||{};r.j1.id=(v||"").trim();ch()},
+ // 나중 조합ONE 연동용: PJD.importResult("PJD-2026-01",{grade:"A",report:"주소",at:"2027-01-10"}) — 단지 ID로 찾아 결과만 채움
+ importResult:function(id,o){var r=row(id);if(!r)return false;r.j1=Object.assign({},r.j1,{grade:o.grade||"",report:o.report||"",at:o.at||today()});save();return true}
+};
+})();
+
+
 var C=window.COMMON, SITES=(window.SITES||[]).slice(), ST={sites:{},localSites:[]}, SERVER=false;
 var view="전체", cur=0, open=null, q="", filt="전체", saveT;
 // 카테고리: 정비사업 현장 · 총회대행 · 프로그램
-var CATS=["정비사업 현장","총회대행","프로그램","기타","보관 현장"];
+var CATS=["정비사업 현장","총회대행","프로그램","기타","보관 현장","공동주택 사전진단"];
 function catOf(x){return x.category||(/프로그램/.test(x.kind||"")?"프로그램":x.kind==="총회대행"?"총회대행":x.kind==="기타"?"기타":"정비사업 현장")}
 var TABS=[["전체","▦"],["홈","⌂"],["단계","☰"],["서류","▤"],["결과","◎"],["기록","✎"]], toF="전체";
 function $(i){return document.getElementById(i)}
@@ -3367,6 +3457,7 @@ function shGo(d){var k=S().name,L=SHBG[k];if(!L||L.length<2)return;shTo(((SHI[k]
 function shStart(){clearInterval(SHT);SHT=setInterval(function(){if(!document.querySelector(".siteHero .shSl")){clearInterval(SHT);return}if(!document.hidden)shGo(1)},7000)}
 function shTs(e){SHX=e.touches[0].clientX}function shTe(e){var dx=e.changedTouches[0].clientX-SHX;if(Math.abs(dx)>50)shGo(dx<0?1:-1)}
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
+ if(s.kind==="공동주택 사전진단"&&window.PJD)return PJD.view(s); // 모듈/공동주택사전진단
  if(s.kind==="투개표 프로그램"&&window.__AT)return omrPhone(s);
  if(s.kind==="투개표 프로그램"&&!window.__AT)return omrView()+'<p class="omrNote">예전 업체 프로그램(omr.exe)·스캐너 드라이버·판독 설정은 위쪽 <b>「서류」</b> 탭에 있습니다.</p>';
  if(!s.current){ // 단계 지정 안 한 현장
