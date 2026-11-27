@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><script>(function(){var V="1795590343064";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><script>(function(){var V="1795746185247";fetch("ver.txt?n="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&sessionStorage.getItem("pm_ver")!==t){sessionStorage.setItem("pm_ver",t);location.replace(location.pathname+"?v="+t)}}).catch(function(){})})()</script><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0e1013"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM업무관리</title>
 <link rel="icon" href="앱/icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -413,6 +413,23 @@ body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Malgun Gothic"
 .fmCap i{width:16px;border-top:2px solid #ff6b5c}
 .fmCap:hover{color:#fff}
 @media(min-width:781px){.fmCap{position:absolute;right:22px;bottom:18px;margin:0}}
+.siteHero{margin-bottom:14px}.siteHero h1{font-size:28px}@media(min-width:781px){.siteHero h1{font-size:36px}}
+.siteHero .fmL{font-size:15.5px;margin-top:8px}.siteHero .prog{background:rgba(255,255,255,.2);margin-top:14px}.siteHero .prog i{background:#ff9a8c}
+.siteHero .shS{margin:6px 0 0;font-size:13px}.siteHero .steps span{background:rgba(255,255,255,.22)}.siteHero .steps .d{background:#ff9a8c}.siteHero .steps .c{background:#f2c46d}
+.siteHero .fmCap{cursor:default}
+.fmHero .fmMap.shSl{overflow:hidden;background:#0f1218}
+.shI{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transform:scale(1.02);transition:opacity 1.6s ease}
+.shI.on{opacity:1;animation:shKB 9s ease-out forwards}
+@keyframes shKB{from{transform:scale(1.02)}to{transform:scale(1.13)}}
+.shSl::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(15,18,24,.05) 0%,rgba(15,18,24,.42) 40%,rgba(15,18,24,.93) 76%)}
+@media(min-width:781px){.shI{background-position:70% center}.shSl::after{background:linear-gradient(100deg,rgba(15,18,24,.93) 0%,rgba(15,18,24,.74) 36%,rgba(15,18,24,.12) 66%,rgba(15,18,24,0) 100%)}}
+.siteHero .shNav{flex-wrap:wrap;gap:10px;color:rgba(255,255,255,.85)}
+.shA{width:32px;height:32px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(15,18,24,.35);color:#fff;font:inherit;font-size:20px;line-height:1;cursor:pointer;backdrop-filter:blur(4px)}
+.shA:hover{background:rgba(255,255,255,.2)}
+.shD{display:inline-flex;align-items:center;gap:6px}.shD i{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.4);cursor:pointer;transition:width .35s,background .35s}.shD i.on{width:22px;background:#ff9a8c}
+.shC b{color:#fff;font-weight:600}
+@media(prefers-reduced-motion:reduce){.shI.on{animation:none}.shI{transition:none}}
+@media(max-width:780px){.siteHero{padding-top:200px}.siteHero .stx{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.shI{background-position:center 30%}.shSl::after{background:linear-gradient(180deg,rgba(15,18,24,0) 0%,rgba(15,18,24,.1) 28%,rgba(15,18,24,.78) 50%,rgba(15,18,24,.95) 72%)}}
 @media(max-width:780px){.pcOnly{display:none}}
 .fmG{display:grid;gap:16px;margin-top:16px;align-items:start}
 @media(min-width:1060px){.fmG{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}}
@@ -3333,6 +3350,22 @@ function cntCopy(){var p=copyText(cntText(CNT.res,nm(S())));if(p&&p.then)p.then(
 function openBox(){var d=BOXD[S().name];if(!d)return toast("잠시 뒤 다시 눌러 주세요");api("/api/open?mode=open&f="+encodeURIComponent(d)).then(function(r){toast(r.ok?"문서함 폴더를 열었습니다":"열 수 없습니다")})}
 function boxSum(s){var b=boxOf(s);if(!b)return"";var o=b.filter(function(f){return f.sub==="_지난판"}).length,t=today(),nx=BD.ready?mtgOf(s).filter(function(x){return(x.pm.date||"")>=t}).pop():null;
  return(b.length?(b.length-o)+"건"+(o?" · 지난판 "+o+"건":""):"비어 있음")+(nx?" · 📅 "+esc(nx.pm.date.slice(5).replace("-","."))+" "+esc(mtgName(nx.pm))+" "+pmDday(nx.pm.date):"")+(b.length?" · 칸을 눌러 보세요":" — 계약서·공문 넣는 곳")}
+// 구역 화면 바탕 사진 넘기기: 문서함에 이름에 「바탕」이 든 사진(jpg·png)이 있으면 지도 대신 그 사진들을 천천히 넘겨 보여 줌 (이름순 · 폰은 📱 올린 것만)
+var SHBG={},SHI={},SHT=0,SHX=0;
+function shFs(s){var b=boxOf(s);if(!b)return null;return b.filter(function(f){return/바탕/.test(f.name)&&/\.(jpe?g|png|webp)$/i.test(f.name)&&f.sub!=="_지난판"}).sort(function(a,c){return a.name.localeCompare(c.name)})}
+function shCap(n){var m=n.replace(/\.[^.]+$/,"").match(/바탕\d*_?(.*)$/);return(m&&m[1]||"구역 모습").replace(/_/g," ")}
+async function shBgLoad(s){var k=s.name;if(SHBG[k]||SHBG[k+"…"])return;var F=shFs(s);if(!F||!F.length)return;SHBG[k+"…"]=1;var L=[];
+ for(var i=0;i<F.length;i++){var f=F[i],u="";try{if(SERVER&&f.file){var r=await fetch("/api/raw?f="+encodeURIComponent(f.file),{headers:{"X-PM":"1"}});if(r.ok)u=URL.createObjectURL(await r.blob())}
+  else if(BD.ready){var c=(bnGet(s).files[bxKey(f)]||{}).c;if(c)u=await getPh(clIds(c))}}catch(e){}if(u)L.push({u:u,c:shCap(f.name)})}
+ delete SHBG[k+"…"];if(!L.length)return;SHBG[k]=L;var h=document.querySelector(".siteHero");if(!h||S().name!==k)return;
+ var m=h.querySelector(".fmMap");if(m)m.remove();h.insertAdjacentHTML("afterbegin",shHtml(k,L));var cp=h.querySelector(".fmCap");if(cp)cp.outerHTML=shNav(k,L);shStart()}
+function shHtml(k,L){var n=(SHI[k]||0)%L.length;return'<div class="fmMap shSl">'+L.map(function(x,i){return'<div class="shI'+(i===n?' on':'')+'" style="background-image:url('+x.u+')"></div>'}).join("")+'</div>'}
+function shNav(k,L){var n=(SHI[k]||0)%L.length;return'<div class="fmCap shNav">'+(L.length>1?'<button class="shA" onclick="shGo(-1)" aria-label="앞 사진">‹</button><span class="shD">'+L.map(function(x,i){return'<i class="'+(i===n?'on':'')+'" onclick="shTo('+i+')"></i>'}).join("")+'</span><button class="shA" onclick="shGo(1)" aria-label="다음 사진">›</button>':'')+'<span class="shC"><b>'+esc(L[n].c)+'</b> '+(n+1)+' / '+L.length+' · 경관계획(참고)</span></div>'}
+function shTo(n){var k=S().name,L=SHBG[k];if(!L)return;SHI[k]=n;var h=document.querySelector(".siteHero");if(!h)return;
+ [].forEach.call(h.querySelectorAll(".shI"),function(e,i){e.classList.toggle("on",i===n)});var v=h.querySelector(".shNav");if(v)v.outerHTML=shNav(k,L);shStart()}
+function shGo(d){var k=S().name,L=SHBG[k];if(!L||L.length<2)return;shTo(((SHI[k]||0)+d+L.length)%L.length)}
+function shStart(){clearInterval(SHT);SHT=setInterval(function(){if(!document.querySelector(".siteHero .shSl")){clearInterval(SHT);return}if(!document.hidden)shGo(1)},7000)}
+function shTs(e){SHX=e.touches[0].clientX}function shTe(e){var dx=e.changedTouches[0].clientX-SHX;if(Math.abs(dx)>50)shGo(dx<0?1:-1)}
 function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
  if(s.kind==="투개표 프로그램"&&window.__AT)return omrPhone(s);
  if(s.kind==="투개표 프로그램"&&!window.__AT)return omrView()+'<p class="omrNote">예전 업체 프로그램(omr.exe)·스캐너 드라이버·판독 설정은 위쪽 <b>「서류」</b> 탭에 있습니다.</p>';
@@ -3341,6 +3374,11 @@ function home(){var s=S(),st=stage(s.current||1),c=SS().chk,h="";
   return h+bizCard(s)+zoneBoard(s)}
  var todo=[];st.tasks.forEach(function(t,i){if(!(c[st.no+":"+i]||{}).ok)todo.push(i)});
  var steps=STG().map(function(x){return'<span class="'+(x.no<s.current?"d":x.no===s.current?"c":"")+'" title="'+esc(x.title)+'"></span>'}).join("");
+ if(s.zone&&s.zone.length>2){ // 구역 경계가 있으면 첫 화면처럼 지도를 바탕으로 깖 (2026-11-25)
+  var bg=SHBG[s.name];
+  h+='<section class="fmHero map siteHero"'+(bg?' ontouchstart="shTs(event)" ontouchend="shTe(event)"':'')+'>'+(bg?shHtml(s.name,bg):'<div class="fmMap" id="fmMap"></div>')+'<div class="fmTx"><p class="fmK">'+esc(nm(s))+'</p><h1>'+st.no+'단계 · '+esc(st.title)+'</h1>'+(s.status?'<p class="fmL stx">'+esc(s.status)+'</p>':'')+
+   '<div class="prog"><i style="width:'+pct(st)+'%"></i></div><p class="fmK shS">할 일 '+pct(st)+'% 완료 · 전체 '+STG().length+'단계 중 '+st.no+'단계</p><div class="steps">'+steps+'</div></div>'+(bg?shNav(s.name,bg):'<span class="fmCap"><i></i>빨간 선은 정비구역 경계(참고)</span>')+'</section>';
+  setTimeout(function(){if(bg)shStart();else fmMapInit(s.zone,s.name);shBgLoad(s)},0);return h+bizCard(s)+zoneBoard(s)}
  h+='<div class="card now"><div class="st">'+esc(nm(s))+'</div><h2>'+st.no+'단계 · '+esc(st.title)+'</h2>'+
   (s.status?'<div class="stx">'+esc(s.status)+'</div>':'')+'<div class="prog"><i style="width:'+pct(st)+'%"></i></div><div class="st">할 일 '+pct(st)+'% 완료 · 전체 '+STG().length+'단계 중 '+st.no+'단계</div><div class="steps">'+steps+'</div></div>';
  h+=bizCard(s)+zoneBoard(s);
